@@ -1,4 +1,4 @@
-## Hva?
+## Hva er feilen knyttet til?
 - 
 
 ## Forventet oppførsel

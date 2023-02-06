@@ -1,4 +1,3 @@
-## Branchnavn:
 
 ## Hva som skal gjøres
 - [ ] ...
