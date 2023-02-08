@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-import { Book } from './type';
+import { IBook } from './components/IBook';
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
@@ -26,7 +26,7 @@ constructor() {
 async getBooks(){
         const books = collection(db, 'books');
         const bookSnapshot = await getDocs(books);
-        const bookList = bookSnapshot.docs.map(doc => doc.data() as Book);
+        const bookList = bookSnapshot.docs.map(doc => doc.data() as IBook);
         return bookList;
       };
     

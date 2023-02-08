@@ -1,7 +1,7 @@
-export interface Book {
+export interface IBook {
     author : string;
     description : string;
-    genres : string[];
+    genre : string;
     rating : number;
     releaseYear : number;
     title : string;

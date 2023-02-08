@@ -10,7 +10,7 @@ import AddBookPage from './pages/AddBookPage';
 
 import 'firebase/firestore';
 import firebaseControl from './firebaseControl';
-import { Book } from './type';
+import { IBook } from './components/IBook';
 
 // const firebaseController = new firebaseControl();
 
