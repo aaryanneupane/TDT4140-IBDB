@@ -1,43 +1,43 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 
+import {Routes,Route } from "react-router-dom";
+import BookPage  from './pages/BookPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import MyBookLists from './pages/MyBookLists';
+import RatedBooks from './pages/RatedBooks';
+import AddBookPage from './pages/AddBookPage';
+
 import 'firebase/firestore';
-import { DocumentData } from 'firebase/firestore';
 import firebaseControl from './firebaseControl';
-import { log } from 'console';
 import { Book } from './type';
 
-const firebaseController = new firebaseControl();
+// const firebaseController = new firebaseControl();
 
 
 function App() {
 
-  const [books, setBooks] = useState<Book[]>([])
+//   const [books, setBooks] = useState<Book[]>([])
   
-useEffect(() => {
-    firebaseController.getBooks().then(books => setBooks(books))
+// useEffect(() => {
+//     firebaseController.getBooks().then(books => setBooks(books))
 
-    return
+//     return
 
-}, [])
+// }, [])
 
-console.log(books);
+// console.log(books);
 
 return (
- 
-    <div>
-      <div>
-        <h1>Books</h1>
-      </div>
-      { books[0] &&
-        <div>
-          <h1>Title: {books[0].title}</h1>
-          <h1>Author: {books[0].author}</h1>
-          <h1>Description: {books[0].description}</h1>
-          <h1>Release year: {books[0].releaseYear}</h1>
-          <h1>Rating: {books[0].rating}</h1>
-          <h1>Genres: {books[0].genres[0]}, {books[0].genres[1]}</h1>
-        </div>
-      }
+    <div className="App">
+      <Routes>
+        <Route path="/" element={ <HomePage/> } />
+        <Route path="bookPage/:id" element={ <BookPage/> } />
+        <Route path="loginPage" element={ <LoginPage/> } />
+        <Route path="myBookLists" element={ <MyBookLists/> } />
+        <Route path="ratedBooks" element={ <RatedBooks/> } />
+        <Route path="addBook" element={ <AddBookPage/> } />
+      </Routes>
     </div>
   );
 }
