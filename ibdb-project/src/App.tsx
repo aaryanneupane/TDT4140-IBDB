@@ -28,7 +28,7 @@ return (
       <div>
         <h1>Books</h1>
       </div>
-      { books &&
+      { books[0] &&
         <div>
           <h1>{books[0].author}</h1>
         </div>
