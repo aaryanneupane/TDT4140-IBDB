@@ -1,55 +1,43 @@
-import React, {useState} from 'react';
-import firebase from "./firebase";
+import React, {useEffect, useLayoutEffect, useState} from 'react';
+
 import 'firebase/firestore';
 import { DocumentData } from 'firebase/firestore';
+import firebaseControl from './firebaseControl';
+import { log } from 'console';
+import { Book } from './type';
+
+const firebaseController = new firebaseControl();
 
 
 function App() {
 
-  const [books, setBooks] = useState<DocumentData>([]);
-  const [singleBook, setSingleBook] = useState([]);
+  const [books, setBooks] = useState<Book[]>([])
+  
+useEffect(() => {
+    firebaseController.getBooks().then(books => setBooks(books))
 
-  const db = firebase.firestore();
+    return
 
-  function getBooks(e) {
-    e.preventDefault();
-    db.collection("Books")
-    .get()
-    .then((snapshot) => {
-      if(snapshot.docs.length>0) {
-        snapshot.docs.forEach((doc) => {
-          setBooks((prev) => {
-            return[...prev, doc.data()]
-          })
-        })
-      }
-    })
-    console.log(books)
-  }
+}, [])
 
-  function getSingleBook(e) {
-    e.preventDefault();
-    db.collection("books")
-    .doc("bok1")
-    .get().
-    then((snapshot) => {
-      if(snapshot) {
-        setSingleBook(snapshot.data());
-      }
-    });
-    console.log(singleBook)
-  }
+console.log(books);
+
+if (true) {
+  
+}
+
+
   return (
+ 
     <div>
       <div>
         <h1>Books</h1>
       </div>
-      <div>
-        <button onClick={getBooks}> getBooks </button>
-        <button onClick={getSingleBook}> getBok1 </button>
-        <h1>{singleBook.Author}</h1>
-        <h1>{singleBook.Title}</h1>
-      </div>
+      { books &&
+        <div>
+          <h1>{books[0].author}</h1>
+        </div>
+      }
     </div>
   );
 }
