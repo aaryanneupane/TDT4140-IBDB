@@ -22,12 +22,7 @@ useEffect(() => {
 
 console.log(books);
 
-if (true) {
-  
-}
-
-
-  return (
+return (
  
     <div>
       <div>
