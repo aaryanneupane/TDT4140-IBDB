@@ -30,7 +30,12 @@ return (
       </div>
       { books[0] &&
         <div>
-          <h1>{books[0].author}</h1>
+          <h1>Title: {books[0].title}</h1>
+          <h1>Author: {books[0].author}</h1>
+          <h1>Description: {books[0].description}</h1>
+          <h1>Release year: {books[0].releaseYear}</h1>
+          <h1>Rating: {books[0].rating}</h1>
+          <h1>Genres: {books[0].genres[0]}, {books[0].genres[1]}</h1>
         </div>
       }
     </div>
