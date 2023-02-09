@@ -1,55 +1,30 @@
-import React, {useState} from 'react';
-import firebase from "./firebase";
+import React, {useEffect, useLayoutEffect, useState} from 'react';
+
+import {Routes,Route } from "react-router-dom";
+import BookPage  from './pages/BookPage';
+import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
+import MyBookLists from './pages/MyBookLists';
+import RatedBooks from './pages/RatedBooks';
+import AddBookPage from './pages/AddBookPage';
+
 import 'firebase/firestore';
-import { DocumentData } from 'firebase/firestore';
+import firebaseControl from './firebaseControl';
+import { IBook } from './components/IBook';
 
 
 function App() {
 
-  const [books, setBooks] = useState<DocumentData>([]);
-  const [singleBook, setSingleBook] = useState([]);
-
-  const db = firebase.firestore();
-
-  function getBooks(e) {
-    e.preventDefault();
-    db.collection("Books")
-    .get()
-    .then((snapshot) => {
-      if(snapshot.docs.length>0) {
-        snapshot.docs.forEach((doc) => {
-          setBooks((prev) => {
-            return[...prev, doc.data()]
-          })
-        })
-      }
-    })
-    console.log(books)
-  }
-
-  function getSingleBook(e) {
-    e.preventDefault();
-    db.collection("books")
-    .doc("bok1")
-    .get().
-    then((snapshot) => {
-      if(snapshot) {
-        setSingleBook(snapshot.data());
-      }
-    });
-    console.log(singleBook)
-  }
-  return (
-    <div>
-      <div>
-        <h1>Books</h1>
-      </div>
-      <div>
-        <button onClick={getBooks}> getBooks </button>
-        <button onClick={getSingleBook}> getBok1 </button>
-        <h1>{singleBook.Author}</h1>
-        <h1>{singleBook.Title}</h1>
-      </div>
+return (
+    <div className="App">
+      <Routes>
+        <Route path="/" element={ <HomePage/> } />
+        <Route path="bookPage/:id" element={ <BookPage/> } />
+        <Route path="loginPage" element={ <LoginPage/> } />
+        <Route path="myBookLists" element={ <MyBookLists/> } />
+        <Route path="ratedBooks" element={ <RatedBooks/> } />
+        <Route path="addBook" element={ <AddBookPage/> } />
+      </Routes>
     </div>
   );
 }
