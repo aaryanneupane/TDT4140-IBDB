@@ -22,15 +22,11 @@ const Book = () => {
 
 
     return (
-        <div>
+        <div className="grid grid-cols-3">
             {books.map((book) => (
-                <div>
-                    <h1 className="text-4xl ">Title: {book.title}</h1>
-                    <p>Author: {book.author}</p>
-                    <p>Description: {book.description}</p>
-                    <p>Release year: {book.releaseYear}</p>
-                    <p>Rating: {book.rating}</p>
-                    <p>Genre: {book.genre}</p>
+                <div className="border-4 ml-100">
+                    <h1 className="text-xl ">Title: {book.title}</h1>
+                    <img src={book.imgURL} width="200" height="300"/>
                 </div>
             ))}
         </div>
