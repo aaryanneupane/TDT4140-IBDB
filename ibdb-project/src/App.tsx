@@ -12,21 +12,8 @@ import 'firebase/firestore';
 import firebaseControl from './firebaseControl';
 import { IBook } from './components/IBook';
 
-// const firebaseController = new firebaseControl();
-
 
 function App() {
-
-//   const [books, setBooks] = useState<Book[]>([])
-  
-// useEffect(() => {
-//     firebaseController.getBooks().then(books => setBooks(books))
-
-//     return
-
-// }, [])
-
-// console.log(books);
 
 return (
     <div className="App">
