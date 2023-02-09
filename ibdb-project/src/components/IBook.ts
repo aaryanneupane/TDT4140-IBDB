@@ -5,4 +5,5 @@ export interface IBook {
     rating : number;
     releaseYear : number;
     title : string;
+    imgURL: string;
 };

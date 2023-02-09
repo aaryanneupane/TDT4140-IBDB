@@ -23,16 +23,18 @@ const Book = () => {
 
     return (
         <div>
-            {books.map((book) => (
-                <div>
-                    <h1 className="text-4xl ">Title: {book.title}</h1>
-                    <p>Author: {book.author}</p>
-                    <p>Description: {book.description}</p>
-                    <p>Release year: {book.releaseYear}</p>
-                    <p>Rating: {book.rating}</p>
-                    <p>Genre: {book.genre}</p>
-                </div>
-            ))}
+            <h1 className="text-6xl text-center">New Books</h1>
+            <div className="grid grid-cols-3">
+                {books.map((book) => (
+                    <div className="grid place-items-center border-4 ml-100">
+                        <h1 className="text-xl">Title: {book.title}</h1>
+                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer'/>
+                        <button type="button" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>
+                            Legg til i favoritter
+                        </button>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
