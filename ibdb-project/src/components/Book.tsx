@@ -25,7 +25,7 @@ const Book = () => {
         <div>
             {books.map((book) => (
                 <div>
-                    <h1>Title: {book.title}</h1>
+                    <h1 className="text-4xl ">Title: {book.title}</h1>
                     <p>Author: {book.author}</p>
                     <p>Description: {book.description}</p>
                     <p>Release year: {book.releaseYear}</p>
