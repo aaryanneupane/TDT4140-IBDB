@@ -7,6 +7,7 @@ module.exports = {
     extend: {},
     colors: {
       bigBoy: "#E9EBEF",
+      teitThene: "#E1726B",
       kulTheme: "#DD7973",
       kulText: "#4D4D4D",
       mindreKulText: "#282828",
