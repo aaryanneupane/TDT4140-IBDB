@@ -5,6 +5,13 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      bigBoy: "#E9EBEF",
+      kulTheme: "#DD7973",
+      kulText: "#4D4D4D",
+      mindreKulText: "#282828",
+      hvit: "#FFFFFF"
+    }
   },
   plugins: [],
 }

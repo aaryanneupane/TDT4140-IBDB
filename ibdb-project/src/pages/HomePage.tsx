@@ -7,7 +7,7 @@ const HomePage = () => {
         <div>
             <Header/>
             
-            <Book/>
+            {/* <Book/> */}
 
         </div>
     )
