@@ -18,13 +18,9 @@ const Book = () => {
 
     const firebaseController = new firebaseControl();
     const [books, setBooks] = useState<DocumentData[]>([]);
-    const[bookId, setBookId] = useState<string[]>([])
-    const [query, setQuery] = useState<any>()
     
     useEffect(() => {
         firebaseController.getBooks().then(books => setBooks(books))
-        firebaseController.hello().then(bookId => setBookId(bookId))
-        firebaseController.sendQuery().then(query => setQuery(query))
 
         return
 
@@ -34,28 +30,6 @@ const Book = () => {
 
     const bookIDs = firebaseController.getBookIds();
     console.log(bookIDs);
-
-    const q = firebaseController.sendQuery();
-
-
-    // bookId.map((id) => (
-    //     console.log(id)
-    // ))
-
-    // const book = q.then((snapshot) => {
-    //     snapshot.docs.map( doc => doc.data());
-    // }, [])
-
-    async function getBookData() {
-        const snapshot = await q;
-        return Array.from(snapshot.docs, (doc) => doc.data());
-      }
-      
-    async function renderBooks() {
-        const book = await getBookData();
-        return book;
-    };
-
 
     return (
         <div>

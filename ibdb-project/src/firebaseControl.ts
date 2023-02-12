@@ -42,18 +42,12 @@ getBookIds(){
   return bookIDs;
 };
 
-async sendQuery(){
-  const colRef = collection(db, 'books');
-  const snapshot = await getDocs(colRef);
-  return snapshot;
-};
+  async getBook(id: string) {
+  const doc = await firebase.firestore().collection('books').doc(id).get();
+  const docData = doc.data();
+  return docData;
+}
 
-async hello(){
-  const colRef = collection(db, 'books');
-  const bookSnapshot = await getDocs(colRef);
-  const bookIds = bookSnapshot.docs.map(doc => doc.id);
-  return bookIds;
-  }
 };
 
 export default firebaseControl
