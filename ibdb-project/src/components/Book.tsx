@@ -1,15 +1,8 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import 'firebase/firestore';
 import firebaseControl from '../firebaseControl';
 import { useNavigate } from 'react-router-dom';
-import { DocumentData, query } from 'firebase/firestore';
-
-import { IBook } from './IBook';
-
-import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
-
-import firebase from "firebase/compat/app";
+import { DocumentData } from 'firebase/firestore';
 import 'firebase/compat/firestore';
 
 
