@@ -7,7 +7,7 @@ const HomePage = () => {
     return (
         <div>
             <Header/>
-            
+            <Filter/>
             <Book/>
 
         </div>
