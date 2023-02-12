@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { IBook } from './IBook';
 import { DocumentData } from 'firebase/firestore';
+import Header from './Header';
 
 interface Ifilter {
     filter: string;
@@ -49,12 +50,13 @@ const Filter = () => {
 
     return (
         <div>
+            <Header/>
             <h1 className="text-6xl text-center">New Books</h1>
             <div className="grid grid-cols-3">
                 {books.filter(book => book.releaseYear === 1998).map((book) => (
                     <div className="grid place-items-center border-4 ml-100">
                         <h1 className="text-xl">Title: {book.title}</h1>
-                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer' onClick={ () => navigate(`bookPage/${book.id}`)}/>
+                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer' onClick={ () => navigate(`/bookPage/${book.id}`)}/>
                         <button type="button" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>
                             Legg til i favoritter
                         </button>

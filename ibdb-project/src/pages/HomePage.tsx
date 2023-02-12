@@ -8,7 +8,7 @@ const HomePage = () => {
         <div>
             <Header/>
             
-            <Filter/>
+            <Book/>
 
         </div>
     )

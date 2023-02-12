@@ -15,11 +15,11 @@ const Header = () => {
                 type="text"
                 className="block w-2/3 px-4 py-2 text-purple-700 bg-white rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 shadow"
                 placeholder="Search..."/>
-            <button>
-                <Link to=" " className="px-5 py-2 rounded-lg bg-hvit shadow" >Filter</Link>
+            <button >
+                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Nyeste først</Link>
             </button>
             <button>
-                <Link to="loginPage" className="px-5 py-2 rounded-lg bg-hvit shadow" >profil</Link>
+                <Link to="/loginPage" className="px-5 py-2 rounded-lg bg-hvit shadow" >profil</Link>
             </button>
 
         </div>
