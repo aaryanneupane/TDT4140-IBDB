@@ -1,7 +1,10 @@
 import React, {useEffect, useLayoutEffect, useState} from 'react';
 import 'firebase/firestore';
 import firebaseControl from '../firebaseControl';
+import { useNavigate } from 'react-router-dom';
+
 import { IBook } from './IBook';
+import { DocumentData } from 'firebase/firestore';
 
 interface Ifilter {
     filter: string;
@@ -10,7 +13,10 @@ interface Ifilter {
 const Filter = () => {
 
     const firebaseController = new firebaseControl();
-    const [books, setBooks] = useState<IBook[]>([]);
+    const [books, setBooks] = useState<DocumentData[]>([]);
+
+    const navigate = useNavigate();
+
     
     useEffect(() => {
         firebaseController.getBooks().then(books => setBooks(books))
@@ -48,7 +54,7 @@ const Filter = () => {
                 {books.filter(book => book.releaseYear === 1998).map((book) => (
                     <div className="grid place-items-center border-4 ml-100">
                         <h1 className="text-xl">Title: {book.title}</h1>
-                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer'/>
+                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer' onClick={ () => navigate(`bookPage/${book.id}`)}/>
                         <button type="button" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>
                             Legg til i favoritter
                         </button>
