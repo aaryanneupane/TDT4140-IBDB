@@ -18,6 +18,7 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+
 class firebaseControl {
 
 constructor() {
@@ -26,10 +27,33 @@ constructor() {
 async getBooks(){
         const books = collection(db, 'books');
         const bookSnapshot = await getDocs(books);
-        const bookList = bookSnapshot.docs.map(doc => doc.data() as IBook);
+        const bookList = bookSnapshot.docs.map(doc => doc.data());
         return bookList;
       };
     
+getBookIds(){
+  const colRef = collection(db, "books");
+  let bookIDs : any[] = [];
+  getDocs(colRef).then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      bookIDs.push({ id: doc.id });
+    })
+  });
+  return bookIDs;
+};
+
+async sendQuery(){
+  const colRef = collection(db, 'books');
+  const snapshot = await getDocs(colRef);
+  return snapshot;
+};
+
+async hello(){
+  const colRef = collection(db, 'books');
+  const bookSnapshot = await getDocs(colRef);
+  const bookIds = bookSnapshot.docs.map(doc => doc.id);
+  return bookIds;
+  }
 };
 
 export default firebaseControl
