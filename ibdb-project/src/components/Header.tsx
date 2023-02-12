@@ -11,8 +11,7 @@ const Header = () => {
             </button>
 
 
-            <button onClick={Dropdown}>
-                <Link to=" " className="px-5 py-2 rounded-lg bg-hvit shadow font-sans">Meny</Link>
+            <button className="px-5 py-2 rounded-lg bg-hvit shadow font-sans" onClick={Dropdown}><p>Meny</p>
             </button>
 
 
@@ -23,7 +22,8 @@ const Header = () => {
             <button>
                 <Link to=" " className="px-5 py-2 rounded-lg bg-hvit shadow font-sans" >Filter</Link>
             </button>
-            <button><img src="https://i.pinimg.com/originals/8b/aa/f5/8baaf5d76905923ce66b24205a1532dd.jpg" className = "ax-w-full h-auto rounded-full w-11 shadow object-right-bottom" alt="" />
+            <button className ="flex">
+                <img src="https://i.pinimg.com/originals/8b/aa/f5/8baaf5d76905923ce66b24205a1532dd.jpg" className = "ax-w-full h-auto rounded-full w-11 shadow object-right-bottom" alt="" />
                 <Link to="loginPage" className="px-5 py-2 rounded-lg bg-hvit shadow font-sans" >Profil</Link>
             </button>
 
