@@ -7,7 +7,6 @@ import LoginPage from './pages/LoginPage';
 import MyBookLists from './pages/MyBookLists';
 import RatedBooks from './pages/RatedBooks';
 import AddBookPage from './pages/AddBookPage';
-import Header from './components/Header';
 
 import 'firebase/firestore';
 import firebaseControl from './firebaseControl';
@@ -18,7 +17,6 @@ function App() {
 
 return (
     <div className="App">
-      <Header/>
       <Routes>
         <Route path="/" element={ <HomePage/> } />
         <Route path="bookPage/:id" element={ <BookPage/> } />
