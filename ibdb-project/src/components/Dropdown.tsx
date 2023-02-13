@@ -1,64 +1,43 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React from 'react';
+    import './index.css';
+    import type { MenuProps } from 'antd';
+import { Button, Dropdown, Space } from 'antd';
+const items: MenuProps['items'] = [
+  {
+    key: '1',
+    label: (
+      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+        1st menu item
+      </a>
+    ),
+  },
+  {
+    key: '2',
+    label: (
+      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+        2nd menu item
+      </a>
+    ),
+  },
+  {
+    key: '3',
+    label: (
+      <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+        3rd menu item
+      </a>
+    ),
+  },
+];
 
+const App: React.FC = () => (
+  <Space direction="vertical">
+    <Space wrap>
+      <Dropdown menu={{ items }} placement="bottom">
+        <Button>bottom</Button>
+      </Dropdown>
 
-const Dropdown = () => {
-    const [open, setOpen] = React.useState(false);
+    </Space>
+  </Space>
+);
 
-
-    const handleOpen = () => {
-        setOpen(!open);
-    };
-
-    return (
-        <div className='dropdown'>
-            <button onClick={handleOpen} className= "px-5 py-2 rounded-lg bg-hvit shadow">
-                Meny
-                </button>
-            {open ? (
-                <ul className='Meny'>
-                    <li>
-                        <button>Nyheter</button>
-                    </li>
-                    <li>
-                        <button>Kommer</button>
-                    </li>
-                    <li>
-                        <button>Topplister</button>
-                    </li>
-                    <li>
-                        <button>Favoritter</button>
-                    </li>
-                    <li>
-                        <button>Tilpasset liste</button>
-                    </li>
-                    <li>
-                        <button>Lag tilpasset liste</button>
-                    </li>
-                </ul>
-            ): null}
-            {open ? <div>Is Open</div> : <div>Is Closed </div>}
-        </div>
-    );
-    };
-
-
-
-/*
-const Dropdown =() => {
-    return
-    <div>
-        <div className = "px-5 py-2 rounded-lg bg-hvit shadow">
-            Meny
-        </div>
-        <ul>
-            <li className="p-2 text-sm hover:shadow">sample</li>
-            <li className="p-2 text-sm hover:shadow">sample</li>
-            <li className="p-2 text-sm hover:shadow"></li>
-            <li className="p-2 text-sm hover:shadow"></li>
-        </ul>
-    </div>
-
-
-}
-*/
 export default Dropdown;
