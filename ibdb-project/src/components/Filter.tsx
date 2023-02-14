@@ -37,25 +37,30 @@ const Filter = () => {
 
     console.log(books);
 
-    const [clicked, setClicked] = React.useState(false);
+    const [clicked, setClicked] = useState(false);
     const handleClicked = () => {
         setClicked(!clicked);
-      };
+    };
 
-    const [fictionChosen, setFictionChosen] = React.useState(false);
-    const [romanChosen, setRomanChosen] = React.useState(false);
-    const [crimeChosen, setCrimeChosen] = React.useState(false);
+    const [fictionChosen, setFictionChosen] = useState(false);
+    const [romanChosen, setRomanChosen] = useState(false);
+    const [crimeChosen, setCrimeChosen] = useState(false);
 
     const handleFictionChosen = () => {
-        setFictionChosen(!fictionChosen); 
+        setFictionChosen(!fictionChosen);
     };
 
     const handleRomanChosen = () => {
-        setRomanChosen(!romanChosen); 
+        setRomanChosen(!romanChosen);
     };
 
     const handleCrimeChosen = () => {
-        setCrimeChosen(!crimeChosen); 
+        setCrimeChosen(!crimeChosen);
+    };
+
+    const [clickedYear, setClickedYear] = useState(false);
+    const handleYear = () => {
+        setClickedYear(!clickedYear);
     };
 
     return (
@@ -66,32 +71,42 @@ const Filter = () => {
                     <button onClick={handleClicked} className="px-5 py-2 rounded-lg bg-hvit shadow">
                         Sjanger
                     </button>
-                    {clicked ? 
-                     <div className='navbar navbar-expand-lg shadow-md absolute space-y-3 bg-current'>
-                        <button onClick={handleFictionChosen}>
-                            <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Fiction</Link>
-                        </button>
-                        <button onClick={handleCrimeChosen}>
-                            <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Crime</Link>
-                        </button>
-                        <button onClick={handleRomanChosen}>
-                            <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Roman</Link>
-                        </button>
-                     </div>
-                    : null}
+                    {clicked ?
+                        <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
+                            <button onClick={handleFictionChosen}>
+                                <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Fiction</Link>
+                            </button>
+                            <button onClick={handleCrimeChosen}>
+                                <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Crime</Link>
+                            </button>
+                            <button onClick={handleRomanChosen}>
+                                <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Roman</Link>
+                            </button>
+                        </div>
+                        : null}
                 </div>
-            
+
                 <button>
                     <Link to="/filteredBooks/newest" className="px-5 py-2 rounded-lg bg-hvit shadow" >Nyeste</Link>
                 </button>
-                <button>
-                    <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Fiction</Link>
-                </button>
+                <div className="space-y-2 relative bg-current">
+                    <button onClick={handleYear} className="px-5 py-2 rounded-lg bg-hvit shadow">
+                        Utgivelsesår
+                    </button>
+                    {clickedYear ?
+                        <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
+                            <input type="number" placeholder="Fra" className="px-3 py-2 rounded-lg bg-hvit shadow" />
+
+                            <input type="number" placeholder="Til" className="px-3 py-2 rounded-lg bg-hvit shadow" />
+
+                        </div>
+                        : null}
+                </div>
 
                 <div>
                     {fictionChosen ?
                         <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>fiction</p>
+                            <p className='text-sm'>fiction X</p>
                         </button> : null
                     }
                     {crimeChosen ?
@@ -104,12 +119,9 @@ const Filter = () => {
                             <p className='text-sm'>roman</p>
                         </button> : null
                     }
-                    
+
                 </div>
             </div>
-            
-            
-
 
             <div className="grid grid-cols-3">
                 {books.map((book) => (
