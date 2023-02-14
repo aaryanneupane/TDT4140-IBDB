@@ -32,7 +32,7 @@ const DownDrop: React.FC = (elmnt) => (
   <Space direction="vertical">
     <Space wrap>
       <Dropdown menu={{ items }} placement="bottom">
-        <Button>Meny</Button>
+        <Button>Menu</Button>
       </Dropdown>
 
     </Space>
