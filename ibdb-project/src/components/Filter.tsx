@@ -11,35 +11,20 @@ const Filter = () => {
 
     const firebaseController = new firebaseControl();
     const [books, setBooks] = useState<DocumentData[]>([]);
+
     const { filter } = useParams();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (filter === "highestRated") {
-            firebaseController
-                .getBooks()
-                .then(books => setBooks(books.sort((book1, book2) => book2.rating - book1.rating)));
-        }
-        else if (filter === "newest") {
-            firebaseController
-                .getBooks()
-                .then(books => setBooks(books.sort((book1, book2) => book2.releaseYear - book1.releaseYear)));
-        }
-        else if (filter === "fiction") {
-            firebaseController
-                .getBooks()
-                .then(books => setBooks(books.filter(book => book.genre === "Fiction")));
-
-        }
+        firebaseController.getBooks().then(books => setBooks(books))
         return
-    }, [filter]);
+    }, []);
 
-    console.log(books);
+    const [genreClicked, setGenreClicked] = useState(false);
 
-    const [clicked, setClicked] = useState(false);
-    const handleClicked = () => {
-        setClicked(!clicked);
+    const handleGenre = () => {
+        setGenreClicked(!genreClicked);
     };
 
     const [fictionChosen, setFictionChosen] = useState(false);
@@ -48,47 +33,63 @@ const Filter = () => {
 
     const handleFictionChosen = () => {
         setFictionChosen(!fictionChosen);
+        setBooks(books.filter(book => book.genre === "Fiction"));
     };
 
     const handleRomanChosen = () => {
         setRomanChosen(!romanChosen);
+        setBooks(books.filter(book => book.genre === "Roman"));
     };
 
     const handleCrimeChosen = () => {
         setCrimeChosen(!crimeChosen);
+        setBooks(books.filter(book => book.genre === "Crime"));
     };
 
     const [clickedYear, setClickedYear] = useState(false);
+
     const handleYear = () => {
         setClickedYear(!clickedYear);
     };
+
+    const [sort, setSort] = useState(false);
+
+    const handleSort = () => {
+        setSort(!sort);
+    };
+
+    const handleNewest = () => {
+        setBooks(books.sort((book1, book2) => book2.releaseYear - book1.releaseYear));
+    }
+
+    const handleRated = () => {
+        setBooks(books.sort((book1, book2) => book2.rating - book1.rating));
+    }
 
     return (
         <div>
             <div className="navbar navbar-expand-lg shadow-md pb-5 px-10 bg-bigBoy relative flex items-center w-full justify-center space-x-10">
                 <p>Filtere: </p>
                 <div className="space-y-2 relative bg-current">
-                    <button onClick={handleClicked} className="px-5 py-2 rounded-lg bg-hvit shadow">
+                    <button onClick={handleGenre} className="px-5 py-2 rounded-lg bg-hvit shadow">
                         Sjanger
+                        <img className="drop-down" src="/public/images/drop-down.png"/>
                     </button>
-                    {clicked ?
+                    {genreClicked ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
                             <button onClick={handleFictionChosen}>
-                                <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Fiction</Link>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Fiction</Link>
                             </button>
                             <button onClick={handleCrimeChosen}>
-                                <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Crime</Link>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Crime</Link>
                             </button>
                             <button onClick={handleRomanChosen}>
-                                <Link to="/filteredBooks/fiction" className="px-5 py-2 rounded-lg bg-hvit shadow" >Roman</Link>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Roman</Link>
                             </button>
                         </div>
                         : null}
                 </div>
 
-                <button>
-                    <Link to="/filteredBooks/newest" className="px-5 py-2 rounded-lg bg-hvit shadow" >Nyeste</Link>
-                </button>
                 <div className="space-y-2 relative bg-current">
                     <button onClick={handleYear} className="px-5 py-2 rounded-lg bg-hvit shadow">
                         Utgivelsesår
@@ -102,21 +103,36 @@ const Filter = () => {
                         </div>
                         : null}
                 </div>
+                <div className="space-y-2 relative bg-current">
 
+                    <button onClick={handleSort} className="px-5 py-2 rounded-lg bg-hvit shadow">
+                        Sorter etter
+                    </button>
+                    {sort ?
+                        <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
+                            <button onClick={handleRated}>
+                                <Link to="/filteredBooks" className="px-3 py-2 rounded-lg bg-hvit shadow" >Høyest Rated</Link>
+                            </button>
+                            <button onClick={handleNewest}>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Nyeste</Link>
+                            </button>
+                        </div>
+                        : null}
+                </div>
                 <div>
                     {fictionChosen ?
                         <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>fiction X</p>
+                            <p className='text-sm'>Fiction X</p>
                         </button> : null
                     }
                     {crimeChosen ?
                         <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>crime</p>
+                            <p className='text-sm'>Crime X</p>
                         </button> : null
                     }
                     {romanChosen ?
                         <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>roman</p>
+                            <p className='text-sm'>Roman X</p>
                         </button> : null
                     }
 

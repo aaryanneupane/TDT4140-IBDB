@@ -21,8 +21,6 @@ const BookPage = () => {
         firebaseController.getBook(bookId).then(book => setBook(book))
     }, [bookId])
 
-    console.log(book);
-
 
     return (
         <div>

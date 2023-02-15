@@ -24,7 +24,7 @@ return (
         <Route path="bookPage/:id" element={ <BookPage/> } />
         <Route path="loginPage" element={ <LoginPage/> } />
         <Route path="myBookLists" element={ <MyBookLists/> } />
-        <Route path="filteredBooks/:filter" element={ <> <Header/> <Filter/></> } />
+        <Route path="filteredBooks" element={ <> <Header/> <Filter/></> } />
         <Route path="ratedBooks" element={ <RatedBooks/> } />
         <Route path="addBook" element={ <AddBookPage/> } />
       </Routes>

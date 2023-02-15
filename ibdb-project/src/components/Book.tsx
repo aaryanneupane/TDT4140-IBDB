@@ -21,9 +21,6 @@ const Book = () => {
 
     const navigate = useNavigate();
 
-    const bookIDs = firebaseController.getBookIds();
-    console.log(bookIDs);
-
     return (
         <div>
             <h1 className="text-6xl text-center">New Books</h1>
