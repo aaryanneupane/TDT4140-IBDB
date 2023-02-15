@@ -1,55 +1,68 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'firebase/firestore';
 import firebaseControl from '../firebaseControl';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { IBook } from './IBook';
+import { Link, useNavigate } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
-import Header from './Header';
 
 
 const Filter = () => {
 
     const firebaseController = new firebaseControl();
     const [books, setBooks] = useState<DocumentData[]>([]);
+    const [bookList, setBookList] = useState<DocumentData[]>([]);
 
-    const { filter } = useParams();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        firebaseController.getBooks().then(books => setBooks(books))
-        return
+        const fetchData = async () => {
+            const allBooks = await firebaseController.getBooks();
+            setBookList(allBooks);
+        }
+        fetchData();
     }, []);
 
     const [genreClicked, setGenreClicked] = useState(false);
+    const [fictionChosen, setFictionChosen] = useState(false);
+    const [romanChosen, setRomanChosen] = useState(false);
+    const [crimeChosen, setCrimeChosen] = useState(false);
 
     const handleGenre = () => {
         setGenreClicked(!genreClicked);
     };
 
-    const [fictionChosen, setFictionChosen] = useState(false);
-    const [romanChosen, setRomanChosen] = useState(false);
-    const [crimeChosen, setCrimeChosen] = useState(false);
-
     const handleFictionChosen = () => {
         setFictionChosen(!fictionChosen);
-        setBooks(books.filter(book => book.genre === "Fiction"));
+        setBooks(bookList.filter(book => book.genre === "Fiction"));
     };
 
     const handleRomanChosen = () => {
         setRomanChosen(!romanChosen);
-        setBooks(books.filter(book => book.genre === "Roman"));
+        setBooks(bookList.filter(book => book.genre === "Roman"));
     };
 
     const handleCrimeChosen = () => {
         setCrimeChosen(!crimeChosen);
-        setBooks(books.filter(book => book.genre === "Crime"));
+        setBooks(bookList.filter(book => book.genre === "Crime"));
     };
 
     const [clickedYear, setClickedYear] = useState(false);
+    const [yearsChosen, setYearsChosen] = useState(false);
+    const [fromValue, setFromValue] = useState<number>(0);
+    const [toValue, setToValue] = useState<number>(2023);
 
     const handleYear = () => {
         setClickedYear(!clickedYear);
+    };
+
+    const handleConfirm = () => {
+        setClickedYear(!clickedYear);
+        const fromElement = document.getElementById("fromValue") as HTMLInputElement;
+        setFromValue(fromElement.value !== "" ? fromElement.valueAsNumber : 0);
+        const toElement = document.getElementById("toValue") as HTMLInputElement;
+        setToValue(toElement.value !== "" ? toElement.valueAsNumber : 2023);
+        setYearsChosen(true);
+        setBooks(bookList.filter(book => book.releaseYear >= fromValue && book.releaseYear <= toValue));
     };
 
     const [sort, setSort] = useState(false);
@@ -59,11 +72,15 @@ const Filter = () => {
     };
 
     const handleNewest = () => {
-        setBooks(books.sort((book1, book2) => book2.releaseYear - book1.releaseYear));
+        setBooks(bookList.sort((book1, book2) => book2.releaseYear - book1.releaseYear));
     }
 
     const handleRated = () => {
-        setBooks(books.sort((book1, book2) => book2.rating - book1.rating));
+        setBooks(bookList.sort((book1, book2) => book2.rating - book1.rating));
+    }
+
+    const handleReset = () => {
+        setBooks(bookList);
     }
 
     return (
@@ -96,12 +113,15 @@ const Filter = () => {
                     </button>
                     {clickedYear ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <input type="number" placeholder="Fra" className="px-3 py-2 rounded-lg bg-hvit shadow" />
+                            <input id="fromValue" type="number" placeholder="Fra" className="px-3 py-2 rounded-lg bg-hvit shadow" />
 
-                            <input type="number" placeholder="Til" className="px-3 py-2 rounded-lg bg-hvit shadow" />
+                            <input id="toValue" type="number" placeholder="Til" className="px-3 py-2 rounded-lg bg-hvit shadow" />
 
                         </div>
                         : null}
+                    <button onClick={handleConfirm}>
+                        <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Bekreft</Link>
+                    </button>
                 </div>
                 <div className="space-y-2 relative bg-current">
 
@@ -135,6 +155,12 @@ const Filter = () => {
                             <p className='text-sm'>Roman X</p>
                         </button> : null
                     }
+                    {yearsChosen ?
+                        <button onClick={() => {handleReset(); setYearsChosen(false)}} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'> {fromValue} - {toValue} X</p>
+                        </button> : null
+                    }
+                    
 
                 </div>
             </div>
