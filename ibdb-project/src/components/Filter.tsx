@@ -10,7 +10,14 @@ const Filter = () => {
     const firebaseController = new firebaseControl();
     const [books, setBooks] = useState<DocumentData[]>([]);
     const [bookList, setBookList] = useState<DocumentData[]>([]);
-
+    const [genreClicked, setGenreClicked] = useState(false);
+    const [genreChosen, setGenreChosen] = useState("");
+    const [sortOn, setSortOn] = useState("");
+    const [sortClicked, setSortClicked] = useState(false);
+    const [clickedYear, setClickedYear] = useState(false);
+    const [yearsChosen, setYearsChosen] = useState(false);
+    const [fromValue, setFromValue] = useState<number>(0);
+    const [toValue, setToValue] = useState<number>(2023);
 
     const navigate = useNavigate();
 
@@ -22,37 +29,24 @@ const Filter = () => {
         fetchData();
     }, []);
 
-    const [genreClicked, setGenreClicked] = useState(false);
-    const [fictionChosen, setFictionChosen] = useState(false);
-    const [romanChosen, setRomanChosen] = useState(false);
-    const [crimeChosen, setCrimeChosen] = useState(false);
+    useEffect(() => {
+        let filteredBooks = bookList.filter(book =>
+            (!genreClicked || book.genre === genreChosen) &&
+            (!yearsChosen || (book.releaseYear >= fromValue && book.releaseYear <= toValue))
+        );
+
+        if (sortOn === "newest") {
+            filteredBooks.sort(
+                (b1, b2) => b2.releaseYear - b1.releaseYear
+            );
+        } else if (sortOn === "rating") {
+            filteredBooks.sort((b1, b2) => b2.rating - b1.rating);
+        }
+        setBooks(filteredBooks);
+    }, [yearsChosen, fromValue, toValue, sortOn, genreChosen]);
 
     const handleGenre = () => {
         setGenreClicked(!genreClicked);
-    };
-
-    const handleFictionChosen = () => {
-        setFictionChosen(!fictionChosen);
-        setBooks(bookList.filter(book => book.genre === "Fiction"));
-    };
-
-    const handleRomanChosen = () => {
-        setRomanChosen(!romanChosen);
-        setBooks(bookList.filter(book => book.genre === "Roman"));
-    };
-
-    const handleCrimeChosen = () => {
-        setCrimeChosen(!crimeChosen);
-        setBooks(bookList.filter(book => book.genre === "Crime"));
-    };
-
-    const [clickedYear, setClickedYear] = useState(false);
-    const [yearsChosen, setYearsChosen] = useState(false);
-    const [fromValue, setFromValue] = useState<number>(0);
-    const [toValue, setToValue] = useState<number>(2023);
-
-    const handleYear = () => {
-        setClickedYear(!clickedYear);
     };
 
     const handleConfirm = () => {
@@ -62,22 +56,7 @@ const Filter = () => {
         const toElement = document.getElementById("toValue") as HTMLInputElement;
         setToValue(toElement.value !== "" ? toElement.valueAsNumber : 2023);
         setYearsChosen(true);
-        setBooks(bookList.filter(book => book.releaseYear >= fromValue && book.releaseYear <= toValue));
     };
-
-    const [sort, setSort] = useState(false);
-
-    const handleSort = () => {
-        setSort(!sort);
-    };
-
-    const handleNewest = () => {
-        setBooks(bookList.sort((book1, book2) => book2.releaseYear - book1.releaseYear));
-    }
-
-    const handleRated = () => {
-        setBooks(bookList.sort((book1, book2) => book2.rating - book1.rating));
-    }
 
     const handleReset = () => {
         setBooks(bookList);
@@ -90,25 +69,27 @@ const Filter = () => {
                 <div className="space-y-2 relative bg-current">
                     <button onClick={handleGenre} className="px-5 py-2 rounded-lg bg-hvit shadow">
                         Sjanger
-                        <img className="drop-down" src="/public/images/drop-down.png"/>
                     </button>
                     {genreClicked ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <button onClick={handleFictionChosen}>
+                            <button onClick={() => setGenreChosen("Fiction")}>
                                 <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Fiction</Link>
                             </button>
-                            <button onClick={handleCrimeChosen}>
+                            <button onClick={() => setGenreChosen("Crime")}>
                                 <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Crime</Link>
                             </button>
-                            <button onClick={handleRomanChosen}>
+                            <button onClick={() => setGenreChosen("Roman")}>
                                 <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Roman</Link>
+                            </button>
+                            <button onClick={() => setGenreChosen("Biography")}>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Biography</Link>
                             </button>
                         </div>
                         : null}
                 </div>
 
                 <div className="space-y-2 relative bg-current">
-                    <button onClick={handleYear} className="px-5 py-2 rounded-lg bg-hvit shadow">
+                    <button onClick={() => setClickedYear(!clickedYear)} className="px-5 py-2 rounded-lg bg-hvit shadow">
                         Utgivelsesår
                     </button>
                     {clickedYear ?
@@ -116,51 +97,51 @@ const Filter = () => {
                             <input id="fromValue" type="number" placeholder="Fra" className="px-3 py-2 rounded-lg bg-hvit shadow" />
 
                             <input id="toValue" type="number" placeholder="Til" className="px-3 py-2 rounded-lg bg-hvit shadow" />
-
+                            <button onClick={handleConfirm}>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Bekreft</Link>
+                            </button>
                         </div>
+
                         : null}
-                    <button onClick={handleConfirm}>
-                        <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Bekreft</Link>
-                    </button>
                 </div>
                 <div className="space-y-2 relative bg-current">
 
-                    <button onClick={handleSort} className="px-5 py-2 rounded-lg bg-hvit shadow">
+                    <button onClick={() => setSortClicked(!sortClicked)} className="px-5 py-2 rounded-lg bg-hvit shadow">
                         Sorter etter
                     </button>
-                    {sort ?
+                    {sortClicked ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <button onClick={handleRated}>
+                            <button onClick={() => setSortOn("rating")}>
                                 <Link to="/filteredBooks" className="px-3 py-2 rounded-lg bg-hvit shadow" >Høyest Rated</Link>
                             </button>
-                            <button onClick={handleNewest}>
+                            <button onClick={() => setSortOn("newest")}>
                                 <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Nyeste</Link>
                             </button>
                         </div>
                         : null}
                 </div>
                 <div>
-                    {fictionChosen ?
-                        <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>Fiction X</p>
-                        </button> : null
-                    }
-                    {crimeChosen ?
-                        <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>Crime X</p>
-                        </button> : null
-                    }
-                    {romanChosen ?
-                        <button className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>Roman X</p>
+                    {genreChosen != "" ?
+                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
-                        <button onClick={() => {handleReset(); setYearsChosen(false)}} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
-                    
+                    {sortOn == "newest" ?
+                        <button onClick={() => { handleReset(); setSortOn("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'> Nyeste X</p>
+                        </button> : null
+                    }
+                    {sortOn == "rating" ?
+                        <button onClick={() => { handleReset(); setSortOn("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'> Høyeste Rated X</p>
+                        </button> : null
+                    }
+
 
                 </div>
             </div>
