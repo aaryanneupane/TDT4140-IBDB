@@ -13,20 +13,12 @@ import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
 
 
-const Book = () => {
+const getBook = () => {
 
     const firebaseController = new firebaseControl();
     const [books, setBooks] = useState<DocumentData[]>([]);
-    
-    useEffect(() => {
-        firebaseController.getBooks().then(books => setBooks(books))
-        return
-    }, [])
-
     const navigate = useNavigate();
-
     const bookIDs = firebaseController.getBookIds();
-    // console.log(bookIDs);
 
     return (
         <div>
@@ -43,4 +35,4 @@ const Book = () => {
     )
 }
 
-export default Book;
+export default getBook;

@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      bigBoy: "#E9EBEF",
+      bigBoy: "#f6f9ff",
       teitThene: "#E1726B",
       kulTheme: "#DD7973",
       kulText: "#4D4D4D",
@@ -24,5 +24,6 @@ module.exports = {
       'inner': 'inset 0 4px 4px 0 rgb(0 0 0 / 0.08)',
     }
   },
-  plugins: [],
+  plugins: [
+  ],
 }

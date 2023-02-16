@@ -1,0 +1,35 @@
+img {
+  border-radius: 10px;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+h1 { 
+  color: #4D4D4D;
+  font-family: "Maven Pro"; 
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.card {
+  width: 175px;
+  margin: 20px;
+}
+
+.conteiner {
+  padding-top: 100px;
+}
+
+.header {
+  display:flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 25px;
+}
+
+.element {
+  width: 8px;
+  height: 50px;
+  background-color: #DD7973;
+  border-radius: 10px;
+}
+
