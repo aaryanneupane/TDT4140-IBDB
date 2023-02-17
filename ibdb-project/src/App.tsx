@@ -12,6 +12,8 @@ import Header from './components/Header';
 import 'firebase/firestore';
 import firebaseControl from './firebaseControl';
 import { IBook } from './components/IBook';
+import Filter from './components/Filter';
+import Header from './components/Header';
 
 
 function App() {
@@ -24,6 +26,7 @@ return (
         <Route path="bookPage/:id" element={ <BookPage/> } />
         <Route path="loginPage" element={ <LoginPage/> } />
         <Route path="myBookLists" element={ <MyBookLists/> } />
+        <Route path="filteredBooks" element={ <> <Header/> <Filter/></> } />
         <Route path="ratedBooks" element={ <RatedBooks/> } />
         <Route path="addBook" element={ <AddBookPage/> } />
       </Routes>

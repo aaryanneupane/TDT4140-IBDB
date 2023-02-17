@@ -2,7 +2,6 @@ import React from 'react';
 import Book from '../components/Book';
 import { IBook } from '../components/IBook'
 import firebaseControl from '../firebaseControl';
-import firebase from 'firebase/compat';
 import { useState, useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
@@ -23,8 +22,6 @@ const BookPage = () => {
     useEffect(() => {
         firebaseController.getBook(bookId).then(book => setBook(book))
     }, [bookId])
-
-    console.log(book);
 
 
     return (
