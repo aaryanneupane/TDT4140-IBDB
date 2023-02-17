@@ -62,11 +62,6 @@ const Filter = () => {
         setBooks(orgBooks);
     }
 
-    const handleGenreChosen = (genre:string) => {
-        setGenreChosen(genre);
-    };
-
-
     return (
         <div>
             <div className="navbar navbar-expand-lg shadow-md pb-5 px-10 bg-bigBoy relative flex items-center w-full justify-center space-x-10">
@@ -78,12 +73,12 @@ const Filter = () => {
                     {genreClicked ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
                             {allGenres.map(genre => (
-                                        <button onClick={() => (handleGenreChosen((genre)))}>
-                                            <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >{genre}</Link>
-                                        </button>
-                            ))}  
+                                <button onClick={() => setGenreChosen(genre)}>
+                                    <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >{genre}</Link>
+                                </button>
+                            ))}
                         </div>
-                    : null}
+                        : null}
                 </div>
 
                 <div className="space-y-2 relative bg-current">
@@ -120,7 +115,7 @@ const Filter = () => {
                 <div>
                     {genreChosen != "" ?
                         <button onClick={() => { handleReset(); setGenreChosen("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'>{genreChosen} X</p> 
+                            <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
@@ -140,8 +135,6 @@ const Filter = () => {
                     }
                 </div>
             </div>
-        
-            {genreChosen != "" || sortOn != "" || yearsChosen ?
             <div className="grid grid-cols-3">
                 {books.map((book) => (
                     <div key={book.id} className="grid place-items-center border-4 ml-100">
@@ -153,19 +146,6 @@ const Filter = () => {
                     </div>
                 ))}
             </div>
-            : 
-            <div className="grid grid-cols-3">
-                {orgBooks.map((book) => (
-                    <div key={book.id} className="grid place-items-center border-4 ml-100">
-                        <h1 className="text-xl">Title: {book.title}</h1>
-                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer' onClick={() => navigate(`/bookPage/${book.id}`)} />
-                        <button type="button" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>
-                            Legg til i favoritter
-                        </button>
-                    </div>
-                ))}
-            </div>
-        }
         </div>
     )
 }
