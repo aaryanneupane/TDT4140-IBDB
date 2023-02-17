@@ -1,15 +1,39 @@
 import React from 'react'
-import Header from '../components/Header';
 import Book from '../components/Book';
-import Filter from '../components/Filter';
+import ScrollingMenu from '../components/ScrollingMenu';
+import '../styles/HomePage.css';
 
 const HomePage = () => {
     return (
         <div>
-            <Header/>
-            <Filter/>
-            <Book/>
-
+            <div className="conteiner">
+                <div className="header">
+                    <div className="element"></div>
+                    <h1>News</h1>
+                </div>
+                <ScrollingMenu/>
+            </div>
+            <div className="conteiner">
+                <div className="header">
+                    <div className="element"></div>
+                    <h1>Comming Soon</h1>
+                </div>
+                <ScrollingMenu/>
+            </div>
+            <div className="conteiner">
+                <div className="header">
+                    <div className="element"></div>
+                    <h1>Top Books</h1>
+                </div>
+                <ScrollingMenu/>
+            </div>
+            <div className="conteiner">
+                <div className="header">
+                    <div className="element"></div>
+                    <h1>My Favorites</h1>
+                </div>
+                <ScrollingMenu/>
+            </div>
         </div>
     )
 }
