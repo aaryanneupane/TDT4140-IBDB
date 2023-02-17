@@ -26,7 +26,6 @@ const BookPage = () => {
 
     return (
         <div>
-            <Header />
             <div className="flex flex-col sm:flex-row">
                 <div className="w-full sm:w-1/3 mt-10 ml-20">
                     <img className="w-50 h-75 rounded-lg shadow-2xl object-cover" src={book?.imgURL} alt={book?.title} /> 
