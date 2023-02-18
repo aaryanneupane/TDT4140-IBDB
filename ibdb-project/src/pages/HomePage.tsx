@@ -1,5 +1,4 @@
 import React from 'react'
-import Book from '../components/Book';
 import ScrollingMenu from '../components/ScrollingMenu';
 import '../styles/HomePage.css';
 

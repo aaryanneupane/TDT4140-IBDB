@@ -11,9 +11,8 @@ const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
     sortedBooks
       .sort((b1, b2) => b2.releaseYear - b1.releaseYear);
   } else if (filter === "coming") {
-    sortedBooks
-      .sort((b1, b2) => b2.releaseYear - b1.releaseYear)
-      .filter(book => book.releaseYear > 2023);
+    sortedBooks = sortedBooks
+      .filter((book) => book.releaseYear > 2023);
   } else if (filter === "rated") {
     sortedBooks
       .sort((b1, b2) => b2.rating - b1.rating);
@@ -28,16 +27,17 @@ const ScrollingMenu = (prop: { filter: string }) => {
   const firebaseController = new firebaseControl();
 
   useEffect(() => {
+    let allBooks: DocumentData[] = [];
     const booksCached = localStorage.getItem("books");
     if (booksCached) {
-      setBooks(sortAndFilterBooks(JSON.parse(booksCached), prop.filter))
+      allBooks = JSON.parse(booksCached);
     } else {
       firebaseController.getBooks().then((orgBooks) => {
-        localStorage.setItem('books', JSON.stringify(orgBooks))
-        setBooks(sortAndFilterBooks(orgBooks, prop.filter))
+        allBooks = orgBooks;
       });
-      ;
+      localStorage.setItem('books', JSON.stringify(allBooks))
     }
+    setBooks(sortAndFilterBooks(allBooks, prop.filter));
     
   }, []);
 
