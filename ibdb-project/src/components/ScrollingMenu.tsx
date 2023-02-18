@@ -5,31 +5,41 @@ import firebaseControl from "../firebaseControl";
 import { DocumentData } from "firebase/firestore";
 
 
+const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
+  let sortedBooks = [...books];
+  if (filter === "news") {
+    sortedBooks
+      .sort((b1, b2) => b2.releaseYear - b1.releaseYear);
+  } else if (filter === "coming") {
+    sortedBooks
+      .sort((b1, b2) => b2.releaseYear - b1.releaseYear)
+      .filter(book => book.releaseYear > 2023);
+  } else if (filter === "rated") {
+    sortedBooks
+      .sort((b1, b2) => b2.rating - b1.rating);
+  } else if (filter === "no") {
+    //do nothing
+  }
+  return sortedBooks.slice(0,10);
+}
 const ScrollingMenu = (prop: { filter: string }) => {
 
   const [books, setBooks] = useState<DocumentData[]>([]);
   const firebaseController = new firebaseControl();
 
   useEffect(() => {
-    firebaseController.getBooks().then((orgBooks) => {
-      if (prop.filter === "news") {
-        setBooks(orgBooks
-          .sort((b1, b2) => b2.releaseYear - b1.releaseYear)
-          .slice(0,10));
-      } else if (prop.filter === "coming") {
-        setBooks(orgBooks
-          .sort((b1, b2) => b2.releaseYear - b1.releaseYear)
-          .filter(book => book.releaseYear > 2023)
-          .slice(0,10));
-      } else if (prop.filter === "rated") {
-        setBooks(orgBooks.sort((b1, b2) => b2.rating - b1.rating)
-        .slice(0,10));
-      } else if (prop.filter === "no") {
-        setBooks(orgBooks.slice(0,10));
-      }
-  });
+    const booksCached = localStorage.getItem("books");
+    if (booksCached) {
+      setBooks(sortAndFilterBooks(JSON.parse(booksCached), prop.filter))
+    } else {
+      firebaseController.getBooks().then((orgBooks) => {
+        localStorage.setItem('books', JSON.stringify(orgBooks))
+        setBooks(sortAndFilterBooks(orgBooks, prop.filter))
+      });
+      ;
+    }
+    
   }, []);
-
 
   return (
     <div>
