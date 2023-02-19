@@ -24,9 +24,21 @@ const Filter = () => {
 
     let allGenres: string[] = ['Crime', 'Fiction', 'Roman', 'Classic', 'Folklore', 'Historical', 'Biography'];
 
+    //cache og listener
     useEffect(() => {
-        firebaseController.getBooks().then(orgBooks => setOrgBooks(orgBooks))
-    }, []);
+        let allBooks: DocumentData[] = [];
+        const booksCached = localStorage.getItem("books");
+        if (booksCached) {
+          allBooks = JSON.parse(booksCached);
+        } else {
+          firebaseController.getBooks().then((orgBooks) => {
+            allBooks = orgBooks;
+          });
+          localStorage.setItem('books', JSON.stringify(allBooks))
+        }
+        setBooks(allBooks);
+      }, []);
+
 
 
     useEffect(() => {

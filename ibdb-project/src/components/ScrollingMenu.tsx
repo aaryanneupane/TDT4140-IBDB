@@ -39,15 +39,6 @@ const ScrollingMenu = (prop: { filter: string }) => {
       localStorage.setItem('books', JSON.stringify(allBooks))
     }
     setBooks(sortAndFilterBooks(allBooks, prop.filter));
-
-    const unsubscribe = firebaseController.listenForBookChanges((updatedBooks: DocumentData[]) => {
-      localStorage.setItem('books', JSON.stringify(updatedBooks));
-      setBooks(sortAndFilterBooks(updatedBooks, prop.filter));
-    });
-  
-    return () => {
-      unsubscribe();
-    }
     
   }, []);
 

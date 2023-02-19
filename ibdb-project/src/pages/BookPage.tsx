@@ -1,11 +1,8 @@
 import React from 'react';
-import { IBook } from '../components/IBook'
 import firebaseControl from '../firebaseControl';
 import { useState, useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
-
-import Header from '../components/Header';
 
 
 const BookPage = () => {
@@ -14,13 +11,24 @@ const BookPage = () => {
     const bookId = typeof id === "string" ? id : '';
 
     const firebaseController = new firebaseControl();
-    const [books, setBooks] = useState<DocumentData[]>([]);
     const [book, setBook] = useState<any>();
 
 
     useEffect(() => {
-        firebaseController.getBook(bookId).then(book => setBook(book))
-    }, [bookId])
+        let allBooks: DocumentData[] = [];
+        const booksCached = localStorage.getItem("books");
+        if (booksCached) {
+          allBooks = JSON.parse(booksCached);  
+        } else {
+          firebaseController.getBooks().then((orgBooks) => {
+            allBooks = orgBooks;
+          });
+          localStorage.setItem('books', JSON.stringify(allBooks))
+        }
+        const book = allBooks.find(book => book.id === bookId)
+        setBook(book);
+      
+      }, []);
 
 
     return (
@@ -41,11 +49,6 @@ const BookPage = () => {
                         </button>
         </div>
     )
-
-
-
-
-
 
 }
 

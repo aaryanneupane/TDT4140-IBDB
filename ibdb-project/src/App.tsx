@@ -9,9 +9,34 @@ import RatedBooks from './pages/RatedBooks';
 import AddBookPage from './pages/AddBookPage';
 import Header from './components/Header';
 import Filter from './components/Filter';
+import firebaseControl from './firebaseControl';
+import { DocumentData } from 'firebase/firestore';
+
+
 
 
 function App() {
+
+  const firebaseController = new firebaseControl();
+
+  useEffect(() => {
+    let allBooks: DocumentData[] = [];
+    const booksCached = localStorage.getItem("books");
+    if (!booksCached) {
+      firebaseController.getBooks().then((orgBooks) => {
+        allBooks = orgBooks;
+      });
+      localStorage.setItem('books', JSON.stringify(allBooks))
+    }
+    const unsubscribe = firebaseController.listenForBookChanges((updatedBooks: DocumentData[]) => {
+      localStorage.setItem('books', JSON.stringify(updatedBooks));
+    });
+
+    return () => {
+      unsubscribe();
+    }
+  
+}, []);
 
 return (
     <div className="App">
