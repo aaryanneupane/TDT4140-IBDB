@@ -1,6 +1,5 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore/lite';
-import { IBook } from './components/IBook';
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';

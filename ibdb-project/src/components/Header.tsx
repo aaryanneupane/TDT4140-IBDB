@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import DownDrop from './DownDrop';
 import '../styles/Header.css';
-import Filter from './Filter';
+import SearchBar from './SearchBar';
 
 const Header = () => {
 
@@ -19,10 +19,11 @@ const Header = () => {
                 </button>
                 {/* <DownDrop elements={dDelements}/> */}
                 <DownDrop />
-                <input
+            <SearchBar/>
+                {/* <input
                     type="text"
                     className="block w-2/3 px-4 py-4 text-purple-700 bg-white rounded-full focus:ring-bigBoy focus:outline-none focus:ring focus:ring-opacity-40 shadow-inner"
-                    placeholder="Search..." />
+                    placeholder="Search..." /> */}
                 {/* <button onClick={() => setFilterClicked(!filterClicked)}> */}
                 <button>
                     <Link to="" className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Filter</Link>
@@ -34,8 +35,8 @@ const Header = () => {
             </div>
             {/* <div>
                 { filterClicked ?
-                <Filter/>
-                : null
+                    <Filter/>
+                    : null
                 }
             </div> */}
         </div>)

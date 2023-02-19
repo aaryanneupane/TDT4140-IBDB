@@ -28,7 +28,7 @@ const BookPage = () => {
         const book = allBooks.find(book => book.id === bookId)
         setBook(book);
       
-      }, []);
+      }, [bookId]);
 
 
     return (
