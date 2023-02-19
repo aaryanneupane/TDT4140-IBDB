@@ -1,5 +1,4 @@
 import React from 'react'
-import Book from '../components/Book';
 import ScrollingMenu from '../components/ScrollingMenu';
 import '../styles/HomePage.css';
 
@@ -11,28 +10,28 @@ const HomePage = () => {
                     <div className="element"></div>
                     <h1>News</h1>
                 </div>
-                <ScrollingMenu/>
+                <ScrollingMenu filter="news"/>
             </div>
             <div className="conteiner">
                 <div className="header">
                     <div className="element"></div>
-                    <h1>Comming Soon</h1>
+                    <h1>Coming Soon</h1>
                 </div>
-                <ScrollingMenu/>
+                <ScrollingMenu filter="coming"/>
             </div>
             <div className="conteiner">
                 <div className="header">
                     <div className="element"></div>
                     <h1>Top Books</h1>
                 </div>
-                <ScrollingMenu/>
+                <ScrollingMenu filter="rated"/>
             </div>
             <div className="conteiner">
                 <div className="header">
                     <div className="element"></div>
-                    <h1>My Favorites</h1>
+                    <h1>Recently added to IBDB</h1>
                 </div>
-                <ScrollingMenu/>
+                <ScrollingMenu filter="added"/>
             </div>
         </div>
     )
