@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore/lite';
 import { IBook } from './components/IBook';
 
 import firebase from "firebase/compat/app";
@@ -21,32 +21,46 @@ const db = getFirestore(app);
 
 class firebaseControl {
 
-constructor() {
-};
+  constructor() {
+  };
 
-async getBooks(){
-        const books = collection(db, 'books');
-        const bookSnapshot = await getDocs(books);
-        const bookList = bookSnapshot.docs.map(doc => doc.data());
-        return bookList;
-      };
-    
-getBookIds(){
-  const colRef = collection(db, "books");
-  let bookIDs : any[] = [];
-  getDocs(colRef).then((snapshot) => {
-    snapshot.docs.forEach((doc) => {
-      bookIDs.push({ id: doc.id });
-    })
-  });
-  return bookIDs;
-};
+  async getBooks() {
+    const books = collection(db, 'books');
+    const bookSnapshot = await getDocs(books);
+    const bookList = bookSnapshot.docs.map(doc => doc.data());
+    return bookList;
+  };
+
+  getBookIds() {
+    const colRef = collection(db, "books");
+    let bookIDs: any[] = [];
+    getDocs(colRef).then((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        bookIDs.push({ id: doc.id });
+      })
+    });
+    return bookIDs;
+  };
 
   async getBook(id: string) {
-  const doc = await firebase.firestore().collection('books').doc(id).get();
-  const docData = doc.data();
-  return docData;
-}
+    const doc = await firebase.firestore().collection('books').doc(id).get();
+    const docData = doc.data();
+    return docData;
+  }
+
+  listenForBookChanges = (callback: (updatedBooks: DocumentData[]) => void): (() => void) => {
+    const unsubscribe = firebase.firestore().collection("books")
+      .onSnapshot((snapshot) => {
+        const updatedBooks: DocumentData[] = [];
+        snapshot.forEach((doc) => {
+          updatedBooks.push(doc.data());
+        });
+        callback(updatedBooks);
+      });
+    return unsubscribe;
+  };
+
+
 
 };
 

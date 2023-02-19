@@ -8,7 +8,8 @@ import { DocumentData } from "firebase/firestore";
 const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
   let sortedBooks = [...books];
   if (filter === "news") {
-    sortedBooks
+    sortedBooks = sortedBooks
+      .filter(book => book.releaseYear <= 2023)
       .sort((b1, b2) => b2.releaseYear - b1.releaseYear);
   } else if (filter === "coming") {
     sortedBooks = sortedBooks
@@ -16,8 +17,8 @@ const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
   } else if (filter === "rated") {
     sortedBooks
       .sort((b1, b2) => b2.rating - b1.rating);
-  } else if (filter === "no") {
-    //do nothing
+  } else if (filter === "added") {
+    sortedBooks.reverse();
   }
   return sortedBooks.slice(0,10);
 }
@@ -38,6 +39,15 @@ const ScrollingMenu = (prop: { filter: string }) => {
       localStorage.setItem('books', JSON.stringify(allBooks))
     }
     setBooks(sortAndFilterBooks(allBooks, prop.filter));
+
+    const unsubscribe = firebaseController.listenForBookChanges((updatedBooks: DocumentData[]) => {
+      localStorage.setItem('books', JSON.stringify(updatedBooks));
+      setBooks(sortAndFilterBooks(updatedBooks, prop.filter));
+    });
+  
+    return () => {
+      unsubscribe();
+    }
     
   }, []);
 

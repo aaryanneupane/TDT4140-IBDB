@@ -29,9 +29,9 @@ const HomePage = () => {
             <div className="conteiner">
                 <div className="header">
                     <div className="element"></div>
-                    <h1>My Favorites</h1>
+                    <h1>Recently added to IBDB</h1>
                 </div>
-                <ScrollingMenu filter="no"/>
+                <ScrollingMenu filter="added"/>
             </div>
         </div>
     )
