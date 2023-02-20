@@ -29,7 +29,7 @@ const HomePage = () => {
             <div className="conteiner">
                 <div className="header">
                     <div className="element"></div>
-                    <h1>Recently added to IBDB</h1>
+                    <h1>Recently added to IBDb</h1>
                 </div>
                 <ScrollingMenu filter="added"/>
             </div>

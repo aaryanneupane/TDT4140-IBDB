@@ -18,7 +18,7 @@ function Card({
       tabIndex={0}
       className="card"
     >
-      <img src={bookIMG} className='cursor-pointer' onClick={ () => navigate(`bookPage/${id}`)}/>
+      <img src={bookIMG} className='cursor-pointer' onClick={ () => navigate(`/bookPage/${id}`)}/>
     </div>
   );
 }
