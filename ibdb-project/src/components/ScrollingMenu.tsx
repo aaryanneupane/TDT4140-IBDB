@@ -46,6 +46,7 @@ const ScrollingMenu = (prop: { filter: string }) => {
     <div>
       {/* create scrolling menu */}
       <ScrollMenu>
+        <div className="scrollingmenu">
         {/* create card component for each item */}
         {books.map((book) => (
           <Card
@@ -55,6 +56,7 @@ const ScrollingMenu = (prop: { filter: string }) => {
             key={book.id}
           />
         ))}
+        </div>
       </ScrollMenu>
     </div>
   );

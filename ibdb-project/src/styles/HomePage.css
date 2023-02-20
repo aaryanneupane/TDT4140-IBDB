@@ -37,3 +37,8 @@ h1 {
   border-radius: 10px;
 }
 
+.scrollingmenu {
+  display:flex;
+  align-items: center;
+}
+
