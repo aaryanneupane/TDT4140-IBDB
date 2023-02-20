@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import 'firebase/firestore';
 import firebaseControl from '../firebaseControl';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
+import Card from './Card';
+import '../styles/Filter.css';
 
 
 const Filter = () => {
@@ -20,8 +22,6 @@ const Filter = () => {
     const [toValue, setToValue] = useState<number>(2023);
 
 
-    const navigate = useNavigate();
-
     let allGenres: string[] = ['Crime', 'Fiction', 'Roman', 'Classic', 'Folklore', 'Historical', 'Biography'];
 
     //cache og listener
@@ -36,9 +36,8 @@ const Filter = () => {
           });
           localStorage.setItem('books', JSON.stringify(allBooks))
         }
-        setBooks(allBooks);
+        setOrgBooks(allBooks);
       }, []);
-
 
 
     useEffect(() => {
@@ -57,10 +56,6 @@ const Filter = () => {
         setBooks(filteredBooks);
     }, [yearsChosen, fromValue, toValue, sortOn, genreChosen]);
 
-    const handleGenre = () => {
-        setGenreClicked(!genreClicked);
-    };
-
     const handleConfirm = () => {
         setClickedYear(!clickedYear);
         const fromElement = document.getElementById("fromValue") as HTMLInputElement;
@@ -77,15 +72,15 @@ const Filter = () => {
     return (
         <div>
             <div className="navbar navbar-expand-lg shadow-md pb-5 px-10 bg-bigBoy relative flex items-center w-full justify-center space-x-10">
-                <p>Filtere: </p>
+                <p>Filters: </p>
                 <div className="space-y-2 relative bg-current">
-                    <button onClick={handleGenre} className="px-5 py-2 rounded-lg bg-hvit shadow">
-                        Sjanger
+                    <button onClick={() => setGenreClicked(!genreClicked)} className="px-5 py-2 rounded-lg bg-hvit shadow">
+                        Genres
                     </button>
                     {genreClicked ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
                             {allGenres.map(genre => (
-                                <button onClick={() => setGenreChosen(genre)}>
+                                <button onClick={() => {setGenreChosen(genre); setGenreClicked(!genreClicked)}}>
                                     <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >{genre}</Link>
                                 </button>
                             ))}
@@ -95,14 +90,14 @@ const Filter = () => {
 
                 <div className="space-y-2 relative bg-current">
                     <button onClick={() => setClickedYear(!clickedYear)} className="px-5 py-2 rounded-lg bg-hvit shadow">
-                        Utgivelsesår
+                        Release Year
                     </button>
                     {clickedYear ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <input id="fromValue" type="number" placeholder="Fra" className="px-3 py-2 rounded-lg bg-hvit shadow" />
-                            <input id="toValue" type="number" placeholder="Til" className="px-3 py-2 rounded-lg bg-hvit shadow" />
+                            <input id="fromValue" type="number" placeholder="From" className="px-3 py-2 rounded-lg bg-hvit shadow" />
+                            <input id="toValue" type="number" placeholder="To" className="px-3 py-2 rounded-lg bg-hvit shadow" />
                             <button onClick={handleConfirm}>
-                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Bekreft</Link>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Confirm</Link>
                             </button>
                         </div>
 
@@ -111,53 +106,66 @@ const Filter = () => {
                 <div className="space-y-2 relative bg-current">
 
                     <button onClick={() => setSortClicked(!sortClicked)} className="px-5 py-2 rounded-lg bg-hvit shadow">
-                        Sorter etter
+                        Sort By
                     </button>
                     {sortClicked ?
                         <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <button onClick={() => setSortOn("rating")}>
-                                <Link to="/filteredBooks" className="px-3 py-2 rounded-lg bg-hvit shadow" >Høyest Rated</Link>
+                            <button onClick={() => {setSortOn("rating"); setSortClicked(!sortClicked)}} className="rated-container">
+                                <Link to="/filteredBooks" className="px-6 py-2 rounded-lg bg-hvit shadow" >Highest Rated</Link>
                             </button>
-                            <button onClick={() => setSortOn("newest")}>
-                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Nyeste</Link>
+                            <button onClick={() => {setSortOn("newest"); setSortClicked(!sortClicked)}}>
+                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Newest</Link>
                             </button>
                         </div>
                         : null}
                 </div>
                 <div>
-                    {genreChosen != "" ?
-                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                    {genreChosen !== "" ?
+                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
-                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
-                    {sortOn == "newest" ?
-                        <button onClick={() => { handleReset(); setSortOn("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'> Nyeste X</p>
+                    {sortOn === "newest" ?
+                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'> Newest X</p>
                         </button> : null
                     }
-                    {sortOn == "rating" ?
-                        <button onClick={() => { handleReset(); setSortOn("") }} className="px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'> Høyeste Rated X</p>
+                    {sortOn === "rating" ?
+                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }
                 </div>
             </div>
-            <div className="grid grid-cols-3">
+            {books.length > 0 ?
+                <div className="ml-10 mt-10 grid grid-cols-5">
                 {books.map((book) => (
-                    <div key={book.id} className="grid place-items-center border-4 ml-100">
-                        <h1 className="text-xl">Title: {book.title}</h1>
-                        <img src={book.imgURL} width="200" height="300" className='cursor-pointer' onClick={() => navigate(`/bookPage/${book.id}`)} />
-                        <button type="button" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full'>
-                            Legg til i favoritter
-                        </button>
-                    </div>
+                    <Card
+                    title={book.title}
+                    bookIMG={book.imgURL}
+                    id={book.id}
+                    key={book.id}
+                    />
                 ))}
-            </div>
+                </div>
+                :
+                <div className="ml-10 mt-10 grid grid-cols-5">
+                {orgBooks.map((book) => (
+                    <Card
+                    title={book.title}
+                    bookIMG={book.imgURL}
+                    id={book.id}
+                    key={book.id}
+                    />
+                ))}
+                </div>
+            }
+            
         </div>
     )
 }

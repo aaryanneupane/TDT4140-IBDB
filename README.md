@@ -16,6 +16,7 @@ npm install firebase
 npm install react-router-dom@6
 npm install -D tailwindcss
 npm install antd
+npm install star-rating-react-ts
 ```
 
 For å åpne nettsiden kjøres:
