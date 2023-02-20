@@ -1,6 +1,6 @@
 import React from 'react';
 import type { MenuProps } from 'antd';
-import { Button, Dropdown, Space } from 'antd';
+import {Dropdown, Space } from 'antd';
 const items: MenuProps['items'] = [
   {
     key: '1',
@@ -32,7 +32,7 @@ const DownDrop: React.FC = (elmnt) => (
   <Space direction="vertical">
     <Space wrap>
       <Dropdown menu={{ items }} placement="bottom">
-        <Button>Menu</Button>
+        <button  className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">Menu</button>
       </Dropdown>
 
     </Space>

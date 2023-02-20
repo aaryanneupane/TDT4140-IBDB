@@ -68,10 +68,10 @@ const [result, setResult] = useState<string[]>([]);
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className = " block w-3/6">
       <input
         type="text"
-        className="block w-2/3 px-4 py-2 text-purple-700 bg-white rounded-full focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40 shadow"
+        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
         placeholder="Search..." 
       onChange={(event)=> setValue(event.target.value)} 
       value ={value}/>
@@ -80,10 +80,12 @@ const [result, setResult] = useState<string[]>([]);
         console.log("Searching for:", result);
       const bookId = getKeyByValue(result, titleId);
        console.log("Book ID:", bookId);
+
+  //Navigerer til riktig bokside
   return (
     <a key={index} onClick={() => navigate(`/bookPage/${bookId}`)}>
-      <div className='border-2 cursor-pointer hover:opacity-20 content-center'>
-        <p className=' font-serif font-bold'>
+      <div className='border-2 cursor-pointer hover:opacity-20 content-center'> 
+        <p className=' font-serif font-bold'>                                   
         {result}
         </p>
       </div>
