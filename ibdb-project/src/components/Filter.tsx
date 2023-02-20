@@ -22,7 +22,7 @@ const Filter = () => {
     const [toValue, setToValue] = useState<number>(2023);
 
 
-    let allGenres: string[] = ['Crime', 'Fiction', 'Roman', 'Classic', 'Folklore', 'Historical', 'Biography'];
+    let allGenres: string[] = ['Crime', 'Fantasy', 'Roman', 'Cartoon', 'Classic', 'Historical', 'Biography'];
 
     //cache og listener
     useEffect(() => {
@@ -121,22 +121,22 @@ const Filter = () => {
                 </div>
                 <div>
                     {genreChosen !== "" ?
-                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
-                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
                     {sortOn === "newest" ?
-                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> Newest X</p>
                         </button> : null
                     }
                     {sortOn === "rating" ?
-                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }
