@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import 'firebase/firestore';
 import firebaseControl from '../firebaseControl';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
 import Card from './Card';
 import '../styles/Filter.css';
@@ -21,8 +21,6 @@ const Filter = () => {
     const [fromValue, setFromValue] = useState<number>(0);
     const [toValue, setToValue] = useState<number>(2023);
 
-
-    const navigate = useNavigate();
 
     let allGenres: string[] = ['Crime', 'Fiction', 'Roman', 'Classic', 'Folklore', 'Historical', 'Biography'];
 
@@ -122,7 +120,7 @@ const Filter = () => {
                         : null}
                 </div>
                 <div>
-                    {genreChosen != "" ?
+                    {genreChosen !== "" ?
                         <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
@@ -132,28 +130,42 @@ const Filter = () => {
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
-                    {sortOn == "newest" ?
+                    {sortOn === "newest" ?
                         <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> Newest X</p>
                         </button> : null
                     }
-                    {sortOn == "rating" ?
+                    {sortOn === "rating" ?
                         <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }
                 </div>
             </div>
-            <div className="ml-10 mt-10 grid grid-cols-5">
-            {books.map((book) => (
-          <Card
-            title={book.title}
-            bookIMG={book.imgURL}
-            id={book.id}
-            key={book.id}
-          />
-        ))}
-            </div>
+            {books.length > 0 ?
+                <div className="ml-10 mt-10 grid grid-cols-5">
+                {books.map((book) => (
+                    <Card
+                    title={book.title}
+                    bookIMG={book.imgURL}
+                    id={book.id}
+                    key={book.id}
+                    />
+                ))}
+                </div>
+                :
+                <div className="ml-10 mt-10 grid grid-cols-5">
+                {orgBooks.map((book) => (
+                    <Card
+                    title={book.title}
+                    bookIMG={book.imgURL}
+                    id={book.id}
+                    key={book.id}
+                    />
+                ))}
+                </div>
+            }
+            
         </div>
     )
 }

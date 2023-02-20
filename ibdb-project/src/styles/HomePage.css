@@ -15,6 +15,10 @@ h1 {
   margin: 20px;
 }
 
+.card :hover {
+  transform: scale(1.1);
+}
+
 .conteiner {
   padding-top: 100px;
 }

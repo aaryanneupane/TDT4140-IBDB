@@ -8,7 +8,7 @@ const HomePage = () => {
             <div className="conteiner">
                 <div className="header">
                     <div className="element"></div>
-                    <h1>News</h1>
+                    <h1>Recently Released</h1>
                 </div>
                 <ScrollingMenu filter="news"/>
             </div>
