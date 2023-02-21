@@ -5,3 +5,14 @@ p {
 .rated-container {
     width: 171px;
 }
+
+.years {
+    opacity: 0;
+    transition: opacity 0.5s;
+    position: absolute;
+}
+
+.release-year:hover .years {
+    opacity: 1;
+    position: relative;
+}

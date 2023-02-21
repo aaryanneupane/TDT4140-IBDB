@@ -1,12 +1,10 @@
 import { DocumentData } from 'firebase/firestore';
 import React, { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import firebaseControl from '../firebaseControl';
 
 
 const SearchBar = () => {
 
-  const firebaseController = new firebaseControl();
   const [books, setBooks] = useState<DocumentData[]>([]);
 
   useEffect(() => {
@@ -14,11 +12,6 @@ const SearchBar = () => {
     const booksCached = localStorage.getItem("books");
     if (booksCached) {
       allBooks = JSON.parse(booksCached);
-    } else {
-      firebaseController.getBooks().then((orgBooks) => {
-        allBooks = orgBooks;
-      });
-      localStorage.setItem('books', JSON.stringify(allBooks))
     }
     setBooks(allBooks);
   }, []);
