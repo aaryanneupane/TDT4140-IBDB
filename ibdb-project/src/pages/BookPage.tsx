@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import { StarRating } from "star-rating-react-ts";
-import './BookPage.css'
+import '../styles/BookPage.css'
 
 const BookPage = () => {
 
@@ -20,11 +20,6 @@ const BookPage = () => {
         const booksCached = localStorage.getItem("books");
         if (booksCached) {
           allBooks = JSON.parse(booksCached);  
-        } else {
-          firebaseController.getBooks().then((orgBooks) => {
-            allBooks = orgBooks;
-          });
-          localStorage.setItem('books', JSON.stringify(allBooks))
         }
         const book = allBooks.find(book => book.id === bookId)
         setBook(book);

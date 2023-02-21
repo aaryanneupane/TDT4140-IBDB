@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Card from "./Card";
-import firebaseControl from "../firebaseControl";
 import { DocumentData } from "firebase/firestore";
 
 
@@ -25,18 +24,12 @@ const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
 const ScrollingMenu = (prop: { filter: string }) => {
 
   const [books, setBooks] = useState<DocumentData[]>([]);
-  const firebaseController = new firebaseControl();
 
   useEffect(() => {
     let allBooks: DocumentData[] = [];
     const booksCached = localStorage.getItem("books");
     if (booksCached) {
       allBooks = JSON.parse(booksCached);
-    } else {
-      firebaseController.getBooks().then((orgBooks) => {
-        allBooks = orgBooks;
-      });
-      localStorage.setItem('books', JSON.stringify(allBooks))
     }
     setBooks(sortAndFilterBooks(allBooks, prop.filter));
     

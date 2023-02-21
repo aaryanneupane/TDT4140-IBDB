@@ -1,22 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import 'firebase/firestore';
-import firebaseControl from '../firebaseControl';
 import { Link } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
 import Card from './Card';
 import '../styles/Filter.css';
+import { MenuProps } from 'antd';
+import DownDrop from './DownDrop';
 
 
 const Filter = () => {
 
-    const firebaseController = new firebaseControl();
     const [books, setBooks] = useState<DocumentData[]>([]);
     const [orgBooks, setOrgBooks] = useState<DocumentData[]>([]);
-    const [genreClicked, setGenreClicked] = useState(false);
     const [genreChosen, setGenreChosen] = useState("");
-    const [sortOn, setSortOn] = useState("");
-    const [sortClicked, setSortClicked] = useState(false);
-    const [clickedYear, setClickedYear] = useState(false);
+    const [sortOn, setSortBy] = useState("");
     const [yearsChosen, setYearsChosen] = useState(false);
     const [fromValue, setFromValue] = useState<number>(0);
     const [toValue, setToValue] = useState<number>(2023);
@@ -29,15 +26,10 @@ const Filter = () => {
         let allBooks: DocumentData[] = [];
         const booksCached = localStorage.getItem("books");
         if (booksCached) {
-          allBooks = JSON.parse(booksCached);
-        } else {
-          firebaseController.getBooks().then((orgBooks) => {
-            allBooks = orgBooks;
-          });
-          localStorage.setItem('books', JSON.stringify(allBooks))
+            allBooks = JSON.parse(booksCached);
         }
         setOrgBooks(allBooks);
-      }, []);
+    }, []);
 
 
     useEffect(() => {
@@ -47,9 +39,9 @@ const Filter = () => {
         );
 
         if (sortOn === "newest") {
-            filteredBooks.sort(
-                (b1, b2) => b2.releaseYear - b1.releaseYear
-            );
+            filteredBooks = filteredBooks
+                .filter(book => book.releaseYear <= 2023)
+                .sort((b1, b2) => b2.releaseYear - b1.releaseYear);
         } else if (sortOn === "rating") {
             filteredBooks.sort((b1, b2) => b2.rating - b1.rating);
         }
@@ -57,7 +49,6 @@ const Filter = () => {
     }, [yearsChosen, fromValue, toValue, sortOn, genreChosen]);
 
     const handleConfirm = () => {
-        setClickedYear(!clickedYear);
         const fromElement = document.getElementById("fromValue") as HTMLInputElement;
         setFromValue(fromElement.value !== "" ? fromElement.valueAsNumber : 0);
         const toElement = document.getElementById("toValue") as HTMLInputElement;
@@ -69,56 +60,105 @@ const Filter = () => {
         setBooks(orgBooks);
     }
 
+    const genres: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <button onClick={() => setGenreChosen("Crime")}>
+                    Crime
+                </button>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <button onClick={() => setGenreChosen("Fantasy")}>
+                    Fantasy
+                </button>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <button onClick={() => setGenreChosen("Roman")}>
+                    Roman
+                </button>
+            ),
+        },
+        {
+            key: '4',
+            label: (
+                <button onClick={() => setGenreChosen("Cartoon")}>
+                    Cartoon
+                </button>
+            ),
+        },
+        {
+            key: '5',
+            label: (
+                <button onClick={() => setGenreChosen("Classic")}>
+                    Classic
+                </button>
+            ),
+        },
+        {
+            key: '6',
+            label: (
+                <button onClick={() => setGenreChosen("Historical")}>
+                    Historical
+                </button>
+            ),
+        },
+        {
+            key: '7',
+            label: (
+                <button onClick={() => setGenreChosen("Biography")}>
+                    Biography
+                </button>
+            ),
+        },
+    ];
+    const sortBy: MenuProps['items'] = [
+        {
+            key: '1',
+            label: (
+                <button onClick={() => setSortBy("rating")}>
+                    Highest Rated
+                </button>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <button onClick={() => setSortBy("newest")}>
+                    Recently Released
+                </button>
+            ),
+        },
+    ];
+
     return (
         <div>
             <div className="navbar navbar-expand-lg shadow-md pb-5 px-10 bg-bigBoy relative flex items-center w-full justify-center space-x-10">
                 <p>Filters: </p>
+                <DownDrop items={genres} text="Genres" />
                 <div className="space-y-2 relative bg-current">
-                    <button onClick={() => setGenreClicked(!genreClicked)} className="px-5 py-2 rounded-lg bg-hvit shadow">
-                        Genres
-                    </button>
-                    {genreClicked ?
-                        <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            {allGenres.map(genre => (
-                                <button onClick={() => {setGenreChosen(genre); setGenreClicked(!genreClicked)}}>
-                                    <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >{genre}</Link>
+                    <div className='release-year'>
+                        <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                            Release Year
+                        </button>
+                        <div className="years">
+                            <div className='navbar navbar-expand-lg absolute bg-current'>
+                                <input id="fromValue" type="number" placeholder="From" className="px-6 py-4 rounded-tr-lg bg-hvit shadow-0 hover:shadow-lg" />
+                                <input id="toValue" type="number" placeholder="To" className="px-6 py-3 rounded-br-lg bg-hvit shadow-0 hover:shadow-lg" />
+                                <button onClick={handleConfirm}>
+                                    <Link to="/filteredBooks" className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Confirm</Link>
                                 </button>
-                            ))}
+                            </div>
                         </div>
-                        : null}
+                    </div>
                 </div>
-
-                <div className="space-y-2 relative bg-current">
-                    <button onClick={() => setClickedYear(!clickedYear)} className="px-5 py-2 rounded-lg bg-hvit shadow">
-                        Release Year
-                    </button>
-                    {clickedYear ?
-                        <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <input id="fromValue" type="number" placeholder="From" className="px-3 py-2 rounded-lg bg-hvit shadow" />
-                            <input id="toValue" type="number" placeholder="To" className="px-3 py-2 rounded-lg bg-hvit shadow" />
-                            <button onClick={handleConfirm}>
-                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Confirm</Link>
-                            </button>
-                        </div>
-
-                        : null}
-                </div>
-                <div className="space-y-2 relative bg-current">
-
-                    <button onClick={() => setSortClicked(!sortClicked)} className="px-5 py-2 rounded-lg bg-hvit shadow">
-                        Sort By
-                    </button>
-                    {sortClicked ?
-                        <div className='navbar navbar-expand-lg absolute space-y-3 bg-current'>
-                            <button onClick={() => {setSortOn("rating"); setSortClicked(!sortClicked)}} className="rated-container">
-                                <Link to="/filteredBooks" className="px-6 py-2 rounded-lg bg-hvit shadow" >Highest Rated</Link>
-                            </button>
-                            <button onClick={() => {setSortOn("newest"); setSortClicked(!sortClicked)}}>
-                                <Link to="/filteredBooks" className="px-5 py-2 rounded-lg bg-hvit shadow" >Newest</Link>
-                            </button>
-                        </div>
-                        : null}
-                </div>
+                <DownDrop items={sortBy} text="Sort By" />
                 <div>
                     {genreChosen !== "" ?
                         <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
@@ -131,12 +171,12 @@ const Filter = () => {
                         </button> : null
                     }
                     {sortOn === "newest" ?
-                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
-                            <p className='text-sm'> Newest X</p>
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                            <p className='text-sm'> Recently Released X</p>
                         </button> : null
                     }
                     {sortOn === "rating" ?
-                        <button onClick={() => { handleReset(); setSortOn("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
                             <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }
@@ -144,28 +184,28 @@ const Filter = () => {
             </div>
             {books.length > 0 ?
                 <div className="ml-10 mt-10 grid grid-cols-5">
-                {books.map((book) => (
-                    <Card
-                    title={book.title}
-                    bookIMG={book.imgURL}
-                    id={book.id}
-                    key={book.id}
-                    />
-                ))}
+                    {books.map((book) => (
+                        <Card
+                            title={book.title}
+                            bookIMG={book.imgURL}
+                            id={book.id}
+                            key={book.id}
+                        />
+                    ))}
                 </div>
                 :
                 <div className="ml-10 mt-10 grid grid-cols-5">
-                {orgBooks.map((book) => (
-                    <Card
-                    title={book.title}
-                    bookIMG={book.imgURL}
-                    id={book.id}
-                    key={book.id}
-                    />
-                ))}
+                    {orgBooks.map((book) => (
+                        <Card
+                            title={book.title}
+                            bookIMG={book.imgURL}
+                            id={book.id}
+                            key={book.id}
+                        />
+                    ))}
                 </div>
             }
-            
+
         </div>
     )
 }
