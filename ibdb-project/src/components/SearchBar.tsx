@@ -47,18 +47,13 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
       let searchQuery = value.toLowerCase();
       setResult([]);
       for (let index = 1; index <= titleId.size; index++) {
-        const book = titleId.get(index.toString());
-        if (book){
-          const titleLower = book?.toLowerCase();
-          const authorLower = titleAuthor.get(book)?.toLowerCase();
-          //const authorLower = getKeyByValue(book, titleAuthor)?.toLowerCase();
-
-          //const search = titleId.get(index.toString())?.toLowerCase()
-          //const title = titleId.get(index.toString())
-          
-          if (titleLower?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1 || authorLower?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1) {
+        const title = titleId.get(index.toString());
+        if (title){
+          const titleLowered = title?.toLowerCase(); //first searchable item 
+          const authorLowered = titleAuthor.get(title)?.toLowerCase(); // second searchable item
+          if (titleLowered?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1 || authorLowered?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1) {
           setResult(prevResult => {
-            return [...prevResult, book]
+            return [...prevResult, title]
           })
         }
       }
@@ -89,7 +84,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
        console.log("Book Author:", bookAuthor);
        
 
-  //Navigerer til riktig bokside
+  //Navigate to the correct book page 
   return (
     <a key={index} onClick={() => navigate(`/bookPage/${bookId}`)}>
       <div className='border-2 cursor-pointer hover:opacity-20 content-center'> 
