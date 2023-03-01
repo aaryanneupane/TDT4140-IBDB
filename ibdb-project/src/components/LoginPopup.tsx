@@ -13,10 +13,12 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 console.log(userCredentials);
+                setVisible(false);
+                setEmail('');
+                setPassword('');
             }).catch((error) => {
                 console.log(error);
             });
-        setVisible(false)
     }
 
     const signUp = (e: { preventDefault: () => void; }) => {
