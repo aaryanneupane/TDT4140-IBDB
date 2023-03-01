@@ -19,26 +19,46 @@ const SearchBar = () => {
 
 
 let titleId = new Map<string, string>();
+let titleAuthor = new Map<string, string>();
 
 for (const book of books) {
   titleId.set(book.id, book.title);
+}
+
+for (const book of books) {
+  titleAuthor.set(book.title, book.author);
 }
 
 
 const [value, setValue] = useState<string>('');
 const [result, setResult] = useState<string[]>([]);
 
+function getKeyByValue(value: string, map: Map<string, string>): string | undefined {
+  for (const [key, mapValue] of map.entries()) {
+    if (mapValue === value) {
+      return key;
+    }
+  }
+  return undefined;
+}
+
   useEffect(() => {
     if (value.length > 0) {
       let searchQuery = value.toLowerCase();
       setResult([]);
       for (let index = 1; index <= titleId.size; index++) {
-        const search = titleId.get(index.toString())?.toLowerCase()
-        const title= titleId.get(index.toString())
-        if (title) {
-          if (search?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1) {
+        const book = titleId.get(index.toString());
+        if (book){
+          const titleLower = book?.toLowerCase();
+          const authorLower = titleAuthor.get(book)?.toLowerCase();
+          //const authorLower = getKeyByValue(book, titleAuthor)?.toLowerCase();
+
+          //const search = titleId.get(index.toString())?.toLowerCase()
+          //const title = titleId.get(index.toString())
+          
+          if (titleLower?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1 || authorLower?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1) {
           setResult(prevResult => {
-            return [...prevResult, title]
+            return [...prevResult, book]
           })
         }
       }
@@ -49,14 +69,6 @@ const [result, setResult] = useState<string[]>([]);
   }, [value])
 
   
-  function getKeyByValue(value: string, map: Map<string, string>): string | undefined {
-    for (const [key, mapValue] of map.entries()) {
-      if (mapValue === value) {
-        return key;
-      }
-    }
-    return undefined;
-  }
   
   const navigate = useNavigate();
 
@@ -72,7 +84,10 @@ const [result, setResult] = useState<string[]>([]);
       {result.map((result, index) => {  
         console.log("Searching for:", result);
       const bookId = getKeyByValue(result, titleId);
+      const bookAuthor = titleAuthor.get(result);
        console.log("Book ID:", bookId);
+       console.log("Book Author:", bookAuthor);
+       
 
   //Navigerer til riktig bokside
   return (
@@ -80,6 +95,9 @@ const [result, setResult] = useState<string[]>([]);
       <div className='border-2 cursor-pointer hover:opacity-20 content-center'> 
         <p className=' font-serif font-bold'>                                   
         {result}
+        <p>
+        {bookAuthor}
+        </p>
         </p>
       </div>
     </a>
