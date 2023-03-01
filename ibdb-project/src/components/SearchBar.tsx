@@ -63,44 +63,51 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
     }
   }, [value])
 
+  //Searchbox is still visible without any items, this is to fix that.
+
+  const [showResults, setShowResults] = useState(false); //New variable which decides to either show or not show the box
+
+  useEffect(() => {
+    if (result.length > 0 && !showResults) setShowResults(true);
+    if (result.length <= 0) setShowResults(false);
+  }, [result]) //What this does is update the variable showResults depending on whether there are any results available 
+  
+
+
   
   
   const navigate = useNavigate();
 
   return (
-    <div className = " block w-3/6">
+    <div className = "relative block w-3/6">
       <input
         type="text"
         className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
-        placeholder="Search..." 
+        placeholder="Title / Author" 
       onChange={(event)=> setValue(event.target.value)} 
       value ={value}/>
-      <div>
-      {result.map((result, index) => {  
-        console.log("Searching for:", result);
-      const bookId = getKeyByValue(result, titleId);
-      const bookAuthor = titleAuthor.get(result);
-       console.log("Book ID:", bookId);
-       console.log("Book Author:", bookAuthor);
-       
+      {showResults && ( //This makes sure to only show the white box when there are results available
+      <div className='absolute top-full left-0 mt-1 w-full p-2 bg-hvit shadow-lg 
+    rounded-b1 rounded-lg '>
+        {result.map((result, index) => {  
+        const bookId = getKeyByValue(result, titleId);
+        const bookAuthor = titleAuthor.get(result);
+  
+//Navigate to the correct book page 
 
-  //Navigate to the correct book page 
   return (
-    <a key={index} onClick={() => 
-    {navigate(`/bookPage/${bookId}`);
-    setValue(''); }}>
-      <div className='border-2 cursor-pointer hover:opacity-20 content-center'> 
-        <p className=' font-serif font-bold'>                                   
-        {result}
-        <p>
-        {bookAuthor}
-        </p>
-        </p>
+      <div 
+      key={index} onClick={() => 
+      {navigate(`/bookPage/${bookId}`);
+      setValue(''); }}>
+          <div className = 'cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1'>
+            {result} 
+            <p className='font-bold italic'> {bookAuthor} </p>
+            </div>
       </div>
-    </a>
   );
 })}
-      </div>
+      </div>)}
     </div>
   );
 };
