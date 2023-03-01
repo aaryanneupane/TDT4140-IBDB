@@ -44,16 +44,16 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
 
   useEffect(() => {
     if (value.length > 0) {
+      setResult([]); //Resets the searchable items every time the value length changes 
       let searchQuery = value.toLowerCase();
-      setResult([]);
       for (let index = 1; index <= titleId.size; index++) {
         const title = titleId.get(index.toString());
         if (title){
           const titleLowered = title?.toLowerCase(); //first searchable item 
           const authorLowered = titleAuthor.get(title)?.toLowerCase(); // second searchable item
           if (titleLowered?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1 || authorLowered?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1) {
-          setResult(prevResult => {
-            return [...prevResult, title]
+            setResult(prevResult => {
+              return [...prevResult, title]
           })
         }
       }
@@ -86,7 +86,9 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
 
   //Navigate to the correct book page 
   return (
-    <a key={index} onClick={() => navigate(`/bookPage/${bookId}`)}>
+    <a key={index} onClick={() => 
+    {navigate(`/bookPage/${bookId}`);
+    setValue(''); }}>
       <div className='border-2 cursor-pointer hover:opacity-20 content-center'> 
         <p className=' font-serif font-bold'>                                   
         {result}
