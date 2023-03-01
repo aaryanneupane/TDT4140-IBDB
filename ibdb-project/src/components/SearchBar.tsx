@@ -53,7 +53,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
           const authorLowered = titleAuthor.get(title)?.toLowerCase(); // second searchable item
           if (titleLowered?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1 || authorLowered?.slice(0, searchQuery.length).indexOf(searchQuery) !== -1) {
             setResult(prevResult => {
-              return [...prevResult, title]
+              return [...prevResult, title].slice(0,5); //Displays 5 books at max given the searchQuery
           })
         }
       }
