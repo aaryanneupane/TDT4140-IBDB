@@ -63,7 +63,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
     }
   }, [value])
 
-  //Searchbox is still visible without any items, this is to fix that.
+  //Searchbox is still visible without any items in the result array, this is to fix that.
 
   const [showResults, setShowResults] = useState(false); //New variable which decides to either show or not show the box
 
@@ -86,6 +86,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         placeholder="Title / Author" 
       onChange={(event)=> setValue(event.target.value)} 
       value ={value}/>
+  
       {showResults && ( //This makes sure to only show the white box when there are results available
       <div className='absolute top-full left-0 mt-1 w-full p-2 bg-hvit shadow-lg 
     rounded-b1 rounded-lg '>
@@ -102,7 +103,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
       setValue(''); }}>
           <div className = 'cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1'>
             {result} 
-            <p className='font-bold italic'> {bookAuthor} </p>
+            <p className='font-medium italic '> {bookAuthor} </p>
             </div>
       </div>
   );
