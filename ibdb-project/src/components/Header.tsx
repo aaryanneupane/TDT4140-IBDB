@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import DownDrop from './DownDrop';
 import '../styles/Header.css';
 import SearchBar from './SearchBar';
+import LoginPopup from './LoginPopup';
 import { MenuProps } from 'antd';
 
 const Header = () => {
 
     const [filterClicked, setFilterClicked] = useState(false);
+    const [popupVisible, setPopupVisible] = useState(false);
     const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
 
     const handleHideFilter = () => {
@@ -87,11 +89,11 @@ const Header = () => {
                     }
                 </button>
 
-                <button>
-                    <Link to=" " className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Log In</Link>
-                </button>
+                <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={() => setPopupVisible(true)}> Log In</button>
+                <LoginPopup visible={popupVisible} setVisible={setPopupVisible}/>
+
             </div>
-        </div>)
+        </div>)     
 }
 
 export default Header;
