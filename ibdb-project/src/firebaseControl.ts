@@ -65,8 +65,8 @@ class firebaseControl {
     return amount;
   }
 
-  async addBook(title : string, author : string, genre : string, releaseYear : string, 
-    description : string, imgURL : string, rating : string) 
+  async addBook(title : string, author : string, genre : string, releaseYear : number, 
+    description : string, imgURL : string, rating : number) 
     {
       //Find the id, equal to the number of books
     const id : string = (await this.findLength()).toString();
