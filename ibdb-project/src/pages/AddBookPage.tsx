@@ -20,6 +20,13 @@ const AddBookPage = () => {
     function addThisBook() {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0){
             firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, rating);
+            //La til dette ikveld for å resette verdiene etter at boken blir lagt til.
+            setTitle('');
+            setAuthor('');
+            setGenre('');
+            setReleaseYear(0);
+            setDescription('');
+            setImgURL('');
         };
     }
 
@@ -36,7 +43,7 @@ const AddBookPage = () => {
        function handleGenreChange(event: React.ChangeEvent<HTMLSelectElement>) {
         setGenre(event.target.value);
       }
-      
+
        console.log(genre);
 
     return (
