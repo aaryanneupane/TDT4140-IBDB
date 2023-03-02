@@ -5,7 +5,7 @@ import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import { StarRating } from "star-rating-react-ts";
 import '../styles/BookPage.css'
-import { Button } from 'antd';
+
 
 const BookPage = () => {
 
@@ -26,20 +26,37 @@ const BookPage = () => {
         setBook(book);
       
       }, [bookId]);
+    
 
-    function CommentForm() {
-      const [showCommentInput, setShowCommentInput] = useState(false);
+    //
+    function CommentForm() {                            //Huske å sette denne false!
+      const [showCommentInput, setShowCommentInput] = useState(true);
+      const [commentText, setCommentText] = useState("")
+
+      //Kode for når tekstboksen skrives i (passer på at den ekspanderer ettersom man skriver
+      const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCommentText(event.target.value);
+        event.target.style.height = 'auto';
+        event.target.style.height = event.target.scrollHeight + 'px';
+      };
 
       const handleCommentSubmit = () => {
         //Code for when submit button is clicked
-      }
+      };
+
       return(
-        <div>
-          <button onClick={() => setShowCommentInput(true)}>Give rating</button>
-                  {showCommentInput && (
-                    <div>
-                      <input type="text" placeholder ="comment here"/>
-                      <button onClick={handleCommentSubmit}>Submit</button>
+        <div className = "bottom w-full flex items-center justify-between ">
+            <div className = "bottom left w-1/4 items-center">
+             <button onClick={() => setShowCommentInput(!showCommentInput)} className=" px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg ml-12">Review this book</button>
+            </div>       {showCommentInput && (
+                    <div className = "flex w-5/6 justify-between pr-20 items-center pr-40">
+                        <StarRating />
+                        <textarea className="px-6 py-3 top rounded-lg bg-hvit shadow-0 flex flex-col items-center w-3/6 text-lg"
+                            value={commentText}
+                            onChange={handleCommentChange}
+                            placeholder="Comment here"
+                            style={{ height: 'auto', minHeight: '100px' }}/>
+                        <button onClick={handleCommentSubmit} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">Submit</button>
                     </div>
                   )}
         </div>
@@ -53,10 +70,9 @@ const BookPage = () => {
             <div className='left'>
                 <img className='center' id="image" src={book?.imgURL} alt={book?.imgURL}/>
                 <div className='center' id="starRating">
-                    
-                    <StarRating/>
                 </div>
             </div>
+            
             <div className='right'>
                 <div id="title">
                     <p>{book?.title}</p>
@@ -85,9 +101,12 @@ const BookPage = () => {
                         </li>
                     </ul>
                 </div>
+
                 <div className="center" id='description'>
                     {book?.description}
                 </div>
+
+
                 {/* <button id='showMoreButton'>
                     Show more...
                 </button> */}
@@ -113,6 +132,11 @@ const BookPage = () => {
                         Language: &emsp; &emsp; &nbsp; English
                     </li> */}
                 </ul>
+            </div>
+
+            {/* Nedre div for kommentarer/rating */}
+            <div className="bottom ml-20">
+                    <CommentForm/>
             </div>
         </body>
     )
