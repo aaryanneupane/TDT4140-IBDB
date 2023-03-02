@@ -4,6 +4,8 @@ import DownDrop from './DownDrop';
 import '../styles/Header.css';
 import SearchBar from './SearchBar';
 import { MenuProps } from 'antd';
+import ScrollIntoView from 'react-scroll-into-view';
+
 
 const Header = () => {
 
@@ -25,49 +27,61 @@ const Header = () => {
         {
           key: '1',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Recently Released
-            </a>
+            <ScrollIntoView selector="#recentlyReleased">
+              <button>
+                Recently Released
+              </button>
+            </ScrollIntoView>
           ),
         },
         {
           key: '2',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Coming Soon
-            </a>
+            <ScrollIntoView selector="#comingSoon">
+              <button>
+                Coming Soon
+              </button>
+            </ScrollIntoView>
           ),
         },
         {
           key: '3',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Top Books
-            </a>
+            <ScrollIntoView selector="#topBooks">
+              <button>
+                Top Books
+              </button>
+            </ScrollIntoView>
           ),
         },
         {
           key: '4',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Recently added to IBDb
-            </a>
+            <ScrollIntoView selector="#RATI">
+              <button>
+                Recently added to IBDb
+              </button>
+            </ScrollIntoView>
           ),
         },
         {
           key: '5',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              My Rated Books
-            </a>
+            <ScrollIntoView selector="#RATI">
+              <button>
+                My Rated Books
+              </button>
+            </ScrollIntoView>
           ),
         },
         {
           key: '6',
           label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              My Custom List 1
-            </a>
+            <ScrollIntoView selector="">
+              <button>
+                My Custom List 1
+              </button>
+            </ScrollIntoView>
           ),
         },
       ];
@@ -82,13 +96,13 @@ const Header = () => {
                 <SearchBar />
                 <button>
                     {filterClicked ?
-                        <Link to="/" onClick={handleHideFilter} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Hide Filter</Link>
-                        : <Link to="/filteredBooks" onClick={handleShowFilter} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+                        <Link to="/" onClick={handleHideFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Hide Filter</Link>
+                        : <Link to="/filteredBooks" onClick={handleShowFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
                     }
                 </button>
 
                 <button>
-                    <Link to=" " className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Log In</Link>
+                    <Link to=" " className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Log In</Link>
                 </button>
             </div>
         </div>)
