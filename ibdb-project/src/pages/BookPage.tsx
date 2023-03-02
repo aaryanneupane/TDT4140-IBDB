@@ -29,8 +29,8 @@ const BookPage = () => {
     
 
     //
-    function CommentForm() {                            //Huske å sette denne false!
-      const [showCommentInput, setShowCommentInput] = useState(true);
+    function CommentForm() {                           
+      const [showCommentInput, setShowCommentInput] = useState(false);
       const [commentText, setCommentText] = useState("")
 
       //Kode for når tekstboksen skrives i (passer på at den ekspanderer ettersom man skriver
