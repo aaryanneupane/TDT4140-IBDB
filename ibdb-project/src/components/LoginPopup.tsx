@@ -16,6 +16,7 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
         setErrorMessage('');
     }
 
+    // Logs in the mail and password set
     const logIn = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
@@ -28,18 +29,24 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
             });
     }
 
+    // Sets error message corresponding to the error
     const showError = (error: AuthError) => {
-        if (error.message == 'Firebase: Error (auth/invalid-email).') {
+        if (error.code == 'auth/invalid-email') {
             setErrorMessage('Invalid Email')
-        } else if (error.message == 'Firebase: Error (auth/user-not-found).') {
+        } else if (error.code == 'auth/user-not-found') {
             setErrorMessage('No user with this email');
-        } else if (error.message == 'Firebase: Error (auth/wrong-password).') {
+        } else if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
             setErrorMessage('Wrong password, try again');
-        } else if (error.message == 'Firebase: Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. (auth/too-many-requests).') {
+        } else if (error.code == 'auth/too-many-requests') {
             setErrorMessage('Access to this account has been temporarily disabled due to many failed login attempts');
+        } else if (error.code == 'auth/weak-password') {
+            setErrorMessage('Password should be at least 6 characters');
+        } else {
+            setErrorMessage('Error, try again later');
         }
     }
 
+    // Creates new user and checks for error
     const signUp = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
@@ -48,6 +55,7 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
                 reset();
             }).catch((error) => {
                 console.log(error);
+                showError(error);
             });
     }
     return (

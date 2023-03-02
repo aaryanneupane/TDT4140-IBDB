@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DownDrop from './DownDrop';
 import '../styles/Header.css';
@@ -7,20 +7,32 @@ import LoginPopup from './LoginPopup';
 import { MenuProps } from 'antd';
 import { auth } from '../firebaseControl';
 import { User, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from "react-router-dom";
+
 
 const Header = () => {
 
   const [filterClicked, setFilterClicked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
+  const [visibleAddBook, setVisibleAddBook] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  const navigate = useNavigate();
+
+  let admins: string[] = ['admin@gmail.com'];
 
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user) {
         setUser(user);
+        if (user.email != null && admins.includes(user.email)) {
+          setVisibleAddBook(true);
+        } else {
+          setVisibleAddBook(false);
+        }
       } else {
         setUser(null);
+        setVisibleAddBook(false);
       }
     });
   }, []);
@@ -102,15 +114,18 @@ const Header = () => {
             : <Link to="/filteredBooks" onClick={handleShowFilter} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
           }
         </button>
+        {visibleAddBook ?
+          <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={ () => navigate(`/addBook`)}> Add Book</button>
+          : null}
         <div>
           {user ?
-          <div>
-            <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={() => signOut(auth)}> Sign out</button>
-            <p>Signed in with {user.email}</p>
+            <div>
+              <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={() => signOut(auth)}> Sign out</button>
+              <p>Signed in with {user.email}</p>
             </div>
-            : 
-              <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={() => setPopupVisible(true)}> Log In</button>
-            }
+            :
+            <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={() => setPopupVisible(true)}> Log In</button>
+          }
         </div>
         <LoginPopup visible={popupVisible} setVisible={setPopupVisible} />
       </div>
