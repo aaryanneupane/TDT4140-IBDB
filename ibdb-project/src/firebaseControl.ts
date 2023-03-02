@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
 import { doc, setDoc } from "firebase/firestore";
 
 import firebase from "firebase/compat/app";
@@ -61,7 +61,7 @@ class firebaseControl {
   };
 
   async findLength() {
-    const amount : Number = (await this.getBooks()).length;
+    const amount : Number = (await this.getBooks()).length + 1;
     return amount;
   }
 
@@ -71,6 +71,8 @@ class firebaseControl {
       //Find the id, equal to the number of books
     const id : string = (await this.findLength()).toString();
       // Add a new document in collection "cities"
+    console.log(id)
+ 
     await setDoc(doc(db, "books", id), {
       title: title, 
       author: author,
