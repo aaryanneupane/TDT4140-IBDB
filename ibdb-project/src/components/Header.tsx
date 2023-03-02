@@ -86,7 +86,9 @@ const Header = () => {
                         : <Link to="/filteredBooks" onClick={handleShowFilter} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
                     }
                 </button>
-
+                <button>
+                  <Link to="/addBook" className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Add book</Link>
+                </button>
                 <button>
                     <Link to=" " className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Log In</Link>
                 </button>

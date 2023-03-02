@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore/lite';
+import { doc, setDoc } from "firebase/firestore";
 
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
@@ -59,7 +60,28 @@ class firebaseControl {
     return unsubscribe;
   };
 
+  async findLength() {
+    const amount : Number = (await this.getBooks()).length;
+    return amount;
+  }
 
+  async addBook(title : string, author : string, genre : string, releaseYear : string, 
+    description : string, imgURL : string, rating : string) 
+    {
+      //Find the id, equal to the number of books
+    const id : string = (await this.findLength()).toString();
+      // Add a new document in collection "cities"
+    await setDoc(doc(db, "books", id), {
+      title: title, 
+      author: author,
+      genre: genre,
+      releaseYear: releaseYear,
+      description: description,
+      imgURL: imgURL,
+      rating: rating,
+      id: id,
+    });
+    }
 
 };
 
