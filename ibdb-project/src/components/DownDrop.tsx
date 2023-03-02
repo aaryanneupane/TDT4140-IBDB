@@ -8,9 +8,7 @@ const DownDrop = ({ items, text, }: { items: MenuProps['items']; text: string; }
     <Space wrap>
       <Dropdown menu={{ items }} placement="bottom" arrow>
         <button className="flex items-center justify-between px-4 py-2 rounded-md bg-hvit shadow-0 hover:shadow-lg">
-          <div className="mr-2">
-            {text}
-          </div>
+          {text}
         </button>
       </Dropdown>
     </Space>
