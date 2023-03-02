@@ -5,6 +5,7 @@ import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import { StarRating } from "star-rating-react-ts";
 import '../styles/BookPage.css'
+import { Button } from 'antd';
 
 const BookPage = () => {
 
@@ -26,12 +27,33 @@ const BookPage = () => {
       
       }, [bookId]);
 
+    function CommentForm() {
+      const [showCommentInput, setShowCommentInput] = useState(false);
+
+      const handleCommentSubmit = () => {
+        //Code for when submit button is clicked
+      }
+      return(
+        <div>
+          <button onClick={() => setShowCommentInput(true)}>Give rating</button>
+                  {showCommentInput && (
+                    <div>
+                      <input type="text" placeholder ="comment here"/>
+                      <button onClick={handleCommentSubmit}>Submit</button>
+                    </div>
+                  )}
+        </div>
+        )
+    }
+  
+
     
     return (
         <body>
             <div className='left'>
                 <img className='center' id="image" src={book?.imgURL} alt={book?.imgURL}/>
                 <div className='center' id="starRating">
+                    
                     <StarRating/>
                 </div>
             </div>
@@ -69,13 +91,15 @@ const BookPage = () => {
                 {/* <button id='showMoreButton'>
                     Show more...
                 </button> */}
+                
                 <ul>
                     <li>
                         <ul id="rating">
                             <li id='rating'>Genre:</li>
-                            <li id='rating'>{book?.genre}</li>
+                            <li id='rating'>{book?.genre}</li>      
                         </ul>
                     </li>
+
                     {/* <li id="info">
                         Pages: &emsp; &emsp; &emsp; &emsp;398
                     </li>
