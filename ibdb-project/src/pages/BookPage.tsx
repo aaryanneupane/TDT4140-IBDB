@@ -70,24 +70,8 @@ const BookPage = () => {
                     Show more...
                 </button> */}
                 <ul>
-                    <li>
-                        <ul id="rating">
-                            <li id='rating'>Genre:</li>
-                            <li id='rating'>{book?.genre}</li>
-                        </ul>
-                    </li>
-                    {/* <li id="info">
-                        Pages: &emsp; &emsp; &emsp; &emsp;398
-                    </li>
-                    <li id="info">
-                        Format: &emsp; &emsp; &emsp; &nbsp; Hardcover
-                    </li>
-                    <li id="info">
-                        First published &emsp; July 8, 1999
-                    </li>
-                    <li id="info">
-                        Language: &emsp; &emsp; &nbsp; English
-                    </li> */}
+                    <li id='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
+                    <li id='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>
             </div>
         </body>
