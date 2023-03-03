@@ -62,22 +62,24 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         <div>
             {visible ?
                 <div className="login">
-                    <div className="login-inner rounded-lg">
-                        <input className="px-6 py-4 bg-hvit shadow-0 hover:shadow-lg" id="email" type="text" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                        <input className="px-6 py-4 bg-hvit shadow-0 hover:shadow-lg" id="password" type="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
-                        <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg login-close" onClick={() => { reset() }}>
-                            Close
-                        </button>
+                    <div className="login-inner">
+                        <input className="input shadow-0" id="email" type="text" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                        <input className="input shadow-0" id="password" type="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
                         {errorMessage !== '' ?
                             <p className='error'>{errorMessage}</p>
                             : null}
+                        <div className='login-close'>
                         {loginOrSignup === 'login' ?
-                            <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={logIn}>
+                            <button className="popUpButton shadow-0" onClick={logIn}>
                                 Log in
-                            </button> : <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={signUp}>
+                            </button> : <button className="popUpButton shadow-0" onClick={signUp}>
                                 Sign Up
                             </button>
                         }
+                        <button className="close shadow-0" onClick={() => { reset() }}>
+                            X
+                        </button>
+                        </div>
                     </div>
                 </div> : null}
         </div>

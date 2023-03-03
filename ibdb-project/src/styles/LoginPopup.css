@@ -1,3 +1,26 @@
+.popUpButton {
+    padding: 3px 6px 3px 6px;
+    margin-top: -12px;
+    margin-right: 12px;
+    width: 100px;
+    border-radius: 8px;
+    background-color: white;
+    height: 48px;
+}
+
+.close {
+    position: fixed;
+    padding: 3px 8px 3px 8px;
+    border-radius: 8px;
+    top: 315px;
+    left: 1080px;
+    background-color: white;
+}
+
+.popUpButton:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
 .login {
     position: fixed;
     top: 0;
@@ -11,15 +34,33 @@
     align-items: center;
 }
 
-.login-close {    
+.login-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-inner {
+    display: grid;
+    grid-template-columns: 1fr;
     position: relative;
+    border-radius: 8px;
     padding: 32px;
-    width: 100%;
-    max-width: 640px;
-    background-color: #FFF;
+    height: 300px;
+    width: 640px;
+    background-color: #F6f9FF;
+}
+
+.input {
+    padding: 16px 24px 16px 24px;
+    height: 60px;
+    width: 500px;
+    background-color: white;
+    border-radius: 9999px;
+}
+
+.input:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .error {
