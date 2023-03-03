@@ -144,22 +144,22 @@ const Filter = () => {
                 <DownDrop items={sortBy} text="Sort By" />
                 <div>
                     {genreChosen !== "" ?
-                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
-                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
                     {sortOn === "newest" ?
-                        <button onClick={() => { handleReset(); setSortBy("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> Recently Released X</p>
                         </button> : null
                     }
                     {sortOn === "rating" ?
-                        <button onClick={() => { handleReset(); setSortBy("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }

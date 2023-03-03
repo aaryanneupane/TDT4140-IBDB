@@ -11,7 +11,8 @@ module.exports = {
       kulTheme: "#DD7973",
       kulText: "#4D4D4D",
       mindreKulText: "#282828",
-      hvit: "#FFFFFF"
+      hvit: "#FFFFFF",
+      graa: "#E5E7EB"
     },
 
     boxShadow: {

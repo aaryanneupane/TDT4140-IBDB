@@ -39,21 +39,27 @@ const Header = () => {
     });
   }, []);
 
-  const handleHideFilter = () => {
+  const hideFilter = () => {
     setFilterClicked(false);
     setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
   }
 
-  const handleShowFilter = () => {
+  const showFilter = () => {
     setFilterClicked(true);
     setDivClass("sticky top-0 z-30 navbar navbar-expand-lg py-5 px-10 relative bg-bigBoy");
+  }
+
+  const listView = () => {
+    navigate(`/`); 
+    setFilterClicked(false);
+    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
   }
 
   const lists: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <ScrollIntoView selector="#recentlyReleased">
+        <ScrollIntoView onClick={() => listView()} selector="#recentlyReleased">
           <button>
             Recently Released
           </button>
@@ -63,7 +69,7 @@ const Header = () => {
     {
       key: '2',
       label: (
-        <ScrollIntoView selector="#comingSoon">
+        <ScrollIntoView onClick={() => listView()} selector="#comingSoon">
           <button>
             Coming Soon
           </button>
@@ -73,7 +79,7 @@ const Header = () => {
     {
       key: '3',
       label: (
-        <ScrollIntoView selector="#topBooks">
+        <ScrollIntoView onClick={() => listView()} selector="#topBooks">
           <button>
             Top Books
           </button>
@@ -83,7 +89,7 @@ const Header = () => {
     {
       key: '4',
       label: (
-        <ScrollIntoView selector="#RATI">
+        <ScrollIntoView onClick={() => listView()} selector="#RATI">
           <button>
             Recently added to IBDb
           </button>
@@ -93,7 +99,7 @@ const Header = () => {
     {
       key: '5',
       label: (
-        <ScrollIntoView selector="#RATI">
+        <ScrollIntoView onClick={() => listView()} selector="#RATI">
           <button>
             My Rated Books
           </button>
@@ -103,7 +109,7 @@ const Header = () => {
     {
       key: '6',
       label: (
-        <ScrollIntoView selector="">
+        <ScrollIntoView onClick={() => listView()} selector="">
           <button>
             My Custom List 1
           </button>
@@ -144,15 +150,15 @@ const Header = () => {
   return (
     < div className={divClass} >
       <div className="flex items-center w-full justify-between">
-        <button onClick={handleHideFilter}>
+        <button onClick={hideFilter}>
           <Link to="/" className="px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg " >IBDb</Link>
         </button>
         <DownDrop items={lists} text='Menu' />
         <SearchBar />
         <button>
           {filterClicked ?
-            <Link to="/" onClick={handleHideFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Hide Filter</Link>
-            : <Link to="/filteredBooks" onClick={handleShowFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            <Link to="/" onClick={hideFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Hide Filter</Link>
+            : <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
           }
         </button>
         {visibleAddBook ?
