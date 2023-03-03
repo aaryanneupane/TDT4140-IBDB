@@ -9,24 +9,27 @@ const AddBookPage = () => {
     const [title, setTitle] = useState<string>('');
     const [author, setAuthor] = useState<string>('');
     const [genre, setGenre] = useState<string>('');
-    const [releaseYear, setReleaseYear] = useState<number>(2020);
+    const [releaseYear, setReleaseYear] = useState<number | undefined >();
     const [description, setDescription] = useState<string>('');
     const [imgURL, setImgURL] = useState<string>('');
     const [rating, setRating] = useState<number>(0);    
+    const [alertBox, setAlertBox] = useState<boolean>(false);    
+
 
     const firebaseController = new firebaseControl();
 
 
     function addThisBook() {
-        if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0){
+        if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
             firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, rating);
-            //La til dette ikveld for å resette verdiene etter at boken blir lagt til.
             setTitle('');
             setAuthor('');
             setGenre('');
-            setReleaseYear(0);
+            setReleaseYear(undefined);
             setDescription('');
             setImgURL('');
+        } else {
+            setAlertBox(true);
         };
     }
 
@@ -44,14 +47,12 @@ const AddBookPage = () => {
         setGenre(event.target.value);
       }
 
-       console.log(genre);
-
     return (
-        <div className=''>
+        <div className='w-full'>
             <div className="header mt-5">
-                    <div className="element"></div>
+                <div className="element"></div>
                     <h1>Add new book</h1>
-            </div>
+                </div>
             <div className="px-8 py-4 grid gap-6 md:grid-cols-2 w-2/3 items-center">
                 <div>
                     <label className="block text-sm font-semibold">Title</label>
@@ -84,7 +85,7 @@ const AddBookPage = () => {
                     className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                     value = {releaseYear} onChange={(event) => {setReleaseYear(Number(event.target.value))}}/>
                 </div>
-               
+            
                 
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Description</label>
@@ -108,6 +109,7 @@ const AddBookPage = () => {
                     </button>
                 </div>
             </div>
+            
         </div>
     )
 }
