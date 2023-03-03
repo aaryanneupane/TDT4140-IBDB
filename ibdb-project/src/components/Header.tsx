@@ -156,9 +156,9 @@ const Header = () => {
         <DownDrop items={lists} text='Menu' />
         <SearchBar />
         <button>
-          {filterClicked ?
-            <Link to="/" onClick={hideFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Hide Filter</Link>
-            : <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+          {!filterClicked ?
+            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            : null
           }
         </button>
         {visibleAddBook ?
