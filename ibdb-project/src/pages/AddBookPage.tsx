@@ -9,7 +9,7 @@ const AddBookPage = () => {
     const [title, setTitle] = useState<string>('');
     const [author, setAuthor] = useState<string>('');
     const [genre, setGenre] = useState<string>('');
-    const [releaseYear, setReleaseYear] = useState<number>(0);
+    const [releaseYear, setReleaseYear] = useState<number>(2020);
     const [description, setDescription] = useState<string>('');
     const [imgURL, setImgURL] = useState<string>('');
     const [rating, setRating] = useState<number>(0);    
@@ -69,8 +69,10 @@ const AddBookPage = () => {
                 </div>
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Genre</label>
-                    <select id ='genre-select' name ='genre' value={genre} onChange={handleGenreChange}>
+                    <select id ='genre-select' name ='genre' value={genre} onChange={handleGenreChange} 
+                        className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         {genres.map(el => <option key={el.id} value={el.genre} >{el.genre}</option>)}
+                        <option value="" selected disabled hidden>Select Genre</option>
                     </select>
                 </div>
                 <div>
