@@ -3,7 +3,7 @@ import '../styles/LoginPopup.css';
 import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebaseControl';
 
-const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dispatch<SetStateAction<boolean>> }) => {
+const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; setVisible: Dispatch<SetStateAction<boolean>>; loginOrSignup: string }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,15 +31,15 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
 
     // Sets error message corresponding to the error
     const showError = (error: AuthError) => {
-        if (error.code == 'auth/invalid-email') {
+        if (error.code === 'auth/invalid-email') {
             setErrorMessage('Invalid Email')
-        } else if (error.code == 'auth/user-not-found') {
+        } else if (error.code === 'auth/user-not-found') {
             setErrorMessage('No user with this email');
-        } else if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+        } else if (error.code === AuthErrorCodes.INVALID_PASSWORD) {
             setErrorMessage('Wrong password, try again');
-        } else if (error.code == 'auth/too-many-requests') {
+        } else if (error.code === 'auth/too-many-requests') {
             setErrorMessage('Access to this account has been temporarily disabled due to many failed login attempts');
-        } else if (error.code == 'auth/weak-password') {
+        } else if (error.code === 'auth/weak-password') {
             setErrorMessage('Password should be at least 6 characters');
         } else {
             setErrorMessage('Error, try again later');
@@ -68,15 +68,16 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
                         <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg login-close" onClick={() => { reset() }}>
                             Close
                         </button>
-                        {errorMessage != '' ?
+                        {errorMessage !== '' ?
                             <p className='error'>{errorMessage}</p>
                             : null}
-                        <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={logIn}>
-                            Log in
-                        </button>
-                        <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={signUp}>
-                            Sign Up
-                        </button>
+                        {loginOrSignup === 'login' ?
+                            <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={logIn}>
+                                Log in
+                            </button> : <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={signUp}>
+                                Sign Up
+                            </button>
+                        }
                     </div>
                 </div> : null}
         </div>
