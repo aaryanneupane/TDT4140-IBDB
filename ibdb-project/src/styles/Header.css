@@ -3,3 +3,8 @@ Button {
   font-size: 1.2rem;
   font-weight: 500;
 }
+
+.user-email {
+  font-size: 14px;
+  color: grey;
+}
