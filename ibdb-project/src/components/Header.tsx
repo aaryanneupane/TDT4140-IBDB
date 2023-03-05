@@ -135,14 +135,14 @@ const Header = () => {
         </p>
       </div>
         : <button className="w-full" onClick= {() => {setPopupVisible(true); setPopUpType('login')}}>
-          Log In
+          Log in
         </button>,
     },
     {
       key: '3',
       label:
         <button className="w-full" onClick= {() => {setPopupVisible(true); setPopUpType('signup')}}>
-          Sign Up
+          Sign up
         </button>
     },
   ];

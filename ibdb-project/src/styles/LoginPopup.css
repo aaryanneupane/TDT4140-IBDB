@@ -1,11 +1,34 @@
-.popUpButton {
+.popup-button {
     padding: 3px 6px 3px 6px;
-    margin-top: -12px;
-    margin-right: 12px;
     width: 100px;
+    border-radius: 8px;
+    margin-top: 8px;
+    background-color: white;
+    height: 48px;
+}
+
+.popup-button:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.google-button {
+    display: flex;
+    padding: 9px 6px 3px 24px;
+    margin-top: 8px;
+    width: 250px;
     border-radius: 8px;
     background-color: white;
     height: 48px;
+}
+
+.google-button:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.google-icon {
+    width: 24px;
+    margin-left: 12px;
+    margin-top: 4px;
 }
 
 .close {
@@ -17,9 +40,8 @@
     background-color: white;
 }
 
-.popUpButton:hover {
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
+
+
 
 .login {
     position: fixed;
@@ -33,12 +55,12 @@
     justify-content: center;
     align-items: center;
 }
-
+/* 
 .login-close {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .login-inner {
     display: grid;
@@ -54,6 +76,7 @@
 .input {
     padding: 16px 24px 16px 24px;
     height: 60px;
+    margin-top: 8px;
     width: 500px;
     background-color: white;
     border-radius: 9999px;

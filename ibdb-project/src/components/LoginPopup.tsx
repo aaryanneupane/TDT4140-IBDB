@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 import '../styles/LoginPopup.css';
-import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseControl';
+import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../firebaseControl';
 
 const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; setVisible: Dispatch<SetStateAction<boolean>>; loginOrSignup: string }) => {
 
@@ -9,11 +9,18 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const reset = () => {
+    const close = () => {
         setVisible(false);
         setEmail('');
         setPassword('');
         setErrorMessage('');
+    }
+
+    const closeOrOpen: MouseEventHandler<HTMLDivElement> = (e) => {
+        const isClose = (e.target as HTMLElement).closest("#popup")
+        if (!isClose) {
+            close();
+        }
     }
 
     // Logs in the mail and password set
@@ -22,10 +29,19 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 console.log(userCredentials);
-                reset();
+                close();
             }).catch((error) => {
                 console.log(error);
                 showError(error);
+            });
+    }
+    // Opens popup to sign in with google
+    const googleLogIn = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        signInWithPopup(auth, googleProvider)
+            .then((userCredentials) => {
+                console.log(userCredentials);
+                close();
             });
     }
 
@@ -52,7 +68,7 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 console.log(userCredentials);
-                reset();
+                close();
             }).catch((error) => {
                 console.log(error);
                 showError(error);
@@ -61,25 +77,31 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
     return (
         <div>
             {visible ?
-                <div className="login">
-                    <div className="login-inner">
+                <div className="login" onClick={closeOrOpen}>
+                    <div className="login-inner" id="popup">
                         <input className="input shadow-0" id="email" type="text" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
                         <input className="input shadow-0" id="password" type="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
                         {errorMessage !== '' ?
                             <p className='error'>{errorMessage}</p>
                             : null}
                         <div className='login-close'>
-                        {loginOrSignup === 'login' ?
-                            <button className="popUpButton shadow-0" onClick={logIn}>
-                                Log in
-                            </button> : <button className="popUpButton shadow-0" onClick={signUp}>
-                                Sign Up
+                            {loginOrSignup === 'login' ?
+                                <button className="popup-button shadow-0" onClick={logIn}>
+                                    Log in
+                                </button> : <button className="popup-button shadow-0" onClick={signUp}>
+                                    Sign up
+                                </button>
+                            }
+
+                            <button className="close shadow-0" onClick={() => close()}>
+                                X
                             </button>
-                        }
-                        <button className="close shadow-0" onClick={() => { reset() }}>
-                            X
-                        </button>
                         </div>
+                            <button className="google-button shadow-0" onClick={googleLogIn}>
+                                Sign in with Google
+                                <img className="google-icon" src="https://freesvg.org/img/1534129544.png" />
+                            </button>
+
                     </div>
                 </div> : null}
         </div>
