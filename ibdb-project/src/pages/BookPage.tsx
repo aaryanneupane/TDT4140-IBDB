@@ -14,6 +14,8 @@ const BookPage = () => {
 
     const firebaseController = new firebaseControl();
 
+    //Get book for book page
+
     const [book, setBook] = useState<any>();
 
     useEffect(() => {
@@ -27,8 +29,16 @@ const BookPage = () => {
       
       }, [bookId]);
     
+    //"show more" functionality
+    const [showFullText, setShowFullText] = useState(false);
 
-    //
+    const toggleShowFullText = () => {
+        setShowFullText(!showFullText);
+    }
+    
+    const maxChars = 250;
+    const displayText = showFullText ? book?.description : book?.description.slice(0, maxChars) + "...";
+
     function CommentForm() {                           
       const [showCommentInput, setShowCommentInput] = useState(false);
       const [commentText, setCommentText] = useState("")
@@ -46,10 +56,10 @@ const BookPage = () => {
 
       return(
         <div className = "bottom w-full flex items-center justify-between ">
-            <div className = "bottom left w-1/4 items-center">
-             <button onClick={() => setShowCommentInput(!showCommentInput)} className=" px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg ml-12">Review this book</button>
+            <div className = "bottom left w-1/4 items-center pb-5">
+             <button onClick={() => setShowCommentInput(!showCommentInput)} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg ml-12">Review this book</button>
             </div>       {showCommentInput && (
-                    <div className = "flex w-5/6 justify-between pr-20 items-center pr-40">
+                    <div className = "flex w-5/6 justify-between pr-20 items-center">
                         <StarRating />
                         <textarea className="px-6 py-3 top rounded-lg bg-hvit shadow-0 flex flex-col items-center w-3/6 text-lg"
                             value={commentText}
@@ -62,9 +72,7 @@ const BookPage = () => {
         </div>
         )
     }
-  
-
-    
+      
     return (
         <body>
             <div className='left'>
@@ -72,7 +80,6 @@ const BookPage = () => {
                 <div className='center' id="starRating">
                 </div>
             </div>
-            
             <div className='right'>
                 <div id="title">
                     <p>{book?.title}</p>
@@ -101,42 +108,27 @@ const BookPage = () => {
                         </li>
                     </ul>
                 </div>
-
                 <div className="center" id='description'>
-                    {book?.description}
-                </div>
-
-
-                {/* <button id='showMoreButton'>
-                    Show more...
-                </button> */}
-                
-                <ul>
-                    <li>
-                        <ul id="rating">
-                            <li id='rating'>Genre:</li>
-                            <li id='rating'>{book?.genre}</li>      
-                        </ul>
-                    </li>
-
-                    {/* <li id="info">
-                        Pages: &emsp; &emsp; &emsp; &emsp;398
-                    </li>
-                    <li id="info">
-                        Format: &emsp; &emsp; &emsp; &nbsp; Hardcover
-                    </li>
-                    <li id="info">
-                        First published &emsp; July 8, 1999
-                    </li>
-                    <li id="info">
-                        Language: &emsp; &emsp; &nbsp; English
-                    </li> */}
+                    <p>
+                        {displayText}
+                    </p>
+                    <button id="genre" onClick={toggleShowFullText}>
+                        {showFullText ? "Show less" : "Show more"}
+                    </button>
+                </div>        
+                <ul id='info'>
+                    <li id='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
+                    <li id='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>
             </div>
 
             {/* Nedre div for kommentarer/rating */}
             <div className="bottom ml-20">
                     <CommentForm/>
+                    <div id="reviewSection">
+                        <h2>Previous reviews</h2>
+                        <text name="review" id="info"></text>
+                    </div>
             </div>
         </body>
     )
