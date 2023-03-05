@@ -39,6 +39,11 @@ body{
     line-height: 10px;
 }
 
+.here {
+    color: blue;
+    cursor: pointer;
+}
+
 #title {
     font-weight: bold;
     font-size: xx-large;
