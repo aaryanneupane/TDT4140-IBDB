@@ -55,19 +55,23 @@ const BookPage = () => {
       };
 
       return(
-        <div className = "bottom w-full flex items-center justify-between ">
-            <div className = "bottom left w-1/4 items-center pb-5">
-             <button onClick={() => setShowCommentInput(!showCommentInput)} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg ml-12">Review this book</button>
-            </div>       {showCommentInput && (
-                    <div className = "flex w-5/6 justify-between pr-20 items-center">
-                        <StarRating />
-                        <textarea className="px-6 py-3 top rounded-lg bg-hvit shadow-0 flex flex-col items-center w-3/6 text-lg"
-                            value={commentText}
-                            onChange={handleCommentChange}
-                            placeholder="Comment here"
-                            style={{ height: 'auto', minHeight: '100px' }}/>
-                        <button onClick={handleCommentSubmit} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">Submit</button>
-                    </div>
+        <div className = "bottom w-full flex flex-col items-center justify-between ">
+            <StarRating onClick={() => setShowCommentInput(!showCommentInput)}/>
+            {showCommentInput && (
+                <div className = "flex flex-col justify-between items-center">
+                    <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
+                        value={commentText}
+                        onChange={handleCommentChange}
+                        placeholder="Add a review to your rating"
+                        cols={28}
+                        style={{ height: 'auto', minHeight: '100px'}}/>
+                            <div className = "items-center ">
+                                <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                    Submit review
+                                </button>
+                            </div>
+                </div>
+                
                   )}
         </div>
         )
@@ -78,6 +82,11 @@ const BookPage = () => {
             <div className='left'>
                 <img className='center' id="image" src={book?.imgURL} alt={book?.imgURL}/>
                 <div className='center' id="starRating">
+                    <CommentForm/>
+                    <div id="reviewSection">
+                        <text name="review" id="info"></text>
+           
+                    </div> 
                 </div>
             </div>
             <div className='right'>
@@ -97,16 +106,10 @@ const BookPage = () => {
                         <li id="rating">
                             {book?.rating} / 5
                         </li>
-                        <li id="rating">
-                            Number of ratings
-                        </li>
-                        <li id="rating">
-                            -
-                        </li>
-                        <li id="rating">
-                            Number of reviews
-                        </li>
                     </ul>
+                    <div id="rating">
+                            1,4M ratings
+                    </div>
                 </div>
                 <div className="center" id='description'>
                     <p>
@@ -123,13 +126,13 @@ const BookPage = () => {
             </div>
 
             {/* Nedre div for kommentarer/rating */}
-            <div className="bottom ml-20">
+            {/* <div className="bottom ml-20">
                     <CommentForm/>
                     <div id="reviewSection">
                         <h2>Previous reviews</h2>
                         <text name="review" id="info"></text>
                     </div>
-            </div>
+            </div> */}
         </body>
     )
 }
