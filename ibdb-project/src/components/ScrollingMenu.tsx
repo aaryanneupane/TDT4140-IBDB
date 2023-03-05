@@ -17,7 +17,7 @@ const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
     sortedBooks
       .sort((b1, b2) => b2.rating - b1.rating);
   } else if (filter === "added") {
-    sortedBooks.reverse();
+    sortedBooks.sort((b1, b2) => b2.id - b1.id);
   }
   return sortedBooks.slice(0,10);
 }

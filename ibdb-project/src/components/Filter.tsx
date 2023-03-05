@@ -54,6 +54,8 @@ const Filter = () => {
         const toElement = document.getElementById("toValue") as HTMLInputElement;
         setToValue(toElement.value !== "" ? toElement.valueAsNumber : 2023);
         setYearsChosen(true);
+        fromElement.value = '';
+        toElement.value = '';
     };
 
     const handleReset = () => {
@@ -63,77 +65,70 @@ const Filter = () => {
     const genres: MenuProps['items'] = [
         {
             key: '1',
-            label: (
-                <button onClick={() => setGenreChosen("Crime")}>
-                    Crime
-                </button>
-            ),
+            label: <p>Crime</p>,
+            onClick: () => setGenreChosen("Crime")
+        },
+        {
+            key: '2',
+            label: <p>Fantasy</p>,
+            onClick: () => setGenreChosen("Fantasy")
+        },
+        {
+            key: '3',
+            label: <p>Roman</p>,
+            onClick: () => setGenreChosen("Roman")
+        },
+        {
+            key: '4',
+            label: <p>Cartoon</p>,
+            onClick: () => setGenreChosen("Cartoon")
+        },
+        {
+            key: '5',
+            label: <p>Classic</p>,
+            onClick: () => setGenreChosen("Classic")
+        },
+        {
+            key: '6',
+            label: <p>Historical</p>,
+            onClick: () => setGenreChosen("Historical")
+        },
+        {
+            key: '7',
+            label: <p>Biography</p>,
+            onClick: () => setGenreChosen("Biography")
+        },
+    ];
+
+    const sortBy: MenuProps['items'] = [
+        {
+            key: '1',
+            label: <p>Highest Rated</p>,
+            onClick: () => setSortBy("rating")
+        },
+        {
+            key: '2',
+            label: <p>Recently Released</p>,
+            onClick: () => setSortBy("newest")
+        },
+    ];
+
+    const releaseYear: MenuProps['items'] = [
+        {
+            key: '1',
+            label: <input id="fromValue" type="number" placeholder="From" className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0" onClick={(e) => e.stopPropagation()}/>,
+            
         },
         {
             key: '2',
             label: (
-                <button onClick={() => setGenreChosen("Fantasy")}>
-                    Fantasy
-                </button>
+                <input id="toValue" type="number" placeholder="To" className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0" onClick={(e) => e.stopPropagation()}/>
             ),
         },
         {
             key: '3',
-            label: (
-                <button onClick={() => setGenreChosen("Roman")}>
-                    Roman
-                </button>
-            ),
-        },
-        {
-            key: '4',
-            label: (
-                <button onClick={() => setGenreChosen("Cartoon")}>
-                    Cartoon
-                </button>
-            ),
-        },
-        {
-            key: '5',
-            label: (
-                <button onClick={() => setGenreChosen("Classic")}>
-                    Classic
-                </button>
-            ),
-        },
-        {
-            key: '6',
-            label: (
-                <button onClick={() => setGenreChosen("Historical")}>
-                    Historical
-                </button>
-            ),
-        },
-        {
-            key: '7',
-            label: (
-                <button onClick={() => setGenreChosen("Biography")}>
-                    Biography
-                </button>
-            ),
-        },
-    ];
-    const sortBy: MenuProps['items'] = [
-        {
-            key: '1',
-            label: (
-                <button onClick={() => setSortBy("rating")}>
-                    Highest Rated
-                </button>
-            ),
-        },
-        {
-            key: '2',
-            label: (
-                <button onClick={() => setSortBy("newest")}>
-                    Recently Released
-                </button>
-            ),
+            label: <button className="w-full rounded-full">Confirm</button>,
+            onClick: () => handleConfirm()
         },
     ];
 
@@ -143,40 +138,28 @@ const Filter = () => {
                 <p>Filters: </p>
                 <DownDrop items={genres} text="Genres" />
                 <div className="space-y-2 relative bg-current">
-                    <div className='release-year'>
-                        <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                            Release Year
-                        </button>
-                        <div className="years">
-                            <div className='navbar navbar-expand-lg absolute bg-current'>
-                                <input id="fromValue" type="number" placeholder="From" className="px-6 py-4 rounded-tr-lg bg-hvit shadow-0 hover:shadow-lg" />
-                                <input id="toValue" type="number" placeholder="To" className="px-6 py-3 rounded-br-lg bg-hvit shadow-0 hover:shadow-lg" />
-                                <button onClick={handleConfirm}>
-                                    <Link to="/filteredBooks" className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Confirm</Link>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <DownDrop items={releaseYear} text="Release Year" />
+
                 </div>
                 <DownDrop items={sortBy} text="Sort By" />
                 <div>
                     {genreChosen !== "" ?
-                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
-                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
                     {sortOn === "newest" ?
-                        <button onClick={() => { handleReset(); setSortBy("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> Recently Released X</p>
                         </button> : null
                     }
                     {sortOn === "rating" ?
-                        <button onClick={() => { handleReset(); setSortBy("") }} className="border-2 mx-2 px-2 py-1 rounded-lg bg-slate-400 shadow">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }

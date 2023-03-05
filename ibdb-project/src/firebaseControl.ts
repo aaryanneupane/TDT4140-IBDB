@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore/lite';
-
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
+import 'firebase/auth';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAVZS1MZ7twZLXAGzOH2a4fUdk5PTixsoM",
@@ -16,6 +16,12 @@ const firebaseConfig = {
 
 const app = firebase.initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+export {auth, googleProvider};
+
+
 
 
 class firebaseControl {
@@ -63,4 +69,4 @@ class firebaseControl {
 
 };
 
-export default firebaseControl
+export default firebaseControl;
