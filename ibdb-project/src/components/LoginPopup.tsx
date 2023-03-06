@@ -28,7 +28,7 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
-                console.log(userCredentials);
+                localStorage.setItem('user', JSON.stringify(userCredentials.user.email));
                 close();
             }).catch((error) => {
                 console.log(error);
@@ -40,7 +40,7 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         e.preventDefault();
         signInWithPopup(auth, googleProvider)
             .then((userCredentials) => {
-                console.log(userCredentials);
+                localStorage.setItem('user', JSON.stringify(userCredentials.user.email));
                 close();
             });
     }
@@ -67,7 +67,7 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         e.preventDefault();
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
-                console.log(userCredentials);
+                localStorage.setItem('user', JSON.stringify(userCredentials.user.email));
                 close();
             }).catch((error) => {
                 console.log(error);
