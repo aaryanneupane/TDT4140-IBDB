@@ -87,11 +87,11 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
         const logInPressed = document.getElementById("onClicklogIn") as HTMLButtonElement;
         const signUpPressed = document.getElementById("onClicksignUp") as HTMLButtonElement;
         if (loginOrSignup == "logIn") {
-            logInPressed.style.borderBottom = "3px solid #DD7973";
+            logInPressed.style.borderBottom = "4px solid #DD7973";
             signUpPressed.style.borderBottom = "0px solid #DD7973";
         }
         else {
-            signUpPressed.style.borderBottom = "3px solid #DD7973";
+            signUpPressed.style.borderBottom = "4px solid #DD7973";
             logInPressed.style.borderBottom = "0px solid #DD7973";
         }
 
