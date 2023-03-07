@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
 
   const [filterClicked, setFilterClicked] = useState(false);
-  const [popUpType, setPopUpType] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -121,10 +120,6 @@ const Header = () => {
   const profile: MenuProps['items'] = [
     {
       key: '1',
-      label: <button className='w-full'>Darkmode</button>,
-    },
-    {
-      key: '2',
       label: user ?
       <div>
         <button className="w-full" onClick={() => signOut(auth)}>
@@ -134,16 +129,13 @@ const Header = () => {
           {user.email}
         </p>
       </div>
-        : <button className="w-full" onClick= {() => {setPopupVisible(true); setPopUpType('login')}}>
-          Log in
+        : <button className="w-full" onClick= {() => {setPopupVisible(true)}}>
+          Sign in
         </button>,
     },
     {
-      key: '3',
-      label:
-        <button className="w-full" onClick= {() => {setPopupVisible(true); setPopUpType('signup')}}>
-          Sign up
-        </button>
+      key: '2',
+      label: <button className='w-full'>Darkmode</button>,
     },
   ];
 
@@ -167,7 +159,7 @@ const Header = () => {
         <div>
           <DownDrop items={profile} text='Profile' />
         </div>
-        <LoginPopup visible={popupVisible} setVisible={setPopupVisible} loginOrSignup={popUpType}/>
+        <LoginPopup visible={popupVisible} setVisible={setPopupVisible}/>
       </div>
     </div>)
 }
