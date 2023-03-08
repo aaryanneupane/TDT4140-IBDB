@@ -61,7 +61,7 @@ class firebaseControl {
   };
 
   async findLength() {
-    const amount : Number = (await this.getBooks()).length + 1;
+    const amount : number = (await this.getBooks()).length + 1;
     return amount;
   }
 

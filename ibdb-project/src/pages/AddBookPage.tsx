@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import firebaseControl from '../firebaseControl';
 import '../styles/HomePage.css';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddBookPage = () => {
@@ -16,24 +17,27 @@ const AddBookPage = () => {
     const [buttonActive, setButtonActive] = useState<boolean>(false);
 
     const firebaseController = new firebaseControl();
+    const navigate = useNavigate();
+    
     
     async function addThisBook() {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
-            firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, rating);
+            await firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, rating);
             setTitle('');
             setAuthor('');
             setGenre('');
             setReleaseYear(undefined);
             setDescription('');
             setImgURL('');
-
-            //Navigate to the bookpage for the new book
-            const newBookId : string = (await firebaseController.findLength()).toString();
-            window.location.href = `/bookPage/${newBookId}`
+            
+            //Navigate to the bookpage for the new book (Added await in the addbook function and implemented navigate)
+           const newBookId : number = (await firebaseController.findLength()) - 1 
+            navigate(`/bookPage/${newBookId}`);
         }
     }
-
-
+    
+    
+    
     useEffect(() => {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
             setButtonActive(true);
@@ -41,7 +45,7 @@ const AddBookPage = () => {
             setButtonActive(false);
         }
     }, [title, author, genre, description, imgURL, releaseYear]);
-
+    
     const genres = [
         { id: 1, genre: "Crime" },
         { id: 2, genre: "Fantasy" },
@@ -50,12 +54,12 @@ const AddBookPage = () => {
         { id: 5, genre: "Classic" },
         { id: 6, genre: "Historical" },
         { id: 7, genre: "Biography" }
-       ];
-
-       function handleGenreChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    ];
+    
+    function handleGenreChange(event: React.ChangeEvent<HTMLSelectElement>) {
         setGenre(event.target.value);
-      }
-
+    }
+    
     return (
         <div className='w-full'>
             <div className="header mt-5">
