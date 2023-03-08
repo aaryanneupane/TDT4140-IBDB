@@ -82,29 +82,21 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
         }
     }
 
-    const loginOrSignupTab = (loginOrSignup: string) => {
-        setLogInOrSignup(loginOrSignup);
-        const logInPressed = document.getElementById("onClicklogIn") as HTMLButtonElement;
-        const signUpPressed = document.getElementById("onClicksignUp") as HTMLButtonElement;
-        if (loginOrSignup == "logIn") {
-            logInPressed.style.borderBottom = "4px solid #DD7973";
-            signUpPressed.style.borderBottom = "0px solid #DD7973";
-        }
-        else {
-            signUpPressed.style.borderBottom = "4px solid #DD7973";
-            logInPressed.style.borderBottom = "0px solid #DD7973";
-        }
-
-    }
     return (
         <div>
             {visible ?
                 <div className="popupBackground" onClick={closeOrOpen}>
                     <div className="login-inner" id="popup">
                         <div className="top">
-                            <button className="logIn" id="onClicklogIn" onClick={() => loginOrSignupTab('logIn')}> Log in </button>
-                            <button className="signUp" id="onClicksignUp" onClick={() => loginOrSignupTab('signUp')}> Sign up </button>
 
+                            <div className='logIn-signUp-flex'>
+                                <button className={logInOrSignup == 'logIn' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('logIn')}> Log in </button>
+                                <div className={logInOrSignup == 'logIn' ? 'logIn-underline' : ''}></div>
+                            </div>
+                                <div className='logIn-signUp-flex'>
+                                    <button className={logInOrSignup == 'signUp' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('signUp')}> Sign up </button>
+                                    <div className={logInOrSignup == 'signUp' ? 'signUp-underline' : ''}></div>
+                                </div>
                         </div>
                         <div>
                             <p>Email</p>

@@ -55,8 +55,26 @@
     gap: 70px;
 }
 
-.logIn {
+.logIn-signUp-flex {
+    display: flex;
+    flex-direction: column;
+} 
+
+.logIn-underline {
     border-bottom: 4px solid #DD7973;
+}
+
+.signUp-underline {
+    border-bottom: 4px solid #DD7973;
+}
+
+.grey-text {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.grey-text:hover {
+    color:black;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2);
 }
 
 .popupBackground {
