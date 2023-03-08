@@ -1,19 +1,29 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, MouseEventHandler, SetStateAction, useState } from 'react';
 import '../styles/LoginPopup.css';
-import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebaseControl';
+import { AuthError, AuthErrorCodes, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../firebaseControl';
 
-const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; setVisible: Dispatch<SetStateAction<boolean>>; loginOrSignup: string }) => {
+const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dispatch<SetStateAction<boolean>> }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [logInOrSignup, setLogInOrSignup] = useState('logIn');
     const [errorMessage, setErrorMessage] = useState('');
 
-    const reset = () => {
+    const close = () => {
         setVisible(false);
         setEmail('');
         setPassword('');
         setErrorMessage('');
+    }
+
+    const closeOrOpen: MouseEventHandler<HTMLDivElement> = (e) => {
+        const isClose = (e.target as HTMLElement).closest("#popup")
+        if (!isClose) {
+            close();
+            setLogInOrSignup('logIn');
+        }
     }
 
     // Logs in the mail and password set
@@ -22,10 +32,19 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredentials) => {
                 console.log(userCredentials);
-                reset();
+                close();
             }).catch((error) => {
                 console.log(error);
                 showError(error);
+            });
+    }
+    // Opens popup to sign in with google
+    const googleLogIn = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+        signInWithPopup(auth, googleProvider)
+            .then((userCredentials) => {
+                console.log(userCredentials);
+                close();
             });
     }
 
@@ -49,34 +68,70 @@ const LoginPopup = ({ visible, setVisible, loginOrSignup }: { visible: boolean; 
     // Creates new user and checks for error
     const signUp = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredentials) => {
-                console.log(userCredentials);
-                reset();
-            }).catch((error) => {
-                console.log(error);
-                showError(error);
-            });
+        if (password == confirmPassword) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredentials) => {
+                    console.log(userCredentials);
+                    close();
+                }).catch((error) => {
+                    console.log(error);
+                    showError(error);
+                });
+        } else {
+            setErrorMessage("Passwords do not match");
+        }
     }
+
     return (
         <div>
             {visible ?
-                <div className="login">
-                    <div className="login-inner rounded-lg">
-                        <input className="px-6 py-4 bg-hvit shadow-0 hover:shadow-lg" id="email" type="text" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                        <input className="px-6 py-4 bg-hvit shadow-0 hover:shadow-lg" id="password" type="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
-                        <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg login-close" onClick={() => { reset() }}>
-                            Close
-                        </button>
-                        {errorMessage !== '' ?
-                            <p className='error'>{errorMessage}</p>
-                            : null}
-                        {loginOrSignup === 'login' ?
-                            <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={logIn}>
-                                Log in
-                            </button> : <button className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" onClick={signUp}>
-                                Sign Up
-                            </button>
+                <div className="popupBackground" onClick={closeOrOpen}>
+                    <div className="login-inner" id="popup">
+                        <div className="top">
+
+                            <div className='logIn-signUp-flex'>
+                                <button className={logInOrSignup == 'logIn' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('logIn')}> Log in </button>
+                                <div className={logInOrSignup == 'logIn' ? 'logIn-underline' : ''}></div>
+                            </div>
+                                <div className='logIn-signUp-flex'>
+                                    <button className={logInOrSignup == 'signUp' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('signUp')}> Sign up </button>
+                                    <div className={logInOrSignup == 'signUp' ? 'signUp-underline' : ''}></div>
+                                </div>
+                        </div>
+                        <div>
+                            <p>Email</p>
+                            <input className="input shadow-0" id="email" type="text" placeholder="Email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                        </div>
+                        <div>
+                            <p>Password</p>
+                            <input className="input shadow-0" id="password" type="password" placeholder="Password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                        </div>
+                        {logInOrSignup === 'logIn' ?
+                            <div>
+                                {errorMessage !== '' ?
+                                    <p className='error'>{errorMessage}</p>
+                                    : null}
+                                <div className="logIn-buttons">
+                                    <button className="popup-button shadow-0" onClick={logIn}>
+                                        Log in
+                                    </button>
+                                    <button className="google-button shadow-0" onClick={googleLogIn}>
+                                        Log in with Google
+                                        <img className="google-icon" src="https://freesvg.org/img/1534129544.png" />
+                                    </button>
+                                </div>
+                            </div>
+                            : <div>
+                                <input className="input shadow-0" id="confirmPassword" type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => { setConfirmPassword(e.target.value) }} />
+                                {errorMessage !== '' ?
+                                    <p className='error'>{errorMessage}</p>
+                                    : null}
+                                <div className="logIn-buttons">
+                                    <button className="popup-button shadow-0" onClick={signUp}>
+                                        Sign up
+                                    </button>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div> : null}
