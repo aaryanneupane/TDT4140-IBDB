@@ -1,5 +1,5 @@
 import { doc, setDoc } from 'firebase/firestore';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import firebaseControl from '../firebaseControl';
 import '../styles/HomePage.css';
@@ -13,11 +13,10 @@ const AddBookPage = () => {
     const [description, setDescription] = useState<string>('');
     const [imgURL, setImgURL] = useState<string>('');
     const [rating, setRating] = useState<number>(0);    
-    const [alertBox, setAlertBox] = useState<boolean>(false);    
+    const [buttonActive, setButtonActive] = useState<boolean>(false);    
 
 
     const firebaseController = new firebaseControl();
-
 
     function addThisBook() {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
@@ -29,9 +28,16 @@ const AddBookPage = () => {
             setDescription('');
             setImgURL('');
         } else {
-            setAlertBox(true);
         };
     }
+
+    useEffect(() => {
+        if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
+            setButtonActive(true);
+        } else {
+            setButtonActive(false);
+        }
+    }, [title, author, genre, description, imgURL, releaseYear]);
 
     const genres = [
         { id: 1, genre: "Crime" },
@@ -55,7 +61,7 @@ const AddBookPage = () => {
                 </div>
             <div className="px-8 py-4 grid gap-6 md:grid-cols-2 w-2/3 items-center">
                 <div>
-                    <label className="block text-sm font-semibold">Title</label>
+                    <label className="block mb-2 text-sm font-semibold">Title</label>
                     <input type="text" 
                         className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Title" 
@@ -103,10 +109,21 @@ const AddBookPage = () => {
                 </div>
                 
                 <div>
-                    <label className="block mb-2 text-sm font-semibold">Click when you are ready to add book</label>
-                    <button onClick={addThisBook} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                        Add book
-                    </button>
+                    {buttonActive ? 
+                        <div>
+                            <label className="block mb-2 text-sm font-semibold">Ready to add the book!</label>
+                            <button onClick={addThisBook} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                Add book
+                            </button>
+                        </div>
+                        : 
+                        <div>
+                            <label className="block mb-2 text-sm font-semibold">Fill out all fields to add the book to IBDb</label>
+                            <button type="button" disabled className="px-6 py-3 rounded-lg bg-grå shadow-0">
+                                Add book
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
             
