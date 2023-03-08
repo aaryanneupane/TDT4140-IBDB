@@ -177,7 +177,7 @@ const Filter = () => {
                     ))}
                 </div>
                 :
-                <div className="ml-10 mt-10 grid grid-cols-5">
+                <div className="books-div ml-10 mt-10 grid grid-cols-5">
                     {orgBooks.map((book) => (
                         <Card
                             title={book.title}

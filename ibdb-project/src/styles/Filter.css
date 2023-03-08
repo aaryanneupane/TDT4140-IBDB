@@ -2,3 +2,8 @@ p {
     font-family: "Maven Pro";
     font-size: 1.2rem;
 }
+
+.dark .navbar {
+    background-color: #292929;
+    color: white
+}

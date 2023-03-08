@@ -46,3 +46,11 @@ h1 {
   padding-bottom: 500px;
 }
 
+.dark #hpContent {
+  background-color: #4D4D4D;
+}
+
+.dark h1 {
+  color: white;
+}
+

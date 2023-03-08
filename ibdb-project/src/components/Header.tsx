@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DownDrop from './DownDrop';
 import '../styles/Header.css';
@@ -9,6 +9,7 @@ import ScrollIntoView from 'react-scroll-into-view';
 import { auth } from '../firebaseControl';
 import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
+import { DarkModeContext } from './DarkModeHandler';
 
 
 const Header = () => {
@@ -17,6 +18,7 @@ const Header = () => {
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const { darkMode, setDarkMode } = useContext(DarkModeContext);
   const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
   const navigate = useNavigate();
 
@@ -135,7 +137,7 @@ const Header = () => {
     },
     {
       key: '2',
-      label: <button className='w-full'>Darkmode</button>,
+      label: <input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/>,
     },
   ];
 
@@ -143,18 +145,18 @@ const Header = () => {
     < div className={divClass} >
       <div className="flex items-center w-full justify-between">
         <button onClick={hideFilter}>
-          <Link to="/" className="px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg " >IBDb</Link>
+          <Link to="/" className="link px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg " >IBDb</Link>
         </button>
         <DownDrop items={lists} text='Menu' />
         <SearchBar />
         <button>
           {!filterClicked ?
-            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            <Link to="/filteredBooks" onClick={showFilter} className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
             : null
           }
         </button>
         {visibleAddBook ?
-          <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
+          <button className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
           : null}
         <div>
           <DownDrop items={profile} text='Profile' />
