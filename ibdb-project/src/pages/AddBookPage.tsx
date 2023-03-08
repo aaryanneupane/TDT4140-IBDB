@@ -13,12 +13,11 @@ const AddBookPage = () => {
     const [description, setDescription] = useState<string>('');
     const [imgURL, setImgURL] = useState<string>('');
     const [rating, setRating] = useState<number>(0);    
-    const [buttonActive, setButtonActive] = useState<boolean>(false);    
-
+    const [buttonActive, setButtonActive] = useState<boolean>(false);
 
     const firebaseController = new firebaseControl();
-
-    function addThisBook() {
+    
+    async function addThisBook() {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
             firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, rating);
             setTitle('');
@@ -27,9 +26,13 @@ const AddBookPage = () => {
             setReleaseYear(undefined);
             setDescription('');
             setImgURL('');
-        } else {
-        };
+
+            //Navigate to the bookpage for the new book
+            const newBookId : string = (await firebaseController.findLength()).toString();
+            window.location.href = `/bookPage/${newBookId}`
+        }
     }
+
 
     useEffect(() => {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
@@ -113,14 +116,14 @@ const AddBookPage = () => {
                         <div>
                             <label className="block mb-2 text-sm font-semibold">Ready to add the book!</label>
                             <button onClick={addThisBook} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                                Add book
+                                Legg til bok
                             </button>
                         </div>
                         : 
                         <div>
                             <label className="block mb-2 text-sm font-semibold">Fill out all fields to add the book to IBDb</label>
-                            <button type="button" disabled className="px-6 py-3 rounded-lg bg-grå shadow-0">
-                                Add book
+                            <button type="button" disabled className="px-6 py-3 rounded-lg shadow-0">
+                            Add book
                             </button>
                         </div>
                     }
