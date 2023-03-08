@@ -44,6 +44,10 @@ body{
     cursor: pointer;
 }
 
+.error-message {
+    color: red;
+}
+
 #title {
     font-weight: bold;
     font-size: xx-large;

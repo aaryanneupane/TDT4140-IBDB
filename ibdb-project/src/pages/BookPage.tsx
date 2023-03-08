@@ -20,7 +20,15 @@ const BookPage = () => {
     const [reviews, setReviews] = useState<DocumentData[]>([]);
     const [alreadyReviewed, setAlreadyReviewed] = useState<boolean>(false);
     const [rating, setRating] = useState<number>(0);
+    const [averageRating, setAverageRating] = useState<number>(0);
+    const [amountOfRatings, setAmountOfRatings] = useState<number>(0);
+    const [reviewAdded, setReviewAdded] = useState(false);
     const [userRating, setUserRating] = useState<number>();
+    const [showFullText, setShowFullText] = useState(false);
+    const [showCommentInput, setShowCommentInput] = useState(false);
+    const [commentText, setCommentText] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     useEffect(() => {
 
@@ -33,26 +41,32 @@ const BookPage = () => {
         setBook(book);
 
         let allReviews: DocumentData[] = [];
+        let thisBookReviews: DocumentData[] = [];
         const reviewsCached = localStorage.getItem("reviews");
         if (reviewsCached) {
             allReviews = JSON.parse(reviewsCached);
+            thisBookReviews = allReviews.filter((review) => review.bookID == bookID);
         }
-        setReviews(allReviews);
+        setReviews(thisBookReviews);
 
-        allReviews.forEach(review => {
+        var sum = 0;
+        var counter = 0;
+
+        thisBookReviews.forEach(review => {
             const reviewUser = review.userID;
+            sum += review.rating;
+            counter++;
             if (reviewUser === userEmail) {
-                if (review.bookID === bookID) {
-                    setAlreadyReviewed(true);
-                    setUserRating(review.rating);
-                }
+                setAlreadyReviewed(true);
+                setUserRating(review.rating);
             }
         });
 
+        setAverageRating(sum / counter);
+        setAmountOfRatings(counter);
+
     }, [bookID]);
 
-    //"show more" functionality
-    const [showFullText, setShowFullText] = useState(false);
 
     const toggleShowFullText = () => {
         setShowFullText(!showFullText);
@@ -61,71 +75,33 @@ const BookPage = () => {
     const maxChars = 250;
     const displayText = showFullText ? book?.description : book?.description.slice(0, maxChars) + "...";
 
-    function CommentForm() {
-        const [showCommentInput, setShowCommentInput] = useState(false);
-        const [commentText, setCommentText] = useState("")
+    //Kode for når tekstboksen skrives i (passer på at den ekspanderer ettersom man skriver
+    const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCommentText(event.target.value);
+        event.target.style.height = 'auto';
+        event.target.style.height = event.target.scrollHeight + 'px';
+    };
 
-        //Kode for når tekstboksen skrives i (passer på at den ekspanderer ettersom man skriver
-        const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setCommentText(event.target.value);
-            event.target.style.height = 'auto';
-            event.target.style.height = event.target.scrollHeight + 'px';
-        };
+    function handleCommentSubmit() {
 
-        function handleCommentSubmit() {
+        if (userEmail) {
 
-            if (userEmail) {
+            firebaseController.addReview(bookID, commentText, rating, userEmail);
+            console.log(bookID);
+            console.log(commentText);
+            console.log(rating);
+            console.log(userEmail);
+            setShowCommentInput(false);
+            setReviewAdded(true);
+        }
+    };
 
-                firebaseController.addReview(bookID, commentText, rating, userEmail);
-                console.log(bookID);
-                console.log(commentText);
-                console.log(rating);
-                console.log(userEmail);
-            }
-        };
-
-        const handleRatingChange = useCallback((selectedRating: number) => {
+    const handleRateBook = () => {
+        if (!userEmail) {
+            setErrorMessage("You need to be logged in to rate books");
+        } else {
             setShowCommentInput(true);
-            //setRating(selectedRating);
-            console.log(rating)
-        }, []);
-
-        return (
-            <div className="bottom w-full flex flex-col items-center justify-between ">
-                {alreadyReviewed ?
-                    <div>
-                        <p> Your review of this book </p>
-                        <StarRating readOnly={true} initialRating={userRating} />
-                        <p className='error-message'> Change your review <u className="here">here</u> </p>
-                    </div>
-                    : <div>
-                        <p>Rate this book</p>
-                        <StarRating initialRating={rating} onClick={(rating) => {handleRatingChange(rating); console.log("ratri", rating)}} />
-                    </div>}
-
-                {showCommentInput && (
-                    <div className="flex flex-col justify-between items-center">
-                        <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
-                            value={commentText}
-                            onChange={handleCommentChange}
-                            placeholder="Add a review to your rating"
-                            cols={28}
-                            style={{ height: 'auto', minHeight: '100px' }} />
-                        {alreadyReviewed ?
-                            <p className='error-message'> You've already reviewed this book </p> : null}
-                        {commentText === "" ?
-                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                                Submit without comment
-                            </button>
-                            :
-                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                                Submit with comment
-                            </button>
-                        }
-                    </div>
-                )}
-            </div>
-        )
+        }
     }
 
     return (
@@ -133,7 +109,50 @@ const BookPage = () => {
             <div className='left'>
                 <img className='center' id="image" src={book?.imgURL} alt={book?.imgURL} />
                 <div className='center' id="starRating">
-                    <CommentForm />
+                    <div className="bottom w-full flex flex-col items-center justify-between ">
+                        {alreadyReviewed ?
+                            <div>
+                                <p> Your review of this book </p>
+                                <StarRating readOnly={true} initialRating={userRating} />
+                                <p> Change your review <u className="here">here</u> </p>
+                            </div>
+                            :
+                            <div>
+                                {!reviewAdded ?
+                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
+                                    : null}
+                                <p className="error-message">{errorMessage}</p>
+                            </div>
+                        }
+
+                        {showCommentInput && (
+                            <div className="flex flex-col justify-between items-center">
+                                <StarRating initialRating={rating} onClick={(rating) => { setRating(rating) }} />
+                                <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
+                                    value={commentText}
+                                    onChange={handleCommentChange}
+                                    placeholder="Add a review to your rating"
+                                    cols={28}
+                                    style={{ height: 'auto', minHeight: '100px' }} />
+                                {commentText === "" ?
+                                    <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                        Submit without comment
+                                    </button>
+                                    :
+                                    <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                        Submit with comment
+                                    </button>
+                                }
+                            </div>
+                        )}
+                        {reviewAdded ?
+                            <div>
+                                <p> Your review of this book </p>
+                                <StarRating readOnly={true} initialRating={rating} />
+                                <p> Change your review <u className="here">here</u> </p>
+                            </div> : null}
+
+                    </div>
                     <div id="reviewSection">
                         <p id="info"></p>
 
@@ -151,15 +170,15 @@ const BookPage = () => {
                     <ul id="rating">
                         <li id="rating">
                             {book && (
-                                <StarRating readOnly={true} initialRating={book?.rating} />
+                                <StarRating readOnly={true} initialRating={averageRating} />
                             )}
                         </li>
                         <li id="rating">
-                            {book?.rating} / 5
+                            {averageRating} / 5
                         </li>
                     </ul>
                     <div id="rating">
-                        1,4M ratings
+                        {amountOfRatings} ratings
                     </div>
                 </div>
                 <div className="center" id='description'>
@@ -175,7 +194,23 @@ const BookPage = () => {
                     <li id='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>
             </div>
-
+            <div className="pt-400">
+                {reviews.map((review) => (
+                    <div>
+                    {review.userID !== userEmail ?
+                    <div className="bg-white width-200">
+                        <p>{review.comment}</p>
+                        <StarRating readOnly={true} initialRating={review.rating} />
+                        <p> Reviewed by {review.userID.split("@")[0]}</p>
+                    </div> : null}
+                    <div>
+                    {userEmail == 'admin@gmail.com' && review.userID != 'admin@gmail.com'? 
+                    
+                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg"> Delete Review </button> : null}
+                    </div>
+                    </div>
+                ))}
+            </div>
             {/* Nedre div for kommentarer/rating */}
             {/* <div className="bottom ml-20">
                     <CommentForm/>
