@@ -135,7 +135,7 @@ const Filter = () => {
     return (
         <div>
             <div className="navbar navbar-expand-lg shadow-md pb-5 px-10 bg-bigBoy relative flex items-center w-full justify-center space-x-10">
-                <p>Filters: </p>
+                <h1>Filters: </h1>
                 <DownDrop items={genres} text="Genres" />
                 <div className="space-y-2 relative bg-current">
                     <DownDrop items={releaseYear} text="Release Year" />

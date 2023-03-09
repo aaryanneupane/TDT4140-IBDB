@@ -1,0 +1,17 @@
+
+
+.dark .searchbar-text {
+    color: black;
+}
+
+.dark .search-result {
+    background-color: #292929;
+}
+
+.dark .search-result-text {
+    background-color: #292929;
+}
+
+.dark .search-result-text:hover {
+    background-color: #DD7973;
+}

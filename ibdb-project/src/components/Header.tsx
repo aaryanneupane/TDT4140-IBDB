@@ -60,7 +60,7 @@ const Header = () => {
     {
       key: '1',
       label: (
-        <ScrollIntoView onClick={() => listView()} selector="#recentlyReleased">
+        <ScrollIntoView className="menu-choice" onClick={() => listView()} selector="#recentlyReleased">
           <button>
             Recently Released
           </button>
@@ -71,7 +71,7 @@ const Header = () => {
       key: '2',
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#comingSoon">
-          <button>
+          <button className="menu-choice">
             Coming Soon
           </button>
         </ScrollIntoView>
@@ -81,7 +81,7 @@ const Header = () => {
       key: '3',
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#topBooks">
-          <button>
+          <button className="menu-choice">
             Top Books
           </button>
         </ScrollIntoView>
@@ -91,7 +91,7 @@ const Header = () => {
       key: '4',
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#RATI">
-          <button>
+          <button className="menu-choice">
             Recently added to IBDb
           </button>
         </ScrollIntoView>
@@ -101,7 +101,7 @@ const Header = () => {
       key: '5',
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#RATI">
-          <button>
+          <button className="menu-choice">
             My Rated Books
           </button>
         </ScrollIntoView>
@@ -111,7 +111,7 @@ const Header = () => {
       key: '6',
       label: (
         <ScrollIntoView onClick={() => listView()} selector="">
-          <button>
+          <button className="menu-choice">
             My Custom List 1
           </button>
         </ScrollIntoView>
@@ -124,14 +124,14 @@ const Header = () => {
       key: '1',
       label: user ?
       <div>
-        <button className="w-full" onClick={() => signOut(auth)}>
+        <button className="menu-choice w-full" onClick={() => signOut(auth)}>
           Sign Out
         </button >
         <p className='user-email'>
           {user.email}
         </p>
       </div>
-        : <button className="w-full" onClick= {() => {setPopupVisible(true)}}>
+        : <button className="menu-choice w-full" onClick= {() => {setPopupVisible(true)}}>
           Sign in
         </button>,
     },

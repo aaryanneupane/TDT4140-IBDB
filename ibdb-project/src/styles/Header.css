@@ -3,6 +3,13 @@ Button {
   font-size: 1.2rem;
   font-weight: 500;
 }
+ 
+.menu-choice {
+  display: flex;
+  width: 100%;
+  border-radius: 4px;
+  justify-content: start;
+}
 
 .dark .header-button {
   background-color: #4d4d4d;
@@ -13,9 +20,22 @@ Button {
   color: white;
 }
 
+.dark .menu-choice {
+  display: flex;
+  background-color: #4d4d4d;
+  color: white;
+  width: 100%;
+  border-radius: 4px;
+  justify-content: start;
+}
+
 .user-email {
   font-size: 14px;
   color: grey;
+}
+
+.dark .user-email {
+  background-color: #4d4d4d;
 }
 
 .toggle {
