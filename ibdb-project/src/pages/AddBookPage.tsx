@@ -1,4 +1,3 @@
-import { doc, setDoc } from 'firebase/firestore';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import firebaseControl from '../firebaseControl';
@@ -30,7 +29,7 @@ const AddBookPage = () => {
             setDescription('');
             setImgURL('');
             
-            //Navigate to the bookpage for the new book (Added await in the addbook function and implemented navigate)
+            //Navigate to the bookpage for the new book 
            const newBookId : number = (await firebaseController.findLength()) - 1 
             navigate(`/bookPage/${newBookId}`);
         }
