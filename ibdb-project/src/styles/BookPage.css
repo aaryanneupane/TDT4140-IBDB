@@ -48,6 +48,30 @@ body{
     color: red;
 }
 
+.edit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    position: relative;
+    border-radius: 8px;
+    padding: 32px;
+    height: 300px;
+    width: 640px;
+    background-color: #F6f9FF;
+}
+
 #title {
     font-weight: bold;
     font-size: xx-large;

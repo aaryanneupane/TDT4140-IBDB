@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, DocumentData, deleteDoc } from 'firebase/firestore';
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
 import 'firebase/auth';
@@ -79,18 +79,22 @@ class firebaseControl {
   }
 
 
-  async addReview(bookID: string, comment: string, rating: number, userID: string) {
+  async addReview(review: DocumentData) {
     //Find the id, equal to the number of books
-    const id: string = (await this.findReviewLength()).toString();
-    console.log(id)
+    const id: string = review.userID + review.bookID;
     try {
 
-      await setDoc(doc(db, "reviews", id), {
-        bookID: bookID,
-        comment: comment,
-        rating: rating,
-        userID: userID,
-      });
+      await setDoc(doc(db, "reviews", id), review);
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  async deleteReview(review: DocumentData) {
+    const id: string = review.userID + review.bookID;
+    try {
+      await deleteDoc(doc(db, "reviews", id));
     }
     catch (error) {
       console.log(error)
@@ -99,6 +103,6 @@ class firebaseControl {
 
 
 
-  };
+};
 
 export default firebaseControl;
