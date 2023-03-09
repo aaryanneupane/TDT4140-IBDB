@@ -1,97 +1,167 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import DownDrop from './DownDrop';
 import '../styles/Header.css';
 import SearchBar from './SearchBar';
+import LoginPopup from './LoginPopup';
 import { MenuProps } from 'antd';
+import ScrollIntoView from 'react-scroll-into-view';
+import { auth } from '../firebaseControl';
+import { User, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useNavigate } from "react-router-dom";
+
 
 const Header = () => {
 
-    const [filterClicked, setFilterClicked] = useState(false);
-    const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  const [filterClicked, setFilterClicked] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const [visibleAddBook, setVisibleAddBook] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  const navigate = useNavigate();
 
-    const handleHideFilter = () => {
-        setFilterClicked(false);
-        setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
-    }
+  let admins: string[] = ['admin@gmail.com'];
 
-    const handleShowFilter = () => {
-        setFilterClicked(true);
-        setDivClass("sticky top-0 z-30 navbar navbar-expand-lg py-5 px-10 relative bg-bigBoy");
-    }
+  useEffect(() => {
+    onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        setUser(user);
+        if (user.email != null && admins.includes(user.email)) {
+          setVisibleAddBook(true);
+        } else {
+          setVisibleAddBook(false);
+        }
+      } else {
+        setUser(null);
+        setVisibleAddBook(false);
+      }
+    });
+  }, []);
 
+  const hideFilter = () => {
+    setFilterClicked(false);
+    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  }
 
-    const items: MenuProps['items'] = [
-        {
-          key: '1',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Recently Released
-            </a>
-          ),
-        },
-        {
-          key: '2',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Coming Soon
-            </a>
-          ),
-        },
-        {
-          key: '3',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Top Books
-            </a>
-          ),
-        },
-        {
-          key: '4',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              Recently added to IBDb
-            </a>
-          ),
-        },
-        {
-          key: '5',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              My Rated Books
-            </a>
-          ),
-        },
-        {
-          key: '6',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://instabart.no/">
-              My Custom List 1
-            </a>
-          ),
-        },
-      ];
+  const showFilter = () => {
+    setFilterClicked(true);
+    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg py-5 px-10 relative bg-bigBoy");
+  }
 
-    return (      
-        < div className= {divClass} >
-            <div className="flex items-center w-full justify-between">
-                <button onClick={handleHideFilter}>
-                    <Link to="/" className="px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg " >IBDb</Link>
-                </button>
-                <DownDrop items={items} text='Menu'/>
-                <SearchBar />
-                <button>
-                    {filterClicked ?
-                        <Link to="/" onClick={handleHideFilter} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Hide Filter</Link>
-                        : <Link to="/filteredBooks" onClick={handleShowFilter} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
-                    }
-                </button>
-                
-                <button>
-                    <Link to=" " className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg" >Log In</Link>
-                </button>
-            </div>
-        </div>)
+  const listView = () => {
+    navigate(`/`); 
+    setFilterClicked(false);
+    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  }
+
+  const lists: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <ScrollIntoView onClick={() => listView()} selector="#recentlyReleased">
+          <button>
+            Recently Released
+          </button>
+        </ScrollIntoView>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <ScrollIntoView onClick={() => listView()} selector="#comingSoon">
+          <button>
+            Coming Soon
+          </button>
+        </ScrollIntoView>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <ScrollIntoView onClick={() => listView()} selector="#topBooks">
+          <button>
+            Top Books
+          </button>
+        </ScrollIntoView>
+      ),
+    },
+    {
+      key: '4',
+      label: (
+        <ScrollIntoView onClick={() => listView()} selector="#RATI">
+          <button>
+            Recently added to IBDb
+          </button>
+        </ScrollIntoView>
+      ),
+    },
+    {
+      key: '5',
+      label: (
+        <ScrollIntoView onClick={() => listView()} selector="#RATI">
+          <button>
+            My Rated Books
+          </button>
+        </ScrollIntoView>
+      ),
+    },
+    {
+      key: '6',
+      label: (
+        <ScrollIntoView onClick={() => listView()} selector="">
+          <button>
+            My Custom List 1
+          </button>
+        </ScrollIntoView>
+      ),
+    },
+  ];
+
+  const profile: MenuProps['items'] = [
+    {
+      key: '1',
+      label: user ?
+      <div>
+        <button className="w-full" onClick={() => signOut(auth)}>
+          Sign Out
+        </button >
+        <p className='user-email'>
+          {user.email}
+        </p>
+      </div>
+        : <button className="w-full" onClick= {() => {setPopupVisible(true)}}>
+          Sign in
+        </button>,
+    },
+    {
+      key: '2',
+      label: <button className='w-full'>Darkmode</button>,
+    },
+  ];
+
+  return (
+    < div className={divClass} >
+      <div className="flex items-center w-full justify-between">
+        <button onClick={hideFilter}>
+          <Link to="/" className="px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg " >IBDb</Link>
+        </button>
+        <DownDrop items={lists} text='Menu' />
+        <SearchBar />
+        <button>
+          {!filterClicked ?
+            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            : null
+          }
+        </button>
+        {visibleAddBook ?
+          <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
+          : null}
+        <div>
+          <DownDrop items={profile} text='Profile' />
+        </div>
+        <LoginPopup visible={popupVisible} setVisible={setPopupVisible}/>
+      </div>
+    </div>)
 }
 
 export default Header;

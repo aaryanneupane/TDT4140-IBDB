@@ -12,7 +12,7 @@ module.exports = {
       kulText: "#4D4D4D",
       mindreKulText: "#282828",
       hvit: "#FFFFFF",
-      gray: "#A9A9A9"
+      graa: "#E5E7EB"
     },
 
     boxShadow: {
