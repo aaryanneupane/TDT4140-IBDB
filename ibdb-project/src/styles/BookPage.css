@@ -27,6 +27,7 @@ body{
     overflow: hidden;
     margin-top: 40px;
     margin-bottom: 20px;
+    padding-right: 20px;
 } 
 
 .center {
@@ -40,7 +41,7 @@ body{
 }
 
 .here {
-    color: blue;
+    color: #DD7973;
     cursor: pointer;
 }
 
@@ -75,7 +76,6 @@ margin-bottom: 10px;
 
 .genre {
     font-size: large;
-    font-weight: bold;
     color: rgb(109, 109, 109);
 }
 
@@ -120,21 +120,26 @@ margin-bottom: 10px;
 }
 
 .reviewSection {
-    background-color: white;
     margin-top: 40px;
-    border-color: black;
+    
+    margin-right:40px;
 }
 
 .reviewSection text{
     width: 75%;
     float: right;
-    border-color:black; 
+}
+
+.weakText{
+    color: grey;
+    
 }
 
 .commentBox{
     border: .000;
     margin-top: 20px;
-    border-color: black;
+    border-top: 2px solid grey;
+    padding-top: 10px; 
     
 }
 

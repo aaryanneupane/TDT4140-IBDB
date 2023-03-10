@@ -110,21 +110,6 @@ const BookPage = () => {
                 <img className='center image' src={book?.imgURL} alt={book?.imgURL} />
                 <div className='center starRating'>
                     <div className="bottom w-full flex flex-col items-center justify-between ">
-                        {alreadyReviewed ?
-                            <div>
-                                <p> Your review of this book </p>
-                                <StarRating readOnly={true} initialRating={userRating} />
-                                <p> Change your review <u className="here">here</u> </p>
-                            </div>
-                            :
-                            <div>
-                                {!reviewAdded ?
-                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
-                                    : null}
-                                <p className="error-message">{errorMessage}</p>
-                            </div>
-                        }
-
                         {showCommentInput && (
                             <div className="flex flex-col justify-between items-center">
                                 <StarRating initialRating={rating} onClick={(rating) => { setRating(rating) }} />
@@ -145,13 +130,6 @@ const BookPage = () => {
                                 }
                             </div>
                         )}
-                        {reviewAdded ?
-                            <div>
-                                <p> Your review of this book </p>
-                                <StarRating readOnly={true} initialRating={rating} />
-                                <p> Change your review <u className="here">here</u> </p>
-                            </div> : null}
-
                     </div>
                 </div>
             </div>
@@ -189,15 +167,37 @@ const BookPage = () => {
                     <li className='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
                     <li className='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>
+            {alreadyReviewed ?
+                            <div>
+                                <p> Your review  </p>
+                                <StarRating theme={{size: 30}} readOnly={true} initialRating={userRating} />
+                                <p> Edit your review <u className="here">here</u> </p>
+                            </div>
+                            :
+                            <div>
+                                {!reviewAdded ?
+                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
+                                    : null}
+                                <p className="error-message">{errorMessage}</p>
+                            </div>
+                        }
+
+            {reviewAdded ?
+                            <div>
+                                <p> Your review </p>
+                                <StarRating theme={{size: 30}} readOnly={true} initialRating={rating} />
+                                <p>userReview.comment</p>
+                                <p> Edit your review <u className="here">here</u> </p>
+                            </div> : null}
             <div className="reviewSection">
-                <p className='text-2xl'>User Reviews</p>
+                <p className='text-2xl'>Other Reviews</p>
                 {reviews.map((review) => (
-                    <div className="commentBox">
+                    <div >
                     {review.userID!== userEmail ?
-                    <div>
-                        <StarRating readOnly={true} initialRating={review.rating} />
+                    <div className="commentBox">
+                        <StarRating theme={{size: 30}} readOnly={true} initialRating={review.rating} />
                         <p>{review.comment}</p>
-                        <p> Reviewed by {review.userID.split("@")[0]}</p>
+                        <p className = "genre"> Reviewed by {review.userID.split("@")[0]}</p>
                     </div> : null}
                     <div>
                     {userEmail == 'admin@gmail.com' && review.userID!= 'admin@gmail.com'? 
