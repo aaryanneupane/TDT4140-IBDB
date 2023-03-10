@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 const Header = () => {
 
   const [filterClicked, setFilterClicked] = useState(false);
-  const [popUpType, setPopUpType] = useState('');
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
   const [user, setUser] = useState<User | null>(null);
@@ -128,10 +127,6 @@ const Header = () => {
   const profile: MenuProps['items'] = [
     {
       key: '1',
-      label: <button className='w-full'>Darkmode</button>,
-    },
-    {
-      key: '2',
       label: user ?
       <div>
         <button className="w-full" onClick={signOutUser}>
@@ -141,16 +136,13 @@ const Header = () => {
           {user.email}
         </p>
       </div>
-        : <button className="w-full" onClick= {() => {setPopupVisible(true); setPopUpType('login')}}>
-          Log in
+        : <button className="w-full" onClick= {() => {setPopupVisible(true)}}>
+          Sign in
         </button>,
     },
     {
-      key: '3',
-      label:
-        <button className="w-full" onClick= {() => {setPopupVisible(true); setPopUpType('signup')}}>
-          Sign up
-        </button>
+      key: '2',
+      label: <button className='w-full'>Darkmode</button>,
     },
   ];
 
@@ -164,17 +156,17 @@ const Header = () => {
         <SearchBar />
         <button>
           {!filterClicked ?
-            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5" >Show Filter</Link>
             : null
           }
         </button>
         {visibleAddBook ?
-          <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
+          <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
           : null}
         <div>
           <DownDrop items={profile} text='Profile' />
         </div>
-        <LoginPopup visible={popupVisible} setVisible={setPopupVisible} loginOrSignup={popUpType}/>
+        <LoginPopup visible={popupVisible} setVisible={setPopupVisible}/>
       </div>
     </div>)
 }

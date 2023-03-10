@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { MouseEventHandler, useCallback } from 'react';
 import firebaseControl from '../firebaseControl';
 import { useState, useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
@@ -16,16 +16,19 @@ const BookPage = () => {
     const userEmail = localStorage.getItem('user')?.replace(/"/g, '');
     const firebaseController = new firebaseControl();
 
-    const [book, setBook] = useState<any>();
     const [reviews, setReviews] = useState<DocumentData[]>([]);
-    const [alreadyReviewed, setAlreadyReviewed] = useState<boolean>(false);
+    const [userReview, setUserReview] = useState<DocumentData>();
+    const [reviewToDelete, setReviewToDelete] = useState<DocumentData>([]);
+    const [book, setBook] = useState<any>();
     const [rating, setRating] = useState<number>(0);
     const [averageRating, setAverageRating] = useState<number>(0);
-    const [amountOfRatings, setAmountOfRatings] = useState<number>(0);
+    const [amountOfRatingsForBook, setAmountOfRatingsForBook] = useState<number>(0);
     const [reviewAdded, setReviewAdded] = useState(false);
-    const [userRating, setUserRating] = useState<number>();
+    const [alreadyReviewed, setAlreadyReviewed] = useState<boolean>(false);
+    const [hideReviewToDelete, setHideReviewToDelete] = useState(false);
     const [showFullText, setShowFullText] = useState(false);
-    const [showCommentInput, setShowCommentInput] = useState(false);
+    const [visibleReviewPopup, setVisibleReviewPopup] = useState(false);
+    const [visibleDeletePopup, setVisibleDeletePopup] = useState(false);
     const [commentText, setCommentText] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -53,17 +56,16 @@ const BookPage = () => {
         var counter = 0;
 
         thisBookReviews.forEach(review => {
-            const reviewUser = review.userID;
             sum += review.rating;
             counter++;
-            if (reviewUser === userEmail) {
+            if (review.userID === userEmail) {
                 setAlreadyReviewed(true);
-                setUserRating(review.rating);
+                setUserReview(review);
             }
         });
 
-        setAverageRating(sum / counter);
-        setAmountOfRatings(counter);
+        setAverageRating(Number((sum / counter).toFixed(1)));
+        setAmountOfRatingsForBook(counter);
 
     }, [bookID]);
 
@@ -85,13 +87,19 @@ const BookPage = () => {
     function handleCommentSubmit() {
 
         if (userEmail) {
-
-            firebaseController.addReview(bookID, commentText, rating, userEmail);
-            console.log(bookID);
-            console.log(commentText);
-            console.log(rating);
-            console.log(userEmail);
-            setShowCommentInput(false);
+            if (userReview) {
+                firebaseController.deleteReview(userReview);
+            }
+            const review: DocumentData = {
+                bookID: bookID,
+                comment: commentText,
+                rating: rating,
+                userID: userEmail,
+            };
+            firebaseController.addReview(review);
+            setUserReview(review);
+            setVisibleReviewPopup(false);
+            setAlreadyReviewed(false);
             setReviewAdded(true);
         }
     };
@@ -100,8 +108,37 @@ const BookPage = () => {
         if (!userEmail) {
             setErrorMessage("You need to be logged in to rate books");
         } else {
-            setShowCommentInput(true);
+            setVisibleReviewPopup(true);
         }
+    }
+
+    const handleEdit = () => {
+        setCommentText(userReview?.comment);
+        setRating(userReview?.rating);
+        setVisibleReviewPopup(true);
+    }
+
+    const closeOrOpen: MouseEventHandler<HTMLDivElement> = (e) => {
+        const isClose = (e.target as HTMLElement).closest("#popup")
+        if (!isClose) {
+            setVisibleReviewPopup(false);
+        }
+    }
+
+    const deleteReview = (review: DocumentData) => {
+        setVisibleDeletePopup(true);
+        setReviewToDelete(review);
+    }
+
+    const handleConfirm = () => {
+        firebaseController.deleteReview(reviewToDelete);
+        setVisibleDeletePopup(false);
+        setVisibleReviewPopup(false);
+        setAlreadyReviewed(false);
+        setReviewAdded(false);
+        setHideReviewToDelete(true);
+        setCommentText('');
+        setRating(0);
     }
 
     return (
@@ -110,29 +147,44 @@ const BookPage = () => {
                 <img className='center image' src={book?.imgURL} alt={book?.imgURL} />
                 <div className='center starRating'>
                     <div className="bottom w-full flex flex-col items-center justify-between ">
-                        {showCommentInput && (
-                            <div className="flex flex-col justify-between items-center">
-                                <StarRating initialRating={rating} onClick={(rating) => { setRating(rating) }} />
-                                <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
-                                    value={commentText}
-                                    onChange={handleCommentChange}
-                                    placeholder="Add a review to your rating"
-                                    cols={28}
-                                    style={{ height: 'auto', minHeight: '100px' }} />
-                                {commentText === "" ?
-                                    <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                                        Submit without comment
-                                    </button>
-                                    :
-                                    <button onClick={() => handleCommentSubmit()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                                        Submit with comment
-                                    </button>
-                                }
-                            </div>
-                        )}
+                        {visibleReviewPopup ?
+                            <div>
+                                <div className="edit" onClick={closeOrOpen}>
+                                    <div className="edit-inner" id="popup">
+                                        <StarRating initialRating={rating} onClick={(rating) => { setRating(rating) }} />
+
+                                        <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
+                                            value={commentText}
+                                            onChange={handleCommentChange}
+                                            placeholder="Add a review to your rating"
+                                            cols={28}
+                                            style={{ height: 'auto', minHeight: '100px' }} />
+                                        <div className="flex">
+                                        {commentText === "" ?
+                                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                                Submit without comment
+                                            </button>
+                                            :
+                                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                                Submit with comment
+                                            </button>
+                                        }
+                                        {userReview ?
+                                            <button onClick={() => deleteReview(userReview)} className="text-base mt-2 px-5 py-1 rounded-lg bg-kulTheme shadow-0 hover:shadow-lg">
+                                                Delete review
+                                            </button> : null
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> : null
+                        }
                     </div>
-                </div>
-            </div>
+                    <div id="reviewSection">
+                        <p id="info"></p>
+                    </div >
+                </div >
+            </div >
             <div className='right'>
                 <div className="title">
                     <p className='text-4xl'>{book?.title}</p>
@@ -152,7 +204,7 @@ const BookPage = () => {
                         </li>
                     </ul>
                     <div className="amountOfRatings">
-                        {amountOfRatings} ratings
+                        {amountOfRatingsForBook} ratings
                     </div>
                 </div>
                 <div className="center" id='description'>
@@ -167,56 +219,61 @@ const BookPage = () => {
                     <li className='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
                     <li className='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>
-            {alreadyReviewed ?
-                            <div>
-                                <p> Your review  </p>
-                                <StarRating theme={{size: 30}} readOnly={true} initialRating={userRating} />
-                                <p> Edit your review <u className="here">here</u> </p>
-                            </div>
-                            :
-                            <div>
-                                {!reviewAdded ?
-                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
-                                    : null}
-                                <p className="error-message">{errorMessage}</p>
-                            </div>
-                        }
-
-            {reviewAdded ?
-                            <div>
-                                <p> Your review </p>
-                                <StarRating theme={{size: 30}} readOnly={true} initialRating={rating} />
-                                <p>userReview.comment</p>
-                                <p> Edit your review <u className="here">here</u> </p>
-                            </div> : null}
-            <div className="reviewSection">
-                <p className='text-2xl'>Other Reviews</p>
-                {reviews.map((review) => (
-                    <div >
-                    {review.userID!== userEmail ?
+                { alreadyReviewed ?
                     <div className="commentBox">
-                        <StarRating theme={{size: 30}} readOnly={true} initialRating={review.rating} />
-                        <p>{review.comment}</p>
-                        <p className = "genre"> Reviewed by {review.userID.split("@")[0]}</p>
-                    </div> : null}
+                        <p> Your review  <u className="edit-underline" onClick={() => {handleEdit()}}> edit </u> </p>
+                        <StarRating theme={{ size: 30 }} readOnly={true} initialRating={userReview?.rating} />
+                        <p>{userReview?.comment}</p>
+                        
+                    </div>
+                    :
                     <div>
-                    {userEmail == 'admin@gmail.com' && review.userID!= 'admin@gmail.com'? 
-                    
-                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg"> Delete Review </button> : null}
-                    </div>
-                    </div>
-                ))}
+                        {!reviewAdded ?
+                            <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
+                            : null}
+                        <p className="error-message">{errorMessage}</p>
+                    </div> }
+
+                { reviewAdded ?
+                    <div>
+                        <p> Your review <u className="edit-underline" onClick={() => {handleEdit()}}> edit </u> </p>
+                        <StarRating theme={{ size: 30 }} readOnly={true} initialRating={rating} />
+                        <p>{userReview?.comment}</p>
+                    </div> : null }
+                { visibleDeletePopup ?
+                    <div>
+                        <div className="edit" onClick={closeOrOpen}>
+                            <div className="edit-inner" id="popup">
+                                <p>Are you sure you want to delete this review? </p>
+                                <button onClick={() => handleConfirm()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                    Confirm
+                                </button>
+                                <button onClick={() => setVisibleDeletePopup(false)} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div> : null }
+                <div className="reviewSection">
+                    <p >Other Reviews</p>
+                    {reviews.map((review) => (
+                        <div >
+                            {review.userID !== userEmail && !hideReviewToDelete ?
+                                <div className="commentBox">
+                                    <StarRating theme={{ size: 30 }} readOnly={true} initialRating={review.rating} />
+                                    <p>{review.comment}</p>
+                                    <p className="genre"> Reviewed by {review.userID.split("@")[0]}</p>
+                                </div> : null}
+                            <div>
+                                {userEmail == 'admin@gmail.com' && review.userID != 'admin@gmail.com' && !hideReviewToDelete ?
+
+                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg"> Delete Review </button> : null}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            </div>
-            {/* Nedre div for kommentarer/rating */}
-            {/* <div className="bottom ml-20">
-                    <CommentForm/>
-                    <div className="reviewSection">
-                        <h2>Previous reviews</h2>
-                        <text name="review" className="info"></text>
-                    </div>
-            </div> */}
-        </div>
+        </div >
     )
 }
 
