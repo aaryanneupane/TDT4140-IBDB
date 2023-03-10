@@ -27,10 +27,24 @@
     <style>
       #body {
         background-color: #f6f9ff;
+        --scrollbarBG: #f6f9ff;
+        --thumbBG: #E1726B;
       }
 
       .dark #body {
         background-color: #4d4d4d;
+        --scrollbarBG: #3d3d3d;
+        --thumbBG: #E1726B;
+      }
+
+      body::-webkit-scrollbar {
+        width: 9px;
+      }
+      
+      body::-webkit-scrollbar-thumb {
+        background-color: var(--thumbBG) ;
+        border-radius: 6px;
+        border: 3px solid var(--scrollbarBG);
       }
     </style>
     <title>IBDb</title>

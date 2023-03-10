@@ -3,7 +3,6 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Card from "./Card";
 import { DocumentData } from "firebase/firestore";
 
-
 const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
   let sortedBooks = [...books];
   if (filter === "news") {
