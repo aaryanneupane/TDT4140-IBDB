@@ -12,15 +12,25 @@ cd ibdb-project
 Deretter må man installere forskjellige pakker for at å kunne åpne nettsiden:
 ```
 npm install
-npm install firebase
-npm install react-router-dom@6
-npm install -D tailwindcss
-npm install antd
-npm install star-rating-react-ts
 ```
 
-For å åpne nettsiden kjøres:
+Nettsiden kan nå åpnes på to forskjellige måter:
+
+### Alternativ 1
+
 ```
 npm start
 ```
 Da vil nettsiden åpnes i en localhost i nettleseren din.
+
+### Alternativ 2
+
+```
+sudo npm install -g firebase-tools
+firebase login
+npm run build
+```
+
+Da vil du få en egen link i terminalen som kan deles med andre.
+
+
