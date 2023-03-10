@@ -107,8 +107,8 @@ const BookPage = () => {
     return (
         <div>
             <div className='left'>
-                <img className='center' id="image" src={book?.imgURL} alt={book?.imgURL} />
-                <div className='center' id="starRating">
+                <img className='center image' src={book?.imgURL} alt={book?.imgURL} />
+                <div className='center starRating'>
                     <div className="bottom w-full flex flex-col items-center justify-between ">
                         {alreadyReviewed ?
                             <div>
@@ -153,31 +153,31 @@ const BookPage = () => {
                             </div> : null}
 
                     </div>
-                    <div id="reviewSection">
-                        <p id="info"></p>
+                    <div className="reviewSection">
+                        <p className="info"></p>
 
                     </div>
                 </div>
             </div>
             <div className='right'>
-                <div id="title">
-                    <p>{book?.title}</p>
+                <div className="title">
+                    <p className='text-4xl'>{book?.title}</p>
                 </div>
-                <div id="author">
+                <div className="author">
                     <p>{book?.author}</p>
                 </div>
                 <div>
-                    <ul id="rating">
-                        <li id="rating">
+                    <ul className="rating">
+                        <li className="rating">
                             {book && (
                                 <StarRating readOnly={true} initialRating={averageRating} />
                             )}
                         </li>
-                        <li id="rating">
+                        <li className="rating">
                             {averageRating} / 5
                         </li>
                     </ul>
-                    <div id="rating">
+                    <div className="amountOfRatings">
                         {amountOfRatings} ratings
                     </div>
                 </div>
@@ -185,38 +185,39 @@ const BookPage = () => {
                     <p>
                         {displayText}
                     </p>
-                    <button id="genre" onClick={toggleShowFullText}>
+                    <button className="genre" onClick={toggleShowFullText}>
                         {showFullText ? "Show less" : "Show more"}
                     </button>
                 </div>
-                <ul id='info'>
-                    <li id='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
-                    <li id='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
+                <ul className='info'>
+                    <li className='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
+                    <li className='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>
-            </div>
-            <div className="pt-400">
+            <div className="reviewSection">
+                <p className='text-2xl'>User Reviews</p>
                 {reviews.map((review) => (
+                    <div className="commentBox">
+                    {review.userID!== userEmail ?
                     <div>
-                    {review.userID !== userEmail ?
-                    <div className="bg-white width-200">
-                        <p>{review.comment}</p>
                         <StarRating readOnly={true} initialRating={review.rating} />
+                        <p>{review.comment}</p>
                         <p> Reviewed by {review.userID.split("@")[0]}</p>
                     </div> : null}
                     <div>
-                    {userEmail == 'admin@gmail.com' && review.userID != 'admin@gmail.com'? 
+                    {userEmail == 'admin@gmail.com' && review.userID!= 'admin@gmail.com'? 
                     
                     <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg"> Delete Review </button> : null}
                     </div>
                     </div>
                 ))}
             </div>
+            </div>
             {/* Nedre div for kommentarer/rating */}
             {/* <div className="bottom ml-20">
                     <CommentForm/>
-                    <div id="reviewSection">
+                    <div className="reviewSection">
                         <h2>Previous reviews</h2>
-                        <text name="review" id="info"></text>
+                        <text name="review" className="info"></text>
                     </div>
             </div> */}
         </div>

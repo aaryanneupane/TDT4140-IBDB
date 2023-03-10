@@ -13,7 +13,7 @@ body{
 }
 
 .left {
-    width: 30%;
+    width: 33%;
     height: 100%;
     float: left;
     overflow: hidden;
@@ -22,7 +22,7 @@ body{
 
 .right {
     height: 100%;
-    width : 70%;
+    width : 67%;
     float: left;
     overflow: hidden;
     margin-top: 40px;
@@ -48,7 +48,7 @@ body{
     color: red;
 }
 
-#title {
+.title {
     font-weight: bold;
     font-size: xx-large;
     line-height: 2.5rem;
@@ -56,91 +56,88 @@ body{
     margin-left: 5px;
 }
 
-#description {
+.description {
 margin-right: 200px;
 font-size: large;
 margin-bottom: 10px;
 }
 
-#image {
+.image {
     border-radius: 18px;
     width: 260px;
 }
 
-#author {
+.author {
     margin: 10px 0; 
     font-size: medium;
     margin-left: 10px;
 }
 
-#genre {
+.genre {
     font-size: large;
     font-weight: bold;
     color: rgb(109, 109, 109);
 }
 
-#starRating {
-    margin-top: 20px;
-    width: 55%;
+.starRating {
+    margin-top: 5px;
+    width: 100%;
     /* padding-left: 50px; */
 }
 
-#heartButton {
-    margin-top: 20px;
-    /* padding-left: 50px; */
-}
-
-#heartButton li{
-    display: inline;
-}
-
-#heartButton svg{
-    display: inline;
-}
-
-#rating {
-    margin-bottom: 20px;
+.rating {
+    margin-bottom: 0px;
     margin-left: 10px;
 }
 
-#rating section{
+.rating section{
     width: 22%;
     display: inline;
 }
 
-#rating ul{
+.rating ul{
     margin-left: 20px;
 }
 
-#showMoreButton {
+.showMoreButton {
     margin-bottom: 20px;
 }
 
-#rating li {
+.rating li {
     display: inline;
-    margin: 0px 15px;
+    margin: 0px 0px;
     color: rgb(70, 70, 70);
     font-size: medium;
     font-weight: bold;
 }
 
-#info {
+
+.info {
     font-size: 14px;
     margin: 10px;
     margin-left: 10px;
     font-weight: 600;
 }
 
-#reviewSection {
+.reviewSection {
+    margin-top: 40px;
+}
+
+.reviewSection text{
     width: 75%;
     float: right;
 }
 
-#reviewSection text{
-    width: 75%;
-    float: right;
+.commentBox{
+    background-color: white;
+    border: .000;
+    margin-top: 20px;
 }
 
-#showMoreButton {
+.showMoreButton {
     color: gray;
+}
+
+.amountOfRatings {
+    margin-bottom: 20px;
 }
