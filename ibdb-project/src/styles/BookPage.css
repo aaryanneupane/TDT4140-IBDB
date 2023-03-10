@@ -111,12 +111,14 @@ margin-bottom: 10px;
 #rating li {
     display: inline;
     margin: 0px 15px;
-    color: rgb(109, 109, 109);
+    color: rgb(81, 81, 81);
     font-size: medium;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 #info {
     font-size: 14px;
-    margin: 5px;
+    margin: 10px;
+    margin-left: 20px;
+    font-weight: 600;
 }
