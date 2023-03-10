@@ -149,12 +149,12 @@ const Header = () => {
         <SearchBar />
         <button>
           {!filterClicked ?
-            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            <Link to="/filteredBooks" onClick={showFilter} className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5" >Show Filter</Link>
             : null
           }
         </button>
         {visibleAddBook ?
-          <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
+          <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
           : null}
         <div>
           <DownDrop items={profile} text='Profile' />

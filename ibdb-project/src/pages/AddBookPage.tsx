@@ -35,6 +35,13 @@ const AddBookPage = () => {
         }
     }
     
+    //Control description are
+    const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setDescription(event.target.value);
+        event.target.style.height = "16"; // reset the height to auto
+        event.target.style.height = `${event.target.scrollHeight}px`; // set the height to the scroll height
+      };
+    
     
     
     useEffect(() => {
@@ -101,10 +108,11 @@ const AddBookPage = () => {
                 
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Description</label>
-                    <input type="text" 
-                        className="border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="Description" 
-                        value={description} onChange={(event) => {setDescription(event.target.value)}}/>
+                    <textarea
+                        className="input-field border text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-11"
+                        placeholder="Description"
+                        value={description}
+                        onChange={handleInputChange}/>
                 </div>
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Image URL</label>
