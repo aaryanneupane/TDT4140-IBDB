@@ -13,7 +13,7 @@ body{
 }
 
 .left {
-    width: 33%;
+    width: 25%;
     height: 100%;
     float: left;
     overflow: hidden;
@@ -22,7 +22,7 @@ body{
 
 .right {
     height: 100%;
-    width : 67%;
+    width : 75%;
     float: left;
     overflow: hidden;
     margin-top: 40px;
@@ -120,18 +120,22 @@ margin-bottom: 10px;
 }
 
 .reviewSection {
+    background-color: white;
     margin-top: 40px;
+    border-color: black;
 }
 
 .reviewSection text{
     width: 75%;
     float: right;
+    border-color:black; 
 }
 
 .commentBox{
-    background-color: white;
     border: .000;
     margin-top: 20px;
+    border-color: black;
+    
 }
 
 .showMoreButton {

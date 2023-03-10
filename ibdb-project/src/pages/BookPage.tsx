@@ -153,10 +153,6 @@ const BookPage = () => {
                             </div> : null}
 
                     </div>
-                    <div className="reviewSection">
-                        <p className="info"></p>
-
-                    </div>
                 </div>
             </div>
             <div className='right'>
