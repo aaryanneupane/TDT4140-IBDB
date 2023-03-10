@@ -24,7 +24,8 @@ const Header = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
-      if (user) {
+      if (user && user.email) {
+        localStorage.setItem('user', user.email);
         setUser(user);
         if (user.email != null && admins.includes(user.email)) {
           setVisibleAddBook(true);
@@ -32,6 +33,7 @@ const Header = () => {
           setVisibleAddBook(false);
         }
       } else {
+        localStorage.setItem('user', '');
         setUser(null);
         setVisibleAddBook(false);
       }
@@ -52,6 +54,11 @@ const Header = () => {
     navigate(`/`); 
     setFilterClicked(false);
     setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  }
+
+  const signOutUser = () => {
+    signOut(auth);
+    localStorage.setItem('user', '');
   }
 
   const lists: MenuProps['items'] = [
@@ -122,7 +129,7 @@ const Header = () => {
       key: '1',
       label: user ?
       <div>
-        <button className="w-full" onClick={() => signOut(auth)}>
+        <button className="w-full" onClick={signOutUser}>
           Sign Out
         </button >
         <p className='user-email'>

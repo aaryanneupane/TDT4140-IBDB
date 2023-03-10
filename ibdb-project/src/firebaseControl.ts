@@ -1,11 +1,11 @@
+import { getFirestore, collection, getDocs, DocumentData, deleteDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
 import { doc, setDoc } from "firebase/firestore";
-
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
 import 'firebase/auth';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAVZS1MZ7twZLXAGzOH2a4fUdk5PTixsoM",
@@ -22,7 +22,7 @@ const db = getFirestore(app);
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-export {auth, googleProvider};
+export { auth, googleProvider };
 
 
 
@@ -37,6 +37,13 @@ class firebaseControl {
     const bookSnapshot = await getDocs(books);
     const bookList = bookSnapshot.docs.map(doc => doc.data());
     return bookList;
+  };
+
+  async getReviews() {
+    const reviews = collection(db, 'reviews');
+    const reviewSnapshot = await getDocs(reviews);
+    const reviewList = reviewSnapshot.docs.map(doc => doc.data());
+    return reviewList;
   };
 
   getBookIds() {
@@ -56,17 +63,45 @@ class firebaseControl {
     return docData;
   }
 
-  listenForBookChanges = (callback: (updatedBooks: DocumentData[]) => void): (() => void) => {
-    const unsubscribe = firebase.firestore().collection("books")
+  listenForCollectionChanges = (collection: string, callback: (updatedCollection: DocumentData[]) => void): (() => void) => {
+    const unsubscribe = firebase.firestore().collection(collection)
       .onSnapshot((snapshot) => {
-        const updatedBooks: DocumentData[] = [];
+        const updateCollection: DocumentData[] = [];
         snapshot.forEach((doc) => {
-          updatedBooks.push(doc.data());
+          updateCollection.push(doc.data());
         });
-        callback(updatedBooks);
+        callback(updateCollection);
       });
     return unsubscribe;
   };
+
+  async findReviewLength() {
+    const amount: Number = (await this.getReviews()).length + 1;
+    return amount;
+  }
+
+
+  async addReview(review: DocumentData) {
+    //Find the id, equal to the number of books
+    const id: string = review.userID + review.bookID;
+    try {
+
+      await setDoc(doc(db, "reviews", id), review);
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  async deleteReview(review: DocumentData) {
+    const id: string = review.userID + review.bookID;
+    try {
+      await deleteDoc(doc(db, "reviews", id));
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   async findLength() {
     const amount : number = (await this.getBooks()).length + 1;
