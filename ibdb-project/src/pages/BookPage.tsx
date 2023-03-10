@@ -27,7 +27,6 @@ const BookPage = () => {
     const [reviewToDelete, setReviewToDelete] = useState<DocumentData>([]);
     const [hideReviewToDelete, setHideReviewToDelete] = useState(false);
     const [showFullText, setShowFullText] = useState(false);
-    //const [showCommentInput, setShowCommentInput] = useState(false);
     const [visibleReviewPopup, setVisibleReviewPopup] = useState(false);
     const [visibleDeletePopup, setVisibleDeletePopup] = useState(false);
     const [commentText, setCommentText] = useState("");
@@ -99,7 +98,6 @@ const BookPage = () => {
             };
             firebaseController.addReview(review);
             setUserReview(review);
-            //setShowCommentInput(false);
             setVisibleReviewPopup(false);
             setAlreadyReviewed(false);
             setReviewAdded(true);
@@ -110,7 +108,6 @@ const BookPage = () => {
         if (!userEmail) {
             setErrorMessage("You need to be logged in to rate books");
         } else {
-            //setShowCommentInput(true);
             setVisibleReviewPopup(true);
         }
     }
@@ -119,7 +116,6 @@ const BookPage = () => {
         setCommentText(userReview?.comment);
         setRating(userReview?.rating);
         setVisibleReviewPopup(true);
-        // setShowCommentInput(true);
     }
 
     const closeOrOpen: MouseEventHandler<HTMLDivElement> = (e) => {
@@ -141,6 +137,8 @@ const BookPage = () => {
         setAlreadyReviewed(false);
         setReviewAdded(false);
         setHideReviewToDelete(true);
+        setCommentText('');
+        setRating(0);
     }
 
     return (
@@ -276,15 +274,6 @@ const BookPage = () => {
                     </div>
                 ))}
             </div>
-
-            {/* Nedre div for kommentarer/rating */}
-            {/* <div className="bottom ml-20">
-                    <CommentForm/>
-                    <div id="reviewSection">
-                        <h2>Previous reviews</h2>
-                        <text name="review" id="info"></text>
-                    </div>
-            </div> */}
         </div>
     )
 }
