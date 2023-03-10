@@ -119,7 +119,7 @@ const AddBookPage = () => {
                         <div>
                             <label className="block mb-2 text-sm font-semibold">Ready to add the book!</label>
                             <button onClick={addThisBook} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
-                                Legg til bok
+                                Add book
                             </button>
                         </div>
                         : 
