@@ -28,7 +28,7 @@ const BookPage = () => {
 
     
     return (
-        <body>
+        <div id="body">
             <div className='left'>
                 <img className='center' id="image" src={book?.imgURL} alt={book?.imgURL}/>
                 <div className='center' id="starRating">
@@ -90,7 +90,7 @@ const BookPage = () => {
                     </li> */}
                 </ul>
             </div>
-        </body>
+        </div>
     )
 }
 
