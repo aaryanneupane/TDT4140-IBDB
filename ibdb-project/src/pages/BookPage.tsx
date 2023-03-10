@@ -237,7 +237,10 @@ const BookPage = () => {
                         {showFullText ? "Show less" : "Show more"}
                     </button>
                 </div>
-                <ul id='info'>
+                {/* <button id='showMoreButton'>
+                    Show more...
+                </button> */}
+                <ul>
                     <li id='info'>Genre: &emsp; &emsp; &emsp; &ensp; &nbsp; {book?.genre}</li>
                     <li id='info'>Release Year: &emsp; &nbsp; &nbsp; {book?.releaseYear}</li>
                 </ul>

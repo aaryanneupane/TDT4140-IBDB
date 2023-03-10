@@ -1,3 +1,5 @@
+
+
 .popup-button {
     padding: 3px 6px 3px 6px;
     width: 100px;
@@ -9,6 +11,16 @@
 
 .popup-button:hover {
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.logIn-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.signUp-buttons {
+    display: flex;
+    gap: 20px;
 }
 
 .google-button {
@@ -32,18 +44,40 @@
 }
 
 .close {
-    position: fixed;
+    position: relative;
     padding: 3px 8px 3px 8px;
-    border-radius: 8px;
-    top: 315px;
-    left: 1080px;
-    background-color: white;
+    bottom: 0%;
 }
 
+.top {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+}
 
+.logIn-signUp-flex {
+    display: flex;
+    flex-direction: column;
+} 
 
+.logIn-underline {
+    border-bottom: 4px solid #DD7973;
+}
 
-.login {
+.signUp-underline {
+    border-bottom: 4px solid #DD7973;
+}
+
+.grey-text {
+    color: rgba(0, 0, 0, 0.2);
+}
+
+.grey-text:hover {
+    color:black;
+    border-bottom: 4px solid rgba(0, 0, 0, 0.2);
+}
+
+.popupBackground {
     position: fixed;
     top: 0;
     left: 0;
@@ -55,22 +89,14 @@
     justify-content: center;
     align-items: center;
 }
-/* 
-.login-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
 
 .login-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    position: relative;
-    border-radius: 8px;
-    padding: 32px;
-    height: 300px;
-    width: 640px;
     background-color: #F6f9FF;
+    display: flex;
+    padding: 30px;
+    flex-direction: column;
+    border-radius: 8px;
+    gap: 10px;
 }
 
 .input {

@@ -1,9 +1,11 @@
 import { getFirestore, collection, getDocs, DocumentData, deleteDoc } from 'firebase/firestore';
+import { initializeApp } from 'firebase/app';
+import { doc, setDoc } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import 'firebase/compat/firestore';
 import 'firebase/auth';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAVZS1MZ7twZLXAGzOH2a4fUdk5PTixsoM",
@@ -101,7 +103,30 @@ class firebaseControl {
     }
   }
 
+  async findLength() {
+    const amount : number = (await this.getBooks()).length + 1;
+    return amount;
+  }
 
+  async addBook(title : string, author : string, genre : string, releaseYear : number, 
+    description : string, imgURL : string, rating : number) 
+    {
+      //Find the id, equal to the number of books
+    const id : string = (await this.findLength()).toString();
+      // Add a new document in collection "cities"
+    console.log(id)
+ 
+    await setDoc(doc(db, "books", id), {
+      title: title, 
+      author: author,
+      genre: genre,
+      releaseYear: releaseYear,
+      description: description,
+      imgURL: imgURL,
+      rating: rating,
+      id: id,
+    });
+    }
 
 };
 
