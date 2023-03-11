@@ -28,12 +28,25 @@ function App() {
       });
       localStorage.setItem('books', JSON.stringify(allBooks))
     }
-    const unsubscribe = firebaseController.listenForBookChanges((updatedBooks: DocumentData[]) => {
+    const unsubscribe = firebaseController.listenForCollectionChanges('books', (updatedBooks: DocumentData[]) => {
       localStorage.setItem('books', JSON.stringify(updatedBooks));
+    });
+
+    let allReviews: DocumentData[] = [];
+    const reviewsCached = localStorage.getItem("reviews");
+    if (!reviewsCached) {
+      firebaseController.getReviews().then((orgReviews) => {
+        allReviews = orgReviews;
+      });
+      localStorage.setItem('reviews', JSON.stringify(allReviews))
+    }
+    const unsubscribe2 = firebaseController.listenForCollectionChanges('reviews', (updatedReviews: DocumentData[]) => {
+      localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     });
 
     return () => {
       unsubscribe();
+      unsubscribe2();
     }
 
   }, []);

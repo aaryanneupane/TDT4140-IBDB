@@ -26,7 +26,8 @@ const Header = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
-      if (user) {
+      if (user && user.email) {
+        localStorage.setItem('user', user.email);
         setUser(user);
         if (user.email != null && admins.includes(user.email)) {
           setVisibleAddBook(true);
@@ -34,6 +35,7 @@ const Header = () => {
           setVisibleAddBook(false);
         }
       } else {
+        localStorage.setItem('user', '');
         setUser(null);
         setVisibleAddBook(false);
       }
@@ -54,6 +56,11 @@ const Header = () => {
     navigate(`/`); 
     setFilterClicked(false);
     setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  }
+
+  const signOutUser = () => {
+    signOut(auth);
+    localStorage.setItem('user', '');
   }
 
   const lists: MenuProps['items'] = [
@@ -124,7 +131,7 @@ const Header = () => {
       key: '1',
       label: user ?
       <div>
-        <button className="menu-choice w-full" onClick={() => signOut(auth)}>
+        <button className="menu-choice w-full" onClick={signOutUser}>
           Sign Out
         </button >
         <p className='user-email'>
@@ -151,12 +158,12 @@ const Header = () => {
         <SearchBar />
         <button>
           {!filterClicked ?
-            <Link to="/filteredBooks" onClick={showFilter} className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" >Show Filter</Link>
+            <Link to="/filteredBooks" onClick={showFilter} className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5" >Show Filter</Link>
             : null
           }
         </button>
         {visibleAddBook ?
-          <button className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
+          <button className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
           : null}
         <div>
           <DownDrop items={profile} text='Profile' />
