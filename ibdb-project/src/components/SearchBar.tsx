@@ -1,5 +1,5 @@
 import { DocumentData } from 'firebase/firestore';
-import React, { useState, useEffect} from 'react';
+import { useState, useEffect, useRef, MouseEventHandler} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -73,9 +73,6 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
   }, [result]) //What this does is update the variable showResults depending on whether there are any results available 
   
 
-
-  
-  
   const navigate = useNavigate();
 
   return (
@@ -85,6 +82,8 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
         placeholder="Title / Author" 
       onChange={(event)=> setValue(event.target.value)} 
+      onBlur={() => {setShowResults(false)}} //Removes the search results when on selected
+      onFocus={() => {if (result.length > 0) setShowResults(true);}} //Shows the search results when selected
       value ={value}/>
   
       {showResults && ( //This makes sure to only show the white box when there are results available
@@ -98,16 +97,16 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
 
   return (
       <div 
-      key={index} onClick={() => 
+      key={index} onMouseDown={() =>  //OnMouseDown() event fires before OnBlur() hence we are able to click a result before it disappearing
       {navigate(`/bookPage/${bookId}`);
       setValue(''); }}>
           <div className = 'cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1'>
             {result} 
-            <p className='font-medium italic '> {bookAuthor} </p>
+            <p className='text-sm italic '> {bookAuthor} </p>
             </div>
       </div>
   );
-})}
+      })}
       </div>)}
     </div>
   );

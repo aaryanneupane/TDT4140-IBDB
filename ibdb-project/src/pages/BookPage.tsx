@@ -1,12 +1,11 @@
-import React, { MouseEventHandler, useCallback } from 'react';
+import React, { MouseEventHandler } from 'react';
 import firebaseControl from '../firebaseControl';
 import { useState, useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
 import { StarRating } from "star-rating-react-ts";
 import '../styles/BookPage.css';
-
-
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 
 const BookPage = () => {
@@ -142,11 +141,11 @@ const BookPage = () => {
     }
 
     return (
-        <div>
+        <div className='inline-flex'>
             <div className='left'>
                 <img className='center image' src={book?.imgURL} alt={book?.imgURL} />
                 <div className='center starRating'>
-                    <div className="bottom w-full flex flex-col items-center justify-between ">
+                    <div className="bottom w-full flex flex-col items-center justify-between overflow-y-auto">
                         {visibleReviewPopup ?
                             <div>
                                 <div className="edit" onClick={closeOrOpen}>
@@ -203,16 +202,22 @@ const BookPage = () => {
                             {averageRating} / 5
                         </li>
                     </ul>
-                    <div className="amountOfRatings">
-                        {amountOfRatingsForBook} ratings
-                    </div>
+                    {amountOfRatingsForBook === 1 ?
+                        <div className="amountOfRatings">
+                            {amountOfRatingsForBook} rating
+                        </div> : 
+                        <div className="amountOfRatings">
+                            {amountOfRatingsForBook} ratings
+                        </div>
+                    }
                 </div>
                 <div className="center" id='description'>
                     <p>
                         {displayText}
                     </p>
-                    <button className="genre" onClick={toggleShowFullText}>
-                        {showFullText ? "Show less" : "Show more"}
+                    <button className="genre italic inline-flex" onClick={toggleShowFullText}>
+                        {showFullText ? <p className="flex items-center mb-2 mt-2">Show less <UpOutlined className='ml-2 mt-1'/></p> 
+                        : <p className="flex items-center mb-2 mt-2">Show more <DownOutlined className="ml-2 mt-1"/> </p>}
                     </button>
                 </div>
                 <ul className='info'>
@@ -229,7 +234,7 @@ const BookPage = () => {
                     :
                     <div>
                         {!reviewAdded ?
-                            <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
+                            <button className="mt-5 px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
                             : null}
                         <p className="error-message">{errorMessage}</p>
                     </div> }
@@ -255,19 +260,22 @@ const BookPage = () => {
                         </div>
                     </div> : null }
                 <div className="reviewSection">
-                    <p >Other Reviews</p>
+                    {amountOfRatingsForBook == 0 ?
+                    <p>There are currently no reviews for this book</p> : <p >Reviews</p>}
                     {reviews.map((review) => (
                         <div >
-                            {review.userID !== userEmail && !hideReviewToDelete ?
+                            {review.userID !== userEmail ?
                                 <div className="commentBox">
                                     <StarRating theme={{ size: 30 }} readOnly={true} initialRating={review.rating} />
                                     <p>{review.comment}</p>
-                                    <p className="genre"> Reviewed by {review.userID.split("@")[0]}</p>
-                                </div> : null}
+                                    <div className="inline-flex">
+                                     <p className="genre mr-1">Reviewed by</p>
+                                     <p className="genre italic"> {review.userID.split("@")[0]}</p>
+                                    </div>
+                                </div>: null}
                             <div>
                                 {userEmail == 'admin@gmail.com' && review.userID != 'admin@gmail.com' && !hideReviewToDelete ?
-
-                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg"> Delete Review </button> : null}
+                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={ () => deleteReview(review)}> Delete Review </button> : null}
                             </div>
                         </div>
                     ))}
