@@ -11,9 +11,7 @@ import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 import { DarkModeContext } from './DarkModeHandler';
 
-
 const Header = () => {
-
   const [filterClicked, setFilterClicked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
@@ -22,12 +20,12 @@ const Header = () => {
   const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
   const navigate = useNavigate();
 
-  let admins: string[] = ['admin@gmail.com'];
+  let admins: string[] = ["admin@gmail.com"];
 
   useEffect(() => {
     onAuthStateChanged(auth, (user: User | null) => {
       if (user && user.email) {
-        localStorage.setItem('user', user.email);
+        localStorage.setItem("user", user.email);
         setUser(user);
         if (user.email != null && admins.includes(user.email)) {
           setVisibleAddBook(true);
@@ -35,7 +33,7 @@ const Header = () => {
           setVisibleAddBook(false);
         }
       } else {
-        localStorage.setItem('user', '');
+        localStorage.setItem("user", "");
         setUser(null);
         setVisibleAddBook(false);
       }
@@ -44,28 +42,34 @@ const Header = () => {
 
   const hideFilter = () => {
     setFilterClicked(false);
-    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
-  }
+    setDivClass(
+      "sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy"
+    );
+  };
 
   const showFilter = () => {
     setFilterClicked(true);
-    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg py-5 px-10 relative bg-bigBoy");
-  }
+    setDivClass(
+      "sticky top-0 z-30 navbar navbar-expand-lg py-5 px-10 relative bg-bigBoy"
+    );
+  };
 
   const listView = () => {
-    navigate(`/`); 
+    navigate(`/`);
     setFilterClicked(false);
-    setDivClass("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
-  }
+    setDivClass(
+      "sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy"
+    );
+  };
 
   const signOutUser = () => {
     signOut(auth);
-    localStorage.setItem('user', '');
-  }
+    localStorage.setItem("user", "");
+  };
 
-  const lists: MenuProps['items'] = [
+  const lists: MenuProps["items"] = [
     {
-      key: '1',
+      key: "1",
       label: (
         <ScrollIntoView className="menu-choice" onClick={() => listView()} selector="#recentlyReleased">
           <button>
@@ -75,7 +79,7 @@ const Header = () => {
       ),
     },
     {
-      key: '2',
+      key: "2",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#comingSoon">
           <button className="menu-choice">
@@ -85,7 +89,7 @@ const Header = () => {
       ),
     },
     {
-      key: '3',
+      key: "3",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#topBooks">
           <button className="menu-choice">
@@ -95,7 +99,7 @@ const Header = () => {
       ),
     },
     {
-      key: '4',
+      key: "4",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#RATI">
           <button className="menu-choice">
@@ -105,7 +109,7 @@ const Header = () => {
       ),
     },
     {
-      key: '5',
+      key: "5",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#RATI">
           <button className="menu-choice">
@@ -115,7 +119,7 @@ const Header = () => {
       ),
     },
     {
-      key: '6',
+      key: "6",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="">
           <button className="menu-choice">
@@ -126,12 +130,12 @@ const Header = () => {
     },
   ];
 
-  const profile: MenuProps['items'] = [
+  const profile: MenuProps["items"] = [
     {
       key: '1',
       label: user ?
-      <div>
-        <button className="menu-choice w-full" onClick={signOutUser}>
+      <div onClick={signOutUser}>
+        <button className="menu-choice w-full">
           Sign Out
         </button >
         <p className='user-email'>
@@ -140,7 +144,7 @@ const Header = () => {
       </div>
         : <button className="menu-choice w-full" onClick= {() => {setPopupVisible(true)}}>
           Sign in
-        </button>,
+        </button>
     },
     {
       key: '2',
@@ -149,29 +153,47 @@ const Header = () => {
   ];
 
   return (
-    < div className={divClass} >
+    <div className={divClass}>
       <div className="flex items-center w-full justify-between">
-        <button onClick={hideFilter}>
-          <Link to="/" className="link px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg " >IBDb</Link>
-        </button>
-        <DownDrop items={lists} text='Menu' />
+        <ScrollIntoView onClick={() => listView()} selector="#recentlyReleased">
+          <button onClick={hideFilter}>
+            <Link to="/" className="px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg" >
+              IBDb
+            </Link>
+          </button>
+        </ScrollIntoView>
+        <DownDrop items={lists} text="Menu" />
         <SearchBar />
         <button>
-          {!filterClicked ?
-            <Link to="/filteredBooks" onClick={showFilter} className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5" >Show Filter</Link>
-            : null
-          }
+          {!filterClicked ? (
+            <Link
+              to="/filteredBooks"
+              onClick={showFilter}
+              className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5"
+            >
+              Show Filter
+            </Link>
+          ) : null}
         </button>
-        {visibleAddBook ?
-          <button className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5" onClick={() => { navigate(`/addBook`); setFilterClicked(false) }}> Add Book</button>
-          : null}
+        {visibleAddBook ? (
+          <button
+            className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5"
+            onClick={() => {
+              navigate(`/addBook`);
+              setFilterClicked(false);
+            }}
+          >
+            {" "}
+            Add Book
+          </button>
+        ) : null}
         <div>
-          <DownDrop items={profile} text='Profile' />
+          <DownDrop items={profile} text="Profile" />
         </div>
-        <LoginPopup visible={popupVisible} setVisible={setPopupVisible}/>
+        <LoginPopup visible={popupVisible} setVisible={setPopupVisible} />
       </div>
-    </div>)
-}
+    </div>
+  );
+};
 
 export default Header;
-
