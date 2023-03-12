@@ -148,7 +148,7 @@ const Header = () => {
     },
     {
       key: '2',
-      label: <input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/>,
+      label: <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>,
     },
   ];
 
@@ -169,7 +169,7 @@ const Header = () => {
             <Link
               to="/filteredBooks"
               onClick={showFilter}
-              className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5"
+              className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5"
             >
               Show Filter
             </Link>

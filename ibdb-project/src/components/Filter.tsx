@@ -65,37 +65,37 @@ const Filter = () => {
     const genres: MenuProps['items'] = [
         {
             key: '1',
-            label: <p>Crime</p>,
+            label: <p className="menu-choice">Crime</p>,
             onClick: () => setGenreChosen("Crime")
         },
         {
             key: '2',
-            label: <p>Fantasy</p>,
+            label: <p className="menu-choice">Fantasy</p>,
             onClick: () => setGenreChosen("Fantasy")
         },
         {
             key: '3',
-            label: <p>Roman</p>,
+            label: <p className="menu-choice">Roman</p>,
             onClick: () => setGenreChosen("Roman")
         },
         {
             key: '4',
-            label: <p>Cartoon</p>,
+            label: <p className="menu-choice">Cartoon</p>,
             onClick: () => setGenreChosen("Cartoon")
         },
         {
             key: '5',
-            label: <p>Classic</p>,
+            label: <p className="menu-choice">Classic</p>,
             onClick: () => setGenreChosen("Classic")
         },
         {
             key: '6',
-            label: <p>Historical</p>,
+            label: <p className="menu-choice">Historical</p>,
             onClick: () => setGenreChosen("Historical")
         },
         {
             key: '7',
-            label: <p>Biography</p>,
+            label: <p className="menu-choice">Biography</p>,
             onClick: () => setGenreChosen("Biography")
         },
     ];
@@ -103,12 +103,12 @@ const Filter = () => {
     const sortBy: MenuProps['items'] = [
         {
             key: '1',
-            label: <p>Highest Rated</p>,
+            label: <p className="menu-choice">Highest Rated</p>,
             onClick: () => setSortBy("rating")
         },
         {
             key: '2',
-            label: <p>Recently Released</p>,
+            label: <p className="menu-choice">Recently Released</p>,
             onClick: () => setSortBy("newest")
         },
     ];
@@ -127,7 +127,7 @@ const Filter = () => {
         },
         {
             key: '3',
-            label: <button className="w-full rounded-full">Confirm</button>,
+            label: <p className="menu-choice w-full rounded-full">Confirm</p>,
             onClick: () => handleConfirm()
         },
     ];
@@ -144,22 +144,22 @@ const Filter = () => {
                 <DownDrop items={sortBy} text="Sort By" />
                 <div>
                     {genreChosen !== "" ?
-                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
+                        <button onClick={() => { handleReset(); setGenreChosen("") }} className="filter-chosen px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'>{genreChosen} X</p>
                         </button> : null
                     }
                     {yearsChosen ?
-                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
+                        <button onClick={() => { handleReset(); setYearsChosen(false) }} className="filter-chosen px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> {fromValue} - {toValue} X</p>
                         </button> : null
                     }
                     {sortOn === "newest" ?
-                        <button onClick={() => { handleReset(); setSortBy("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="filter-chosen px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> Recently Released X</p>
                         </button> : null
                     }
                     {sortOn === "rating" ?
-                        <button onClick={() => { handleReset(); setSortBy("") }} className="px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
+                        <button onClick={() => { handleReset(); setSortBy("") }} className="filter-chosen px-4 mr-2 py-2 rounded-xl bg-graa shadow-0 hover:shadow-lg">
                             <p className='text-sm'> Highest Rated X</p>
                         </button> : null
                     }
