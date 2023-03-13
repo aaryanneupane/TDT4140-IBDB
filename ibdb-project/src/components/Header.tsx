@@ -14,6 +14,7 @@ const Header = () => {
   const [filterClicked, setFilterClicked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
+  
   const [user, setUser] = useState<User | null>(null);
   const [divClass, setDivClass] = useState(
     "sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy"
@@ -27,11 +28,12 @@ const Header = () => {
       if (user && user.email) {
         localStorage.setItem("user", user.email);
         setUser(user);
-        if (user.email != null && admins.includes(user.email)) {
+        if (user.email != null && admins.includes(user.email)){
           setVisibleAddBook(true);
-        } else {
-          setVisibleAddBook(false);
-        }
+          } else {
+            setVisibleAddBook(false);
+          }    
+       
       } else {
         localStorage.setItem("user", "");
         setUser(null);
@@ -134,12 +136,21 @@ const Header = () => {
           }}
         >
           Sign in
-        </button>
+        </button>  
       ),
     },
     {
       key: "2",
       label: <button className="w-full">Darkmode</button>,
+    },
+    {
+      key: "3",
+      label: user ? (
+        
+        <div onClick={ () => {navigate(`/RatedBooks`)}}>
+          <button className="w-full">Rated Books</button>
+        </div>
+      ) : null ,
     },
   ];
 
