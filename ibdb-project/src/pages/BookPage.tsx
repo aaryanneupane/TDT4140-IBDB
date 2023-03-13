@@ -152,7 +152,7 @@ const BookPage = () => {
                                     <div className="edit-inner" id="popup">
                                         <StarRating initialRating={rating} onClick={(rating) => { setRating(rating) }} />
 
-                                        <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
+                                        <textarea className="text-area px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
                                             value={commentText}
                                             onChange={handleCommentChange}
                                             placeholder="Add a review to your rating"
@@ -160,11 +160,11 @@ const BookPage = () => {
                                             style={{ height: 'auto', minHeight: '100px' }} />
                                         <div className="flex">
                                         {commentText === "" ?
-                                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                            <button onClick={() => handleCommentSubmit()} className="button text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
                                                 Submit without comment
                                             </button>
                                             :
-                                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                            <button onClick={() => handleCommentSubmit()} className="button text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
                                                 Submit with comment
                                             </button>
                                         }
@@ -234,7 +234,7 @@ const BookPage = () => {
                     :
                     <div>
                         {!reviewAdded ?
-                            <button className="mt-5 px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
+                            <button className="rate-book mt-5 px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
                             : null}
                         <p className="error-message">{errorMessage}</p>
                     </div> }
@@ -250,10 +250,10 @@ const BookPage = () => {
                         <div className="edit" onClick={closeOrOpen}>
                             <div className="edit-inner" id="popup">
                                 <p>Are you sure you want to delete this review? </p>
-                                <button onClick={() => handleConfirm()} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                <button onClick={() => handleConfirm()} className="button text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
                                     Confirm
                                 </button>
-                                <button onClick={() => setVisibleDeletePopup(false)} className="text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                <button onClick={() => setVisibleDeletePopup(false)} className="button text-base mt-2 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
                                     Cancel
                                 </button>
                             </div>
@@ -275,7 +275,7 @@ const BookPage = () => {
                                 </div>: null}
                             <div>
                                 {userEmail == 'admin@gmail.com' && review.userID != 'admin@gmail.com' && !hideReviewToDelete ?
-                                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={ () => deleteReview(review)}> Delete Review </button> : null}
+                                    <button className="px-6 py-3 rounded-xl bg-kulTheme shadow-0 hover:shadow-lg" onClick={ () => deleteReview(review)}> Delete Review </button> : null}
                             </div>
                         </div>
                     ))}
