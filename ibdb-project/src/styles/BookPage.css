@@ -1,14 +1,9 @@
-
-.dark p {
-    color: white;
-}
-
 .dark div {
-    color: white;
+    color: #dddddd;
 }
 
 .dark .button {
-    background-color: #4d4d4d;
+    background-color: #343434;
 }
 
 .dark .rate-book {
@@ -51,10 +46,6 @@
 
 .raiseText {
     line-height: 10px;
-}
-
-.dark .rating {
-    color: white;
 }
 
 .edit-underline {

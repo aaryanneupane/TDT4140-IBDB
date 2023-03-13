@@ -4,16 +4,10 @@ img {
 }
 
 h1 { 
-  color: #4D4D4D;
   font-family: "Maven Pro"; 
   font-size: 2rem;
   font-weight: 600;
 }
-
-.dark h1 {
-  color: white;
-}
-
 
 .card {
   width: 175px;

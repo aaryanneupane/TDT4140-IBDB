@@ -11,12 +11,11 @@ Button {
 }
 
 .dark .header-button {
-  background-color: #4d4d4d;
-  color: white
+  background-color: #343434;
 }
 
 .dark .link {
-  color: white;
+  color: #dddddd;
 }
 
 .dark .menu-choice {
@@ -29,7 +28,7 @@ Button {
 }
 
 .dark .user-email {
-  background-color: #4d4d4d;
+  background-color: #343434;
 }
 
 .toggle {
@@ -72,6 +71,11 @@ Button {
 .dark .switch {
   border-radius: 4px;
 }
-.dark .main-header {
+
+.dark .navbar {
   background-color: #292929;
+}
+
+.dark .ibdb-text {
+  color: black;
 }

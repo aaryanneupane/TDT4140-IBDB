@@ -157,7 +157,7 @@ const Header = () => {
       <div className="flex items-center w-full justify-between">
         <ScrollIntoView onClick={() => listView()} selector="#recentlyReleased">
           <button onClick={hideFilter}>
-            <Link to="/" className="px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg" >
+            <Link to="/" className="ibdb-text px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg" >
               IBDb
             </Link>
           </button>
