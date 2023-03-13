@@ -27,10 +27,6 @@ Button {
   color: grey;
 }
 
-.dark .user-email {
-  background-color: #343434;
-}
-
 .toggle {
   appearance: none;
   width: 65px;
