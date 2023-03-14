@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Card from "./Card";
 import { DocumentData } from "firebase/firestore";
+import AdCard from "./adCard";
 
 
 const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
@@ -21,6 +22,7 @@ const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
   }
   return sortedBooks.slice(0,10);
 }
+
 const ScrollingMenu = (prop: { filter: string }) => {
 
   const [books, setBooks] = useState<DocumentData[]>([]);
@@ -35,23 +37,35 @@ const ScrollingMenu = (prop: { filter: string }) => {
     
   }, []);
 
-  return (
-    <div>
-      {/* create scrolling menu */}
-      <ScrollMenu>
+ 
+    // create random index to insert advertisement card
+    const adIndex = Math.floor(Math.random() * books.length);
+
+    // create array of cards with advertisement card at random index
+    const cards = [...books.slice(0, adIndex), <AdCard key="ad" />, ...books.slice(adIndex)];
+  
+    return (
+      <div>
+        {/* create scrolling menu */}
+        <ScrollMenu>
         <div className="scrollingmenu">
-        {/* create card component for each item */}
-        {books.map((book) => (
-          <Card
-            title={book.title}
-            bookIMG={book.imgURL}
-            id={book.id}
-            key={book.id}
-          />
-        ))}
+          {/* create card component for each item */}
+          {[...books, {id: "ad"}].map((book) =>
+            book.id === "ad" ? (
+              <AdCard key={book.id}  />
+            ) : (
+              <Card
+                title={book.title}
+                bookIMG={book.imgURL}
+                id={book.id}
+                key={book.id}
+              />
+            )
+          )}
         </div>
       </ScrollMenu>
     </div>
-  );
+  );  
+
 }
 export default ScrollingMenu;
