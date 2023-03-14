@@ -73,13 +73,15 @@ const RatedBooks = () => {
                 <div className="ml-10 mt-10 grid grid-cols-5">
                         {reviewedBooks.map((book) => (
                             <div>
-                                <StarRating theme={{ size: 45 }} readOnly={true} initialRating={idReview.get(book.id)} />
                                 <Card
                                     title={book.title}
                                     bookIMG={book.imgURL}
                                     id={book.id}
                                     key={book.id}
                               />
+                                <div className="stars">
+                                <StarRating theme={{ size: 40 }} readOnly={true} initialRating={idReview.get(book.id)} />
+                                </div>
                             </div>
                         ))}
                 </div>
