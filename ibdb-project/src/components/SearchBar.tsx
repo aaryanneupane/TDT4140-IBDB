@@ -1,6 +1,7 @@
 import { DocumentData } from 'firebase/firestore';
 import { useState, useEffect, useRef, MouseEventHandler} from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/SearchBar.css'
 
 
 const SearchBar = () => {
@@ -79,7 +80,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
     <div className = "relative block w-3/6">
       <input
         type="text"
-        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
+        className="searchbar-text block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
         placeholder="Title / Author" 
       onChange={(event)=> setValue(event.target.value)} 
       onBlur={() => {setShowResults(false)}} //Removes the search results when on selected
@@ -87,7 +88,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
       value ={value}/>
   
       {showResults && ( //This makes sure to only show the white box when there are results available
-      <div className='absolute top-full left-0 mt-1 w-full p-2 bg-hvit shadow-lg 
+      <div className='search-result absolute top-full left-0 mt-1 w-full p-2 bg-hvit shadow-lg 
     rounded-b1 rounded-lg '>
         {result.map((result, index) => {  
         const bookId = getKeyByValue(result, titleId);
@@ -100,7 +101,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
       key={index} onMouseDown={() =>  //OnMouseDown() event fires before OnBlur() hence we are able to click a result before it disappearing
       {navigate(`/bookPage/${bookId}`);
       setValue(''); }}>
-          <div className = 'cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1'>
+          <div className = 'search-result-text cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1'>
             {result} 
             <p className='text-sm italic '> {bookAuthor} </p>
             </div>

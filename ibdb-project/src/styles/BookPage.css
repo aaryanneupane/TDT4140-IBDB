@@ -1,9 +1,17 @@
-body{
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding-bottom: 100px;
-    box-sizing: border-box;
+.dark div {
+    color: #dddddd;
+}
+
+.dark .button {
+    background-color: #343434;
+}
+
+.dark .rate-book {
+    background-color: #292929;
+}
+
+.dark .text-area {
+    color: black;
 }
 
 .container {
@@ -51,6 +59,10 @@ body{
     color: red;
 }
 
+.dark .error-message {
+    color: red;
+}
+
 .edit {
     position: fixed;
     top: 0;
@@ -73,6 +85,10 @@ body{
     height: 300px;
     width: 640px;
     background-color: #F6f9FF;
+}
+
+.dark .edit-inner {
+    background-color: #292929;
 }
 
 #title {
