@@ -1,23 +1,13 @@
 import { useEffect, useState } from "react";
-import  { User }  from 'firebase/auth';
-import {auth} from "../firebaseControl";
 import { DocumentData } from 'firebase/firestore';
-import firebaseControl from "../firebaseControl";
 import Card from '../components/Card';
 import { StarRating } from "star-rating-react-ts";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import '../styles/RatedBooks.css';
-
-
-
-
-
 
 const RatedBooks = () => {
 
     const userEmail = localStorage.getItem('user')?.replace(/"/g, '');
-    const firebaseController = new firebaseControl();
 
     const [reviews, setReviews] = useState<DocumentData[]>([]);
     const [books, setBooks] = useState<DocumentData[]>([]);
@@ -40,8 +30,6 @@ const RatedBooks = () => {
         }
         setBooks(allBooks);
       }, []);
-
-
 
     let userReviewsBookID : Array<string> = [];
 
