@@ -1,21 +1,35 @@
 import React from "react";
+import { useState, useEffect } from 'react';
+import { DocumentData } from 'firebase/firestore';
+import '../styles/adCard.css';
+import { useNavigate, useParams } from "react-router-dom";
 
-interface adCardProps {
-  // id: string;
-  // adIMG: string;
-  // title: string;
-}
+const AdCard= () => {
 
+  const handleClick = () => {
+    window.location.href = ad?.websiteURL;
+  }  
+  const { id } = useParams();
+  const adID = typeof id === "string" ? id : '';
+  const [ad, setAd] = useState<any>();
+  const { imgURL } = useParams();
 
-const adCard: React.FC<adCardProps> = ({ }) => {
+  useEffect(() => {
+    let allAds: DocumentData[] = [];
+          const adsCached = localStorage.getItem("ads");
+          if (adsCached) {
+              allAds = JSON.parse(adsCached);
+          }
+          const ad = allAds.find(ad => ad?.id === adID)
+          setAd(ad);
+    }
+  )
+
   return (
     <div>
-      <h3>This is an advertisement card!</h3>
-      <p>Advertisement ID: {}</p>
-      <img src="https://gitlab.stud.idi.ntnu.no/uploads/-/system/project/avatar/16412/Markdown-mark.svg.png"/>
-      {/* Add your advertisement content here */}
+      <img src={ad?.imgURL} onClick={handleClick}/>
     </div>
   );
 };
 
-export default adCard;
+export default AdCard;

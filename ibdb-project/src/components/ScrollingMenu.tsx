@@ -3,6 +3,7 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Card from "./Card";
 import { DocumentData } from "firebase/firestore";
 import AdCard from "./adCard";
+import { useParams } from "react-router-dom";
 
 
 const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
@@ -37,35 +38,58 @@ const ScrollingMenu = (prop: { filter: string }) => {
     
   }, []);
 
+  const [ad, setAd] = useState<any>();
+  const { id } = useParams();
+  const adID = typeof id === "string" ? id : '';
+
+  useEffect(() => {
+    let allAds: DocumentData[] = [];
+          const adsCached = localStorage.getItem("ads");
+          if (adsCached) {
+              allAds = JSON.parse(adsCached);
+          }
+          const ad = allAds.find(ad => ad?.id === adID)
+          setAd(ad);
+    }
+  )
+
+  
+
+
+  
+
  
     // create random index to insert advertisement card
-    const adIndex = Math.floor(Math.random() * books.length);
+    const adIndex = Math.floor(Math.random() * books.length); 
 
     // create array of cards with advertisement card at random index
-    const cards = [...books.slice(0, adIndex), <AdCard key="ad" />, ...books.slice(adIndex)];
-  
+    const cards = [...books.slice(0, adIndex), <AdCard key={ad?.id}/>, ...books.slice(adIndex)];
+   
     return (
       <div>
         {/* create scrolling menu */}
         <ScrollMenu>
-        <div className="scrollingmenu">
+          <div className="scrollingmenu">
           {/* create card component for each item */}
-          {[...books, {id: "ad"}].map((book) =>
-            book.id === "ad" ? (
-              <AdCard key={book.id}  />
-            ) : (
-              <Card
-                title={book.title}
-                bookIMG={book.imgURL}
-                id={book.id}
-                key={book.id}
+          {cards.map((card) => (
+            card.id === "ad" ? (
+              <AdCard 
+                key={card.id}
+                // imgURL={card.imgURL} fungerer ikke ;( -- får ikke opp bildet. 
               />
-            )
-          )}
-        </div>
-      </ScrollMenu>
-    </div>
-  );  
+            ) : (
+            <Card 
+              title={card.title}
+              bookIMG={card.imgURL}
+              id={card.id}
+              key={card.id}
+            />
+          )))}
+          </div>
+        </ScrollMenu>
+      </div>
+    );
+  
 
 }
 export default ScrollingMenu;
