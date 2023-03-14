@@ -10,16 +10,16 @@ Button {
   border-radius: 4px;
 }
 
+.dark .menu-choice {
+  color: #dddddd;
+}
+
 .dark .header-button {
   background-color: #343434;
 }
 
 .dark .link {
   color: #dddddd;
-}
-
-.dark .menu-choice {
-  color: black;
 }
 
 .user-email {
