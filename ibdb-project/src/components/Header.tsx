@@ -143,15 +143,27 @@ const Header = () => {
       key: "2",
       label: <button className="w-full">Darkmode</button>,
     },
+
     {
       key: "3",
+      label: visibleAddBook ? (
+        <div onClick={ () => {
+          navigate(`/addBook`);
+          setFilterClicked(false);}}>
+          <button className="w-full">Add book</button>
+        </div>
+    ) : null},
+
+    {
+      key: "4",
       label: user ? (
         
         <div onClick={ () => {navigate(`/RatedBooks`)}}>
-          <button className="w-full">Rated Books</button>
+          <button className="w-full">My Rated Books</button>
         </div>
       ) : null ,
     },
+
   ];
 
   return (
@@ -177,18 +189,6 @@ const Header = () => {
             </Link>
           ) : null}
         </button>
-        {visibleAddBook ? (
-          <button
-            className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5"
-            onClick={() => {
-              navigate(`/addBook`);
-              setFilterClicked(false);
-            }}
-          >
-            {" "}
-            Add Book
-          </button>
-        ) : null}
         <div>
           <DownDrop items={profile} text="Profile" />
         </div>
