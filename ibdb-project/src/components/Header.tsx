@@ -111,16 +111,6 @@ const Header = () => {
       ),
     },
     {
-      key: "5",
-      label: (
-        <ScrollIntoView onClick={() => listView()} selector="#RATI">
-          <button className="menu-choice">
-            My Rated Books
-          </button>
-        </ScrollIntoView>
-      ),
-    },
-    {
       key: "6",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="">
@@ -152,27 +142,20 @@ const Header = () => {
       key: '2',
       label: <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>,
     },
-
     {
       key: "3",
       label: visibleAddBook ? (
         <div onClick={ () => {
           navigate(`/addBook`);
-          setFilterClicked(false);}}>
-          <button className="w-full">Add book</button>
-        </div>
+          setFilterClicked(false);}}><button className="w-full add-books">Add book</button></div>
     ) : null},
-
     {
       key: "4",
-      label: user ? (
-        
-        <div onClick={ () => {navigate(`/RatedBooks`)}}>
-          <button className="w-full">My Rated Books</button>
-        </div>
-      ) : null ,
+      label: user && !visibleAddBook ? (
+        <div onClick={ () => {
+          navigate(`/RatedBooks`)}}><button className="w-full my-rated-books">My Rated Books</button></div>
+      ) :null ,
     },
-
   ];
 
   return (
