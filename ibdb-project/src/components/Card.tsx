@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Card({
   title,
@@ -11,14 +11,13 @@ function Card({
   id: string;
 }) {
 
-  const navigate = useNavigate();
 
   return (
     <div
       tabIndex={0}
       className="card"
     >
-      <img src={bookIMG} className='cursor-pointer' onClick={ () => navigate(`/bookPage/${id}`)}/>
+      <Link to={`/bookPage/${id}`}><img src={bookIMG} className='cursor-pointer'/></Link>
     </div>
   );
 }
