@@ -7,6 +7,8 @@ import Card from '../components/Card';
 import { StarRating } from "star-rating-react-ts";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import '../styles/RatedBooks.css';
+
 
 
 
@@ -90,7 +92,7 @@ const RatedBooks = () => {
                 <div className="px-10 py-5 mt-10 center">
                     <h1>You have not rated any books yet. </h1>
                     <h1>Rate your first book today!</h1>
-                    <button className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5 mt-6"
+                    <button className="browse-book px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5 mt-6"
                     onClick={ () => {navigate(`/filteredBooks`)}} >Browse books</button>
                 </div>
             }
