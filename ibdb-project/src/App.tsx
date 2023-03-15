@@ -18,6 +18,8 @@ import DarkModeHandler from './components/DarkModeHandler';
 function App() {
 
   const firebaseController = new firebaseControl();
+  const [isAdmin, setIsAdmin] = useState(false);
+
 
   useEffect(() => {
     let allBooks: DocumentData[] = [];
@@ -44,10 +46,14 @@ function App() {
       localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     });
 
+    
+
+
     return () => {
       unsubscribe();
       unsubscribe2();
     }
+    
 
   }, []);
 
@@ -61,7 +67,8 @@ function App() {
           <Route path="myBookLists" element={<MyBookLists />} />
           <Route path="filteredBooks" element={<Filter />} />
           <Route path="ratedBooks" element={<RatedBooks />} />
-          <Route path="addBook" element={<AddBookPage />} />
+            <Route path="addBook" element={<AddBookPage />} />
+       
         </Routes>
       </div>
     </DarkModeHandler>

@@ -145,9 +145,9 @@ const Header = () => {
     {
       key: "3",
       label: visibleAddBook ? (
-        <div onClick={ () => {
-          navigate(`/addBook`);
-          setFilterClicked(false);}}><button className="w-full add-books">Add book</button></div>
+        <Link to="/addBook" onClick={() => setFilterClicked(false)}>
+        <button className="w-full add-books">Add book</button>
+        </Link>
     ) : null},
     {
       key: "4",
