@@ -23,7 +23,7 @@ Button {
 }
 
 .dark .menu-choice {
-  color: black;
+  color: rgb(255, 255, 255);
 }
 
 .dark .my-rated-books {
