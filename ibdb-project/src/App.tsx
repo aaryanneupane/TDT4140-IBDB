@@ -46,10 +46,7 @@ function App() {
       localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     });
 
-    const userEmail = localStorage.getItem('user')?.replace(/"/g, '');
-    if (userEmail === "admin@gmail.com"){
-      setIsAdmin(true);
-    }
+    
 
 
     return () => {
@@ -70,9 +67,8 @@ function App() {
           <Route path="myBookLists" element={<MyBookLists />} />
           <Route path="filteredBooks" element={<Filter />} />
           <Route path="ratedBooks" element={<RatedBooks />} />
-          {isAdmin ? 
             <Route path="addBook" element={<AddBookPage />} />
-          : null }
+       
         </Routes>
       </div>
     </DarkModeHandler>

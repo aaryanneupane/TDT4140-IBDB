@@ -14,10 +14,11 @@ const AddBookPage = () => {
     const [imgURL, setImgURL] = useState<string>('');
     const [rating, setRating] = useState<number>(0);    
     const [buttonActive, setButtonActive] = useState<boolean>(false);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
 
     const firebaseController = new firebaseControl();
     const navigate = useNavigate();
-    
     
     async function addThisBook() {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
@@ -35,14 +36,12 @@ const AddBookPage = () => {
         }
     }
     
-    //Control description are
+    //Control description area
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(event.target.value);
         event.target.style.height = "16"; // reset the height to auto
         event.target.style.height = `${event.target.scrollHeight}px`; // set the height to the scroll height
-      };
-    
-    
+      };    
     
     useEffect(() => {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
@@ -51,6 +50,14 @@ const AddBookPage = () => {
             setButtonActive(false);
         }
     }, [title, author, genre, description, imgURL, releaseYear]);
+
+     //Check if current user is admin
+    useEffect(() => {
+        const userEmail = localStorage.getItem('user')?.replace(/"/g, '');
+        if (userEmail === "admin@gmail.com"){
+             setIsAdmin(true);
+         }
+    }, [])
     
     const genres = [
         { id: 1, genre: "Crime" },
@@ -67,6 +74,8 @@ const AddBookPage = () => {
     }
     
     return (
+        <div>
+        { isAdmin ? 
         <div className='w-full'>
             <div className="header mt-10">
                 <div className="element "></div>
@@ -137,7 +146,13 @@ const AddBookPage = () => {
                     }
                 </div>
             </div>
-            
+                
+        </div>
+        : 
+        <div>
+        <p>Only admins can access this page</p>
+        </div>
+        }
         </div>
     )
 }
