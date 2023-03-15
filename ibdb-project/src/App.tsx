@@ -11,9 +11,6 @@ import Filter from './components/Filter';
 import firebaseControl from './firebaseControl';
 import { DocumentData } from 'firebase/firestore';
 
-
-
-
 function App() {
 
   const firebaseController = new firebaseControl();
@@ -27,7 +24,7 @@ function App() {
       });
       localStorage.setItem('books', JSON.stringify(allBooks))
     }
-    const unsubscribe = firebaseController.listenForCollectionChanges('books', (updatedBooks: DocumentData[]) => {
+    const unsubscribeBooks = firebaseController.listenForCollectionChanges('books', (updatedBooks: DocumentData[]) => {
       localStorage.setItem('books', JSON.stringify(updatedBooks));
     });
 
@@ -39,15 +36,39 @@ function App() {
       });
       localStorage.setItem('reviews', JSON.stringify(allReviews))
     }
-    const unsubscribe2 = firebaseController.listenForCollectionChanges('reviews', (updatedReviews: DocumentData[]) => {
+    const unsubscribeReviews = firebaseController.listenForCollectionChanges('reviews', (updatedReviews: DocumentData[]) => {
       localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     });
 
+    let allAds: DocumentData[] = [];
+    const adsCached = localStorage.getItem("ads");
+    if (!adsCached) {
+      firebaseController.getAds().then((orgAds) => {
+        allAds = orgAds;
+      });
+      localStorage.setItem('ads', JSON.stringify(allAds))
+    }
+    const unsubscribeAds = firebaseController.listenForCollectionChanges('ads', (updatedAds: DocumentData[]) => {
+      localStorage.setItem('ads', JSON.stringify(updatedAds));
+    });
+
     return () => {
-      unsubscribe();
-      unsubscribe2();
+      unsubscribeBooks();
+      unsubscribeReviews();
+      unsubscribeAds();
     }
   
+}, []);
+
+const [ads, setAds] = useState<DocumentData[]>([]);
+
+useEffect(() => {
+  let allAds: DocumentData[] = [];
+  const adsCached = localStorage.getItem("ads");
+  if (adsCached) {
+    allAds = JSON.parse(adsCached);
+  }
+  setAds(allAds);
 }, []);
 
 return (

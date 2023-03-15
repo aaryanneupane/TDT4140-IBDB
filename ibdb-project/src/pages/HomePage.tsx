@@ -10,28 +10,28 @@ const HomePage = () => {
                     <div className="element"></div>
                     <h1>Recently Released</h1>
                 </div>
-                <ScrollingMenu filter="news"/>
+                <ScrollingMenu filter="news" adID={0}/>
             </div>
             <div className="conteiner" id="comingSoon">
                 <div className="header">
                     <div className="element"></div>
                     <h1 id="comingSoon">Coming Soon</h1>
                 </div>
-                <ScrollingMenu filter="coming"/>
+                <ScrollingMenu filter="coming" adID={1}/>
             </div>
             <div className="conteiner"id="topBooks">
                 <div className="header">
                     <div className="element"></div>
                     <h1>Top Books</h1>
                 </div>
-                <ScrollingMenu filter="rated"/>
+                <ScrollingMenu filter="rated" adID={2}/>
             </div>
             <div className="conteiner" id="RATI">
                 <div className="header">
                     <div className="element"></div>
                     <h1>Recently added to IBDb</h1>
                 </div>
-                <ScrollingMenu filter="added"/>
+                <ScrollingMenu filter="added" adID={3}/>
             </div>
         </div>
     )

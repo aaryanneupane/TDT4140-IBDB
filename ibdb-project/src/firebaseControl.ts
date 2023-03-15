@@ -46,6 +46,13 @@ class firebaseControl {
     return reviewList;
   };
 
+  async getAds() { 
+    const ads = collection(db, 'ads');
+    const adsSnapshot = await getDocs(ads);
+    const adsList = adsSnapshot.docs.map(doc => doc.data());
+    return adsList;
+  };
+
   getBookIds() {
     const colRef = collection(db, "books");
     let bookIDs: any[] = [];
@@ -62,6 +69,7 @@ class firebaseControl {
     const docData = doc.data();
     return docData;
   }
+
 
   listenForCollectionChanges = (collection: string, callback: (updatedCollection: DocumentData[]) => void): (() => void) => {
     const unsubscribe = firebase.firestore().collection(collection)

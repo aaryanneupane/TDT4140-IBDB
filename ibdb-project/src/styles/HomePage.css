@@ -19,6 +19,15 @@ h1 {
   transform: scale(1.1);
 }
 
+.adCard {
+  width: 270px;
+  margin: 20px;
+}
+
+.adCard :hover {
+  transform: scale(1.1);
+}
+
 .conteiner {
   padding-top: 100px;
 }

@@ -14,10 +14,7 @@ function Card({
   const navigate = useNavigate();
 
   return (
-    <div
-      tabIndex={0}
-      className="card"
-    >
+    <div tabIndex={0} className="card">
       <img src={bookIMG} className='cursor-pointer' onClick={ () => navigate(`/bookPage/${id}`)}/>
     </div>
   );

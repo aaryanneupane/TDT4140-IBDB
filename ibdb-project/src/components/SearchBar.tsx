@@ -2,7 +2,6 @@ import { DocumentData } from 'firebase/firestore';
 import { useState, useEffect, useRef, MouseEventHandler} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
 const SearchBar = () => {
 
   const [books, setBooks] = useState<DocumentData[]>([]);
@@ -16,8 +15,6 @@ const SearchBar = () => {
     setBooks(allBooks);
   }, []);
 
-
-
 let titleId = new Map<string, string>();
 let titleAuthor = new Map<string, string>();
 
@@ -28,7 +25,6 @@ for (const book of books) {
 for (const book of books) {
   titleAuthor.set(book.title, book.author);
 }
-
 
 const [value, setValue] = useState<string>('');
 const [result, setResult] = useState<string[]>([]);
