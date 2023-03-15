@@ -15,6 +15,7 @@ const Header = () => {
   const [filterClicked, setFilterClicked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
+  
   const [user, setUser] = useState<User | null>(null);
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
   const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
@@ -27,11 +28,12 @@ const Header = () => {
       if (user && user.email) {
         localStorage.setItem("user", user.email);
         setUser(user);
-        if (user.email != null && admins.includes(user.email)) {
+        if (user.email != null && admins.includes(user.email)){
           setVisibleAddBook(true);
-        } else {
-          setVisibleAddBook(false);
-        }
+          } else {
+            setVisibleAddBook(false);
+          }    
+       
       } else {
         localStorage.setItem("user", "");
         setUser(null);
@@ -109,16 +111,6 @@ const Header = () => {
       ),
     },
     {
-      key: "5",
-      label: (
-        <ScrollIntoView onClick={() => listView()} selector="#RATI">
-          <button className="menu-choice">
-            My Rated Books
-          </button>
-        </ScrollIntoView>
-      ),
-    },
-    {
       key: "6",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="">
@@ -144,11 +136,25 @@ const Header = () => {
       </div>
         : <button className="menu-choice w-full" onClick= {() => {setPopupVisible(true)}}>
           Sign in
-        </button>
+        </button>  
     },
     {
       key: '2',
       label: <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>,
+    },
+    {
+      key: "3",
+      label: visibleAddBook ? (
+        <div onClick={ () => {
+          navigate(`/addBook`);
+          setFilterClicked(false);}}><button className="w-full add-books">Add book</button></div>
+    ) : null},
+    {
+      key: "4",
+      label: user && !visibleAddBook ? (
+        <div onClick={ () => {
+          navigate(`/RatedBooks`)}}><button className="w-full my-rated-books">My Rated Books</button></div>
+      ) :null ,
     },
   ];
 
@@ -175,18 +181,6 @@ const Header = () => {
             </Link>
           ) : null}
         </button>
-        {visibleAddBook ? (
-          <button
-            className="px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 text-center leading-5"
-            onClick={() => {
-              navigate(`/addBook`);
-              setFilterClicked(false);
-            }}
-          >
-            {" "}
-            Add Book
-          </button>
-        ) : null}
         <div>
           <DownDrop items={profile} text="Profile" />
         </div>
