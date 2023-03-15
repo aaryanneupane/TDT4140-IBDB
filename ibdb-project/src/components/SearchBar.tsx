@@ -69,13 +69,6 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
     } 
   }, [value])
 
-  useEffect(() => {
-    if (value.length === 0) {
-      setResult([]);
-    }
-  }, [value])
-  
-
   //Searchbox is still visible without any items in the result array, this is to fix that.
 
   const [showResults, setShowResults] = useState(false); //New variable which decides to either show or not show the box
@@ -95,7 +88,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
     if (value.length > 0 && result.length === 0 ) {
       setNoResults(true);
     }
-  }, [showResults])
+  }, [value, result, showResults])
   
 
 
@@ -108,8 +101,8 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         className="searchbar-text block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
         placeholder="Title / Author" 
       onChange={(event)=> setValue(event.target.value)} 
-      onBlur={() => {setShowResults(false)}} //Removes the search results when on selected
-      onFocus={() => {if (result.length > 0) setShowResults(true);}} //Shows the search results when selected
+      onBlur={() => {setShowResults(false); setNoResults(false);}} //Removes the search results when on selected
+      onFocus={() => { {if (result.length > 0) setShowResults(true);} {if (!noResults && value.length > 0) setNoResults(true) }}} //Shows the search results when selected
       value ={value}/>
 
       {noResults && (
@@ -138,8 +131,8 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         <div className='search-result-text cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1 flex'>
           <img className='h-20 mr-5 ' src={bookImg} alt={bookImg} />
           <div className='flex flex-col justify-center flex-grow'>
-            <span className=''>{result}</span>
-            <p className='text-sm italic mb-2'>{bookAuthor}</p>
+            <span className='text-lg'>{result}</span>
+            <p className='text-base italic mb-2'>{bookAuthor}</p>
           </div>
         </div>
       </div>
