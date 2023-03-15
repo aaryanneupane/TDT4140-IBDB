@@ -30,6 +30,9 @@ const BookPage = () => {
     const [visibleDeletePopup, setVisibleDeletePopup] = useState(false);
     const [commentText, setCommentText] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
+
+
 
 
     useEffect(() => {
@@ -65,6 +68,12 @@ const BookPage = () => {
 
         setAverageRating(Number((sum / counter).toFixed(1)));
         setAmountOfRatingsForBook(counter);
+
+        console.log(userEmail);
+        if (userEmail === "admin@gmail.com"){
+            setIsAdmin(true);
+        }
+
 
     }, [bookID]);
 
@@ -233,7 +242,7 @@ const BookPage = () => {
                     </div>
                     :
                     <div>
-                        {!reviewAdded ?
+                        {!reviewAdded && !isAdmin?
                             <button className="rate-book mt-5 px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg" onClick={() => handleRateBook()}>Rate this book</button>
                             : null}
                         <p className="error-message">{errorMessage}</p>
