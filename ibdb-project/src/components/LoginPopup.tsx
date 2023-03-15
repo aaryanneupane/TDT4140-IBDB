@@ -68,7 +68,7 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
     // Creates new user and checks for error
     const signUp = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        if (password == confirmPassword) {
+        if (password === confirmPassword) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredentials) => {
                     localStorage.setItem('user', JSON.stringify(userCredentials.user.email));
@@ -102,12 +102,12 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
                         <div className="top">
 
                             <div className='logIn-signUp-flex'>
-                                <button className={logInOrSignup == 'logIn' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('logIn')}> Log in </button>
-                                <div className={logInOrSignup == 'logIn' ? 'logIn-underline' : ''}></div>
+                                <button className={logInOrSignup === 'logIn' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('logIn')}> Log in </button>
+                                <div className={logInOrSignup === 'logIn' ? 'logIn-underline' : ''}></div>
                             </div>
                                 <div className='logIn-signUp-flex'>
-                                    <button className={logInOrSignup == 'signUp' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('signUp')}> Sign up </button>
-                                    <div className={logInOrSignup == 'signUp' ? 'signUp-underline' : ''}></div>
+                                    <button className={logInOrSignup === 'signUp' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('signUp')}> Sign up </button>
+                                    <div className={logInOrSignup === 'signUp' ? 'signUp-underline' : ''}></div>
                                 </div>
                         </div>
                         <div>
@@ -129,7 +129,7 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
                                     </button>
                                     <button className="google-button shadow-0" onClick={googleLogIn}>
                                         Log in with Google
-                                        <img className="google-icon" src="https://freesvg.org/img/1534129544.png" />
+                                        <img className="google-icon" src="https://freesvg.org/img/1534129544.png" alt="google-icon"/>
                                     </button>
                                 </div>
                             </div>
