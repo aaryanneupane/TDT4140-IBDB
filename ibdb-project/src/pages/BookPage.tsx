@@ -66,10 +66,14 @@ const BookPage = () => {
             }
         });
 
-        setAverageRating(Number((sum / counter).toFixed(1)));
-        setAmountOfRatingsForBook(counter);
+        if (counter === 0){
+            setAverageRating(0);
+            setAmountOfRatingsForBook(counter);
+        } else {
+            setAverageRating(Number((sum / counter).toFixed(1)));
+            setAmountOfRatingsForBook(counter);
+        }
 
-        console.log(userEmail);
         if (userEmail === "admin@gmail.com"){
             setIsAdmin(true);
         }
