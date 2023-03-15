@@ -26,14 +26,6 @@ Button {
   color: rgb(255, 255, 255);
 }
 
-.dark .my-rated-books {
-  color: black;
-}
-
-.dark .add-books {
-  color: black;
-}
-
 .user-email {
   font-size: 14px;
   color: grey;
