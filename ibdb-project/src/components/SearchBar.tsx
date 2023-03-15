@@ -21,6 +21,7 @@ const SearchBar = () => {
 
 let titleId = new Map<string, string>();
 let titleAuthor = new Map<string, string>();
+let titleImg = new Map<string, string>();
 
 for (const book of books) {
   titleId.set(book.id, book.title);
@@ -28,6 +29,9 @@ for (const book of books) {
 
 for (const book of books) {
   titleAuthor.set(book.title, book.author);
+}
+for (const book of books) {
+  titleImg.set(book.title, book.imgURL);
 }
 
 
@@ -59,20 +63,34 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         }
       }
     }        
-    } else {
+    } 
+    else {
       setResult([]);
-    }
+    } 
   }, [value])
 
   //Searchbox is still visible without any items in the result array, this is to fix that.
 
   const [showResults, setShowResults] = useState(false); //New variable which decides to either show or not show the box
+  const [noResults, setNoResults] = useState(false);
 
   useEffect(() => {
     if (result.length > 0 && !showResults) setShowResults(true);
     if (result.length <= 0) setShowResults(false);
   }, [result]) //What this does is update the variable showResults depending on whether there are any results available 
   
+  useEffect(() => {
+
+    if (value.length === 0 && result.length === 0) {
+      setNoResults(false);
+    }
+
+    if (value.length > 0 && result.length === 0 ) {
+      setNoResults(true);
+    }
+  }, [value, result, showResults])
+  
+
 
   const navigate = useNavigate();
 
@@ -83,9 +101,17 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         className="searchbar-text block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
         placeholder="Title / Author" 
       onChange={(event)=> setValue(event.target.value)} 
-      onBlur={() => {setShowResults(false)}} //Removes the search results when on selected
-      onFocus={() => {if (result.length > 0) setShowResults(true);}} //Shows the search results when selected
+      onBlur={() => {setShowResults(false); setNoResults(false);}} //Removes the search results when on selected
+      onFocus={() => { {if (result.length > 0) setShowResults(true);} {if (!noResults && value.length > 0) setNoResults(true) }}} //Shows the search results when selected
       value ={value}/>
+
+      {noResults && (
+        <div className='search-result absolute top-full left-0 mt-1 w-full p-2 bg-hvit shadow-lg 
+        rounded-b1 rounded-lg'>
+          <p className='italic'>No results</p>
+        </div>
+      )
+      }
   
       {showResults && ( //This makes sure to only show the white box when there are results available
       <div className='search-result absolute top-full left-0 mt-1 w-full p-2 bg-hvit shadow-lg 
@@ -93,6 +119,7 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
         {result.map((result, index) => {  
         const bookId = getKeyByValue(result, titleId);
         const bookAuthor = titleAuthor.get(result);
+        const bookImg = titleImg.get(result);
   
 //Navigate to the correct book page 
 
@@ -101,10 +128,13 @@ function getKeyByValue(value: string, map: Map<string, string>): string | undefi
       key={index} onMouseDown={() =>  //OnMouseDown() event fires before OnBlur() hence we are able to click a result before it disappearing
       {navigate(`/bookPage/${bookId}`);
       setValue(''); }}>
-          <div className = 'search-result-text cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1'>
-            {result} 
-            <p className='text-sm italic '> {bookAuthor} </p>
-            </div>
+        <div className='search-result-text cursor-pointer left-0 hover:bg-kulTheme hover:shadow-lg bg-hvit hover:bg-opacity-10 p-1 flex'>
+          <img className='h-20 mr-5 ' src={bookImg} alt={bookImg} />
+          <div className='flex flex-col justify-center flex-grow'>
+            <span className='text-lg'>{result}</span>
+            <p className='text-base italic mb-2'>{bookAuthor}</p>
+          </div>
+        </div>
       </div>
   );
       })}
