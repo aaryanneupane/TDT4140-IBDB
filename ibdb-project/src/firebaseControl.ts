@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, DocumentData, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, DocumentData, deleteDoc, updateDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { doc, setDoc } from "firebase/firestore";
 import firebase from "firebase/compat/app";
@@ -135,6 +135,17 @@ class firebaseControl {
       id: id,
     });
     }
+
+    async addAd(advertiser : string, WPURL : string, adimgURL : string, adId : string) 
+      { 
+   
+      await updateDoc(doc(db, "ads" , adId), {
+        advertiserName: advertiser, 
+        websiteURL : WPURL,
+        imgURL: adimgURL,
+        id: adId,
+      });
+      }
 
 };
 

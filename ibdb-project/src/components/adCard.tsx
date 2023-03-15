@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import { DocumentData } from 'firebase/firestore';
-import '../styles/AdCard.css';
+import '../styles/HomePage.css';
 
 function AdCard ({
   websiteURL,
@@ -16,10 +16,12 @@ function AdCard ({
   }
 
   return (
-    <div>
-      <p>Advertisement</p>
-      <div className="adCard">
-      <img src={imgURL} className='cursor-pointer' onClick={handleClick}/>
+    <div className = "adCard">
+      <div className="adText">
+        <p>Advertisement</p>
+      </div>
+      <div className="adImage">
+        <img src={imgURL} className='cursor-pointer' onClick={handleClick}/>
       </div>
     </div>
   );

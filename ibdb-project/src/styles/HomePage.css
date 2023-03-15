@@ -19,12 +19,20 @@ h1 {
   transform: scale(1.1);
 }
 
+.adText {
+  text-align: left;
+  padding-left: 10px;
+  color: #4D4D4D;
+  font-family: "Maven Pro"; 
+  font-style: italic;
+}
+
 .adCard {
   width: 270px;
   margin: 20px;
 }
 
-.adCard :hover {
+.adImage:hover {
   transform: scale(1.1);
 }
 
