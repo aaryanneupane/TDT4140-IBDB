@@ -46,6 +46,13 @@ class firebaseControl {
     return reviewList;
   };
 
+  async getCustomLists() {
+    const customLists = collection(db, 'lists');
+    const listSnapshot = await getDocs(customLists);
+    const customListsList = listSnapshot.docs.map(doc => doc.data());
+    return customListsList;
+  };
+
   async getAds() { 
     const ads = collection(db, 'ads');
     const adsSnapshot = await getDocs(ads);

@@ -52,23 +52,25 @@ function App() {
       localStorage.setItem('ads', JSON.stringify(updatedAds));
     });
 
+    let allCustomLists: DocumentData[] = [];
+    const customListsCached = localStorage.getItem("customLists");
+    if (!customListsCached) {
+      firebaseController.getCustomLists().then((orgCustomLists) => {
+        allCustomLists = orgCustomLists;
+      });
+      localStorage.setItem('customLists', JSON.stringify(allCustomLists))
+    }
+    const unsubscribeCustomLists = firebaseController.listenForCollectionChanges('customLists', (updatedCustomLists: DocumentData[]) => {
+      localStorage.setItem('customLists', JSON.stringify(updatedCustomLists));
+    });
+    
     return () => {
       unsubscribeBooks();
       unsubscribeReviews();
       unsubscribeAds();
+      unsubscribeCustomLists();
     }
   
-}, []);
-
-const [ads, setAds] = useState<DocumentData[]>([]);
-
-useEffect(() => {
-  let allAds: DocumentData[] = [];
-  const adsCached = localStorage.getItem("ads");
-  if (adsCached) {
-    allAds = JSON.parse(adsCached);
-  }
-  setAds(allAds);
 }, []);
 
 return (
