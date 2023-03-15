@@ -50,7 +50,6 @@ const ScrollingMenu = ({filter, adID}: {filter: string, adID: number} ) => {
     if (allAds) {
       const adIndex : number = Math.floor(Math.random() * 9); 
       let ad = allAds[adID];
-      console.log(ad);
     // create array of cards with advertisement card at random index
       cards = [...books.slice(0, adIndex), ad , ...books.slice(adIndex)];
       //console.log(cards);
