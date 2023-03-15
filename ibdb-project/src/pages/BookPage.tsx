@@ -32,9 +32,6 @@ const BookPage = () => {
     const [errorMessage, setErrorMessage] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
 
-
-
-
     useEffect(() => {
 
         let allBooks: DocumentData[] = [];
@@ -50,7 +47,7 @@ const BookPage = () => {
         const reviewsCached = localStorage.getItem("reviews");
         if (reviewsCached) {
             allReviews = JSON.parse(reviewsCached);
-            thisBookReviews = allReviews.filter((review) => review.bookID == bookID);
+            thisBookReviews = allReviews.filter((review) => review.bookID === bookID);
         }
         setReviews(thisBookReviews);
 
@@ -66,17 +63,17 @@ const BookPage = () => {
             }
         });
 
-        setAverageRating(Number((sum / counter).toFixed(1)));
-        setAmountOfRatingsForBook(counter);
-
-        console.log(userEmail);
+        if (counter === 0){
+            setAverageRating(0);
+            setAmountOfRatingsForBook(counter);
+        } else {
+            setAverageRating(Number((sum / counter).toFixed(1)));
+            setAmountOfRatingsForBook(counter);
+        }
         if (userEmail === "admin@gmail.com"){
             setIsAdmin(true);
         }
-
-
-    }, [bookID]);
-
+    },[bookID, userEmail]);
 
     const toggleShowFullText = () => {
         setShowFullText(!showFullText);
@@ -269,7 +266,7 @@ const BookPage = () => {
                         </div>
                     </div> : null }
                 <div className="reviewSection">
-                    {amountOfRatingsForBook == 0 ?
+                    {amountOfRatingsForBook === 0 ?
                     <p>There are currently no reviews for this book</p> : <p >Reviews</p>}
                     {reviews.map((review) => (
                         <div >
@@ -283,7 +280,7 @@ const BookPage = () => {
                                     </div>
                                 </div>: null}
                             <div>
-                                {userEmail == 'admin@gmail.com' && review.userID != 'admin@gmail.com' && !hideReviewToDelete ?
+                                {userEmail === 'admin@gmail.com' && review.userID !== 'admin@gmail.com' && !hideReviewToDelete ?
                                     <button className="px-6 py-3 rounded-xl bg-kulTheme shadow-0 hover:shadow-lg" onClick={ () => deleteReview(review)}> Delete Review </button> : null}
                             </div>
                         </div>
