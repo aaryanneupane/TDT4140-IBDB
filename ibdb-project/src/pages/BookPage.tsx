@@ -197,26 +197,27 @@ const BookPage = () => {
                 <div className="author">
                     <p>{book?.author}</p>
                 </div>
-                <div>
-                    <ul className="rating">
+                <div className="flex items-center">
+                    <ul className="rating flex items-center">
                         <li className="rating">
                             {book && (
-                                <StarRating readOnly={true} initialRating={averageRating} />
-                            )}
+                            <StarRating readOnly={true} initialRating={averageRating} />
+                             )}
                         </li>
-                        <li className="rating">
+                        <li className="rating ml-5">
                             {averageRating} / 5
                         </li>
                     </ul>
                     {amountOfRatingsForBook === 1 ?
-                        <div className="amountOfRatings">
-                            {amountOfRatingsForBook} rating
-                        </div> : 
-                        <div className="amountOfRatings">
+                        <div className="amountOfRatings text-sm ml-10 mt-3">
+                        {amountOfRatingsForBook} rating
+                        </div> :
+                        <div className="amountOfRatings text-sm ml-10 mt-3">
                             {amountOfRatingsForBook} ratings
-                        </div>
+                         </div>
                     }
-                </div>
+            </div>
+
                 <div className="center" id='description'>
                     <p>
                         {displayText}
