@@ -110,16 +110,6 @@ const Header = () => {
         </ScrollIntoView>
       ),
     },
-    {
-      key: "6",
-      label: (
-        <ScrollIntoView onClick={() => listView()} selector="">
-          <button className="menu-choice">
-            My Custom List 1
-          </button>
-        </ScrollIntoView>
-      ),
-    },
   ];
 
   const profile: MenuProps["items"] = [
@@ -139,21 +129,17 @@ const Header = () => {
         </button>  
     },
     {
-      key: '2',
-      label: <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>,
-    },
-    {
-      key: "3",
+      key: "2",
       label: visibleAddBook ? (
         <Link to="/addBook" onClick={() => setFilterClicked(false)}>
-        <button className="w-full add-books">Add book</button>
+        <button className="menu-choice w-full add-books">Add book</button>
         </Link>
     ) : null},
     {
-      key: "4",
+      key: "3",
       label: user && !visibleAddBook ? (
         <div onClick={ () => {
-          navigate(`/RatedBooks`)}}><button className="w-full my-rated-books">My Rated Books</button></div>
+          navigate(`/RatedBooks`)}}><button className="menu-choice w-full my-rated-books">My Rated Books</button></div>
       ) :null ,
     },
   ];
@@ -184,8 +170,9 @@ const Header = () => {
         <div>
           <DownDrop items={profile} text="Profile" />
         </div>
+        <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>
         <LoginPopup visible={popupVisible} setVisible={setPopupVisible} />
-      </div>
+        </div>
     </div>
   );
 };
