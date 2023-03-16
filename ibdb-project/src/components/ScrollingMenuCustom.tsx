@@ -6,9 +6,9 @@ import { DocumentData } from "firebase/firestore";
 const ScrollingMenu = ({ user, list }: { user: string, list: string }) => {
 
   const [books, setBooks] = useState<DocumentData[]>([]);
-  const [thisUserList, setThisUserList] = useState<DocumentData>();
   const [allLists, setAllLists] = useState<DocumentData[]>([]);
-  const [listName, setListName] = useState('');
+  const [visible, setVisible] = useState(true);
+
 
   const userEmail = localStorage.getItem('user')?.replace(/"/g, '');
 
@@ -26,82 +26,56 @@ const ScrollingMenu = ({ user, list }: { user: string, list: string }) => {
       allCustomLists = JSON.parse(customListsCached);
       setAllLists(allCustomLists);
     }
-
-
   }, []);
 
-  // for (const customList of allLists) {
-
-  //   if (customList.userID.trim() === userEmail) {
-  //     const userList = customList.list1;
-  //   }
-  // }
-  
-  // setListName(thisUserList[0]);
 
   const userList = allLists.find((list) => list.userID.trim() === userEmail);
   let name: string = '';
   let mylist: DocumentData[] = [];
+
+
   if (userList) {
-    mylist = userList.list1;
-    name = JSON.stringify(mylist[0]).replace(/"/g, '');
-    console.log(mylist);
+    mylist = userList[list];
+    if (mylist){
+      name = JSON.stringify(mylist[0]).replace(/"/g, '');
+    }
   }
   let cards: DocumentData[] = [];
 
+  if (mylist){
     for (const id of mylist) {
-      console.log(id);
       const book = books.find((book) => book.id === id);
-      console.log(book);
       if (book) {
         cards.push(book);
       }
     }
-    // let counter = 1;
-    // console.log(list);
-    // for (const book of books){
-    //   console.log(list[counter]);
-    //   if (list[counter] == book.bookID) {
-    //     console.log(book);
-    //     cards.push(book);
-    //   }
-    //   counter++;
-    // }
-
-
-
-  // setListName(userLists?.list1[0]);
-  // // setUserList(userList?.mylist1);
-  // let cards: DocumentData[] = [];
-  // // books.forEach(book => {
-  // //     userList?.forEach(bookID => {
-  // //         if (book.id === bookID) {
-  // //             cards.push(book);
-  // //         }
-  // //     })
-  // // });
+  }
+  
 
   return (
     <div>
-      <div className="conteiner" id="RATI">
-        <div className="header">
-          <div className="element"></div>
-          <h1>{name}</h1>
-        </div>
-        <ScrollMenu>
-          <div className="scrollingmenu">
-            {cards?.map((card) =>
-              <Card
-                title={card.title}
-                bookIMG={card.imgURL}
-                id={card.id}
-                key={card.id} />
-            )}
+    {mylist ? 
+      <div>
+        <div className="conteiner" id="RATI">
+          <div className="header">
+            <div className="element"></div>
+            <h1>{name}</h1>
           </div>
-        </ScrollMenu>
-      </div>
-
-    </div>
+            <ScrollMenu>
+              <div className="scrollingmenu">
+                {cards?.map((card) =>
+                  <Card
+                    title={card.title}
+                    bookIMG={card.imgURL}
+                    id={card.id}
+                    key={card.id} />
+                )}
+              </div>
+            </ScrollMenu>
+          </div>
+        </div>
+    : null}
+  </div>
   );
 }
 export default ScrollingMenu;

@@ -42,8 +42,10 @@ const HomePage = () => {
                 <ScrollingMenu filter="added" adID={3}/>
             </div>
             <ScrollingMenuCustom user={userEmail} list="list1"/>
-
-            
+            <ScrollingMenuCustom user={userEmail} list="list2"/>
+            <ScrollingMenuCustom user={userEmail} list="list3"/>
+            <ScrollingMenuCustom user={userEmail} list="list4"/> 
+            <ScrollingMenuCustom user={userEmail} list="list5"/> 
         </div>
     )
 }
