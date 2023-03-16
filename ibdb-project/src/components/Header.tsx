@@ -139,18 +139,14 @@ const Header = () => {
         </button>  
     },
     {
-      key: '2',
-      label: <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>,
-    },
-    {
-      key: "3",
+      key: "2",
       label: visibleAddBook ? (
         <Link to="/addBook" onClick={() => setFilterClicked(false)}>
         <button className="menu-choice w-full add-books">Add book</button>
         </Link>
     ) : null},
     {
-      key: "4",
+      key: "3",
       label: user && !visibleAddBook ? (
         <div onClick={ () => {
           navigate(`/RatedBooks`)}}><button className="menu-choice w-full my-rated-books">My Rated Books</button></div>
@@ -184,8 +180,9 @@ const Header = () => {
         <div>
           <DownDrop items={profile} text="Profile" />
         </div>
+        <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>
         <LoginPopup visible={popupVisible} setVisible={setPopupVisible} />
-      </div>
+        </div>
     </div>
   );
 };
