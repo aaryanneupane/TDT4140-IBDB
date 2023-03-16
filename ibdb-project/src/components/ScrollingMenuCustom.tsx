@@ -33,6 +33,10 @@ const ScrollingMenu = ({ user, list }: { user: string, list: string }) => {
   let name: string = '';
   let mylist: DocumentData[] = [];
 
+  if(userList){
+    console.log('hei');
+    console.log(userList[0].id);
+  }
 
   if (userList) {
     mylist = userList[list];

@@ -28,8 +28,11 @@ const BookPage = () => {
     const [showFullText, setShowFullText] = useState(false);
     const [visibleReviewPopup, setVisibleReviewPopup] = useState(false);
     const [visibleDeletePopup, setVisibleDeletePopup] = useState(false);
+    const [visibleAddBookToListPopup, setVisibleAddBookToListPopup] = useState(false);
     const [commentText, setCommentText] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const [allCustomLists, setAllCustomLists] = useState<DocumentData[]>([]);
+
 
 
     useEffect(() => {
@@ -66,8 +69,17 @@ const BookPage = () => {
         setAverageRating(Number((sum / counter).toFixed(1)));
         setAmountOfRatingsForBook(counter);
 
+        let allCustomLists: DocumentData[] = [];
+        const customListsCached = localStorage.getItem("customLists");
+        if (customListsCached) {
+            allCustomLists = JSON.parse(customListsCached);
+            setAllCustomLists(allCustomLists);
+        }
+
     }, [bookID]);
 
+    const thisUserLists = allCustomLists.find((list) => list.userID.trim() === userEmail);
+    console.log(thisUserLists);
 
     const toggleShowFullText = () => {
         setShowFullText(!showFullText);
@@ -144,6 +156,46 @@ const BookPage = () => {
         <div className='inline-flex'>
             <div className='left'>
                 <img className='center image' src={book?.imgURL} alt={book?.imgURL} />
+                <div>
+                    <button onClick ={() => {setVisibleAddBookToListPopup(true)}} className="border">Add book to list</button>
+                </div>
+                {visibleAddBookToListPopup ?
+                            <div>
+                                <div className="edit" onClick={closeOrOpen}>
+                                    <div className="edit-inner" id="popup">
+                                        <h1>Add book to a list</h1>
+                                        <div className="list-container">
+                                            <div key={"key"}>
+                                            <input value={"item"} type="checkbox" />
+                                            <span>{"item"}</span>
+                                            </div>
+                                        </div>
+                                        <textarea className="px-3 py-3 top mt-4 rounded-lg bg-hvit shadow-0 items-center  text-lg"
+                                            value={commentText}
+                                            onChange={handleCommentChange}
+                                            placeholder="Add a review to your rating"
+                                            cols={28}
+                                            style={{ height: 'auto', minHeight: '100px' }} />
+                                        <div className="flex">
+                                        {commentText === "" ?
+                                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                                Submit without comment
+                                            </button>
+                                            :
+                                            <button onClick={() => handleCommentSubmit()} className="text-base mt-2 mr-10 px-5 py-1 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                                                Submit with comment
+                                            </button>
+                                        }
+                                        {userReview ?
+                                            <button onClick={() => deleteReview(userReview)} className="text-base mt-2 px-5 py-1 rounded-lg bg-kulTheme shadow-0 hover:shadow-lg">
+                                                Delete review
+                                            </button> : null
+                                        }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> : null
+                        }
                 <div className='center starRating'>
                     <div className="bottom w-full flex flex-col items-center justify-between overflow-y-auto">
                         {visibleReviewPopup ?
