@@ -13,6 +13,10 @@
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+.dark .popup-button {
+    background-color: #343434;
+}
+
 .logIn-buttons {
     display: flex;
     gap: 20px;
@@ -29,12 +33,15 @@
     margin-top: 8px;
     width: 250px;
     border-radius: 8px;
-    background-color: white;
     height: 48px;
 }
 
 .google-button:hover {
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.dark .google-button {
+    background-color: #343434;
 }
 
 .google-icon {
@@ -77,6 +84,14 @@
     border-bottom: 4px solid rgba(0, 0, 0, 0.2);
 }
 
+.dark .grey-text {
+    color:rgb(151, 151, 151);
+}
+
+.dark .grey-text:hover {
+    border-bottom: 4px solid rgba(158, 157, 157, 0.2);
+}
+
 .popupBackground {
     position: fixed;
     top: 0;
@@ -99,13 +114,20 @@
     gap: 10px;
 }
 
+.dark .login-inner {
+    background-color: #292929;
+}
+
 .input {
     padding: 16px 24px 16px 24px;
     height: 60px;
     margin-top: 8px;
     width: 500px;
-    background-color: white;
     border-radius: 9999px;
+}
+
+.dark .input {
+    color: black;
 }
 
 .input:hover {
@@ -113,5 +135,9 @@
 }
 
 .error {
+    color: red;
+}
+
+.dark .error {
     color: red;
 }

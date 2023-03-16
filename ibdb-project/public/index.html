@@ -6,7 +6,6 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Web site created using create-react-app"
@@ -25,9 +24,32 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <style>
+      #body {
+        background-color: #f6f9ff;
+        --scrollbarBG: #f6f9ff;
+        --thumbBG: #E1726B;
+      }
+
+      .dark #body {
+        background-color: #333333;
+        --scrollbarBG: #4c4c4c;
+        --thumbBG: #E1726B;
+      }
+
+      body::-webkit-scrollbar {
+        width: 9px;
+      }
+      
+      body::-webkit-scrollbar-thumb {
+        background-color: var(--thumbBG) ;
+        border-radius: 6px;
+        border: 2px solid var(--scrollbarBG);
+      }
+    </style>
     <title>IBDb</title>
   </head>
-  <body style="background-color: #f6f9ff">
+  <body id="body">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="rot"></div>
     <!--

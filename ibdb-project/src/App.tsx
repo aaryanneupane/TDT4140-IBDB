@@ -1,7 +1,7 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 
-import {Routes,Route } from "react-router-dom";
-import BookPage  from './pages/BookPage';
+import { Routes, Route } from "react-router-dom";
+import BookPage from './pages/BookPage';
 import HomePage from './pages/HomePage';
 import MyBookLists from './pages/MyBookLists';
 import RatedBooks from './pages/RatedBooks';
@@ -10,6 +10,7 @@ import Header from './components/Header';
 import Filter from './components/Filter';
 import firebaseControl from './firebaseControl';
 import { DocumentData } from 'firebase/firestore';
+import DarkModeHandler from './components/DarkModeHandler';
 
 function App() {
 
@@ -57,32 +58,24 @@ function App() {
       unsubscribeReviews();
       unsubscribeAds();
     }
-  
-}, []);
 
-const [ads, setAds] = useState<DocumentData[]>([]);
+  }, []);
 
-useEffect(() => {
-  let allAds: DocumentData[] = [];
-  const adsCached = localStorage.getItem("ads");
-  if (adsCached) {
-    allAds = JSON.parse(adsCached);
-  }
-  setAds(allAds);
-}, []);
-
-return (
-    <div className="App">
-      <Header/>
-      <Routes>
-        <Route path="/" element={ <HomePage/> } />
-        <Route path="bookPage/:id" element={ <BookPage/> } />
-        <Route path="myBookLists" element={ <MyBookLists/> } />
-        <Route path="filteredBooks" element={ <Filter/>} />
-        <Route path="ratedBooks" element={ <RatedBooks/> } />
-        <Route path="addBook" element={ <AddBookPage/> } />
-      </Routes>
-    </div>
+  return (
+    <DarkModeHandler>
+      <div className="App">
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="bookPage/:id" element={<BookPage />} />
+          <Route path="myBookLists" element={<MyBookLists />} />
+          <Route path="filteredBooks" element={<Filter />} />
+          <Route path="ratedBooks" element={<RatedBooks />} />
+            <Route path="addBook" element={<AddBookPage />} />
+       
+        </Routes>
+      </div>
+    </DarkModeHandler>
   );
 }
 
