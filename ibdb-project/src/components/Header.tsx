@@ -128,29 +128,28 @@ const Header = () => {
           Sign in
         </button>  
     },
-    {
+    visibleAddBook ? {
       key: "2",
-      label: visibleAddBook ? (
+      label: (
         <Link to="/addBook" onClick={() => setFilterClicked(false)}>
         <button className="menu-choice w-full add-books">Add book</button>
         </Link>
-    ) : null},
+    ),}  : null,
 
-    {
+    visibleAddBook ? {
       key: "3",
-      label: visibleAddBook ? (
+      label:  (
         <Link to="/addAd" onClick={() => setFilterClicked(false)}>
         <button className="menu-choice w-full">Add ads</button>
         </Link>
-    ) : null},
+    ),} : null,
     
-    {
+    user && !visibleAddBook ? {
       key: "4",
-      label: user && !visibleAddBook ? (
+      label:  (
         <div onClick={ () => {
           navigate(`/RatedBooks`)}}><button className="menu-choice w-full my-rated-books">My Rated Books</button></div>
-      ) :null ,
-    },
+      ),} :null,
   ];
 
   return (
