@@ -15,8 +15,8 @@ const AddBookPage = () => {
     const [rating, setRating] = useState<number>(0);    
     const [buttonActive, setButtonActive] = useState<boolean>(false);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
-
-
+    
+    
     const firebaseController = new firebaseControl();
     const navigate = useNavigate();
     
@@ -35,13 +35,13 @@ const AddBookPage = () => {
             navigate(`/bookPage/${newBookId}`);
         }
     }
-    
     //Control description area
     const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setDescription(event.target.value);
         event.target.style.height = "16"; // reset the height to auto
         event.target.style.height = `${event.target.scrollHeight}px`; // set the height to the scroll height
-      };    
+      };
+    
     
     useEffect(() => {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
@@ -72,7 +72,7 @@ const AddBookPage = () => {
     function handleGenreChange(event: React.ChangeEvent<HTMLSelectElement>) {
         setGenre(event.target.value);
     }
-    
+
     return (
         <div>
         { isAdmin ? 
@@ -139,7 +139,7 @@ const AddBookPage = () => {
                         : 
                         <div>
                             <label className="block mb-2 text-sm font-semibold">Fill out all fields to add the book to IBDb</label>
-                            <button type="button" disabled className="px-6 py-3 rounded-lg shadow-0">
+                            <button type="button" disabled className="px-6 py-3 rounded-lg shadow-0 bg-hvit">
                             Add book
                             </button>
                         </div>
@@ -154,7 +154,13 @@ const AddBookPage = () => {
         </div>
         }
         </div>
+        
+        
+        
+    
+        
     )
 }
+
 
 export default AddBookPage;

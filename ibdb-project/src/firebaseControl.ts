@@ -1,4 +1,4 @@
-import { getFirestore, collection, getDocs, DocumentData, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, DocumentData, deleteDoc, updateDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { doc, setDoc } from "firebase/firestore";
 import firebase from "firebase/compat/app";
@@ -46,6 +46,13 @@ class firebaseControl {
     return reviewList;
   };
 
+  async getAds() { 
+    const ads = collection(db, 'ads');
+    const adsSnapshot = await getDocs(ads);
+    const adsList = adsSnapshot.docs.map(doc => doc.data());
+    return adsList;
+  };
+
   getBookIds() {
     const colRef = collection(db, "books");
     let bookIDs: any[] = [];
@@ -62,6 +69,7 @@ class firebaseControl {
     const docData = doc.data();
     return docData;
   }
+
 
   listenForCollectionChanges = (collection: string, callback: (updatedCollection: DocumentData[]) => void): (() => void) => {
     const unsubscribe = firebase.firestore().collection(collection)
@@ -127,6 +135,17 @@ class firebaseControl {
       id: id,
     });
     }
+
+    async addAd(advertiser : string, WPURL : string, adimgURL : string, adId : string) 
+      { 
+   
+      await updateDoc(doc(db, "ads" , adId), {
+        advertiserName: advertiser, 
+        websiteURL : WPURL,
+        imgURL: adimgURL,
+        id: adId,
+      });
+      }
 
 };
 

@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { Routes, Route } from "react-router-dom";
 import BookPage from './pages/BookPage';
+import AddAdPage from './pages/AddAdPage';
 import HomePage from './pages/HomePage';
 import MyBookLists from './pages/MyBookLists';
 import RatedBooks from './pages/RatedBooks';
@@ -12,14 +13,9 @@ import firebaseControl from './firebaseControl';
 import { DocumentData } from 'firebase/firestore';
 import DarkModeHandler from './components/DarkModeHandler';
 
-
-
-
 function App() {
 
   const firebaseController = new firebaseControl();
-  const [isAdmin, setIsAdmin] = useState(false);
-
 
   useEffect(() => {
     let allBooks: DocumentData[] = [];
@@ -30,7 +26,7 @@ function App() {
       });
       localStorage.setItem('books', JSON.stringify(allBooks))
     }
-    const unsubscribe = firebaseController.listenForCollectionChanges('books', (updatedBooks: DocumentData[]) => {
+    const unsubscribeBooks = firebaseController.listenForCollectionChanges('books', (updatedBooks: DocumentData[]) => {
       localStorage.setItem('books', JSON.stringify(updatedBooks));
     });
 
@@ -42,18 +38,27 @@ function App() {
       });
       localStorage.setItem('reviews', JSON.stringify(allReviews))
     }
-    const unsubscribe2 = firebaseController.listenForCollectionChanges('reviews', (updatedReviews: DocumentData[]) => {
+    const unsubscribeReviews = firebaseController.listenForCollectionChanges('reviews', (updatedReviews: DocumentData[]) => {
       localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     });
 
-    
-
+    let allAds: DocumentData[] = [];
+    const adsCached = localStorage.getItem("ads");
+    if (!adsCached) {
+      firebaseController.getAds().then((orgAds) => {
+        allAds = orgAds;
+      });
+      localStorage.setItem('ads', JSON.stringify(allAds))
+    }
+    const unsubscribeAds = firebaseController.listenForCollectionChanges('ads', (updatedAds: DocumentData[]) => {
+      localStorage.setItem('ads', JSON.stringify(updatedAds));
+    });
 
     return () => {
-      unsubscribe();
-      unsubscribe2();
+      unsubscribeBooks();
+      unsubscribeReviews();
+      unsubscribeAds();
     }
-    
 
   }, []);
 
@@ -67,7 +72,8 @@ function App() {
           <Route path="myBookLists" element={<MyBookLists />} />
           <Route path="filteredBooks" element={<Filter />} />
           <Route path="ratedBooks" element={<RatedBooks />} />
-            <Route path="addBook" element={<AddBookPage />} />
+          <Route path="addBook" element={<AddBookPage />} />
+          <Route path="addAd" element={<AddAdPage />} />
        
         </Routes>
       </div>
