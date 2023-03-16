@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { Routes, Route } from "react-router-dom";
 import BookPage from './pages/BookPage';
-import AddAdPage from './pages/AddAdPage'
+import AddAdPage from './pages/AddAdPage';
 import HomePage from './pages/HomePage';
 import MyBookLists from './pages/MyBookLists';
 import RatedBooks from './pages/RatedBooks';
