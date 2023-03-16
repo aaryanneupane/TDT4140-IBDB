@@ -146,11 +146,20 @@ const Header = () => {
       key: "3",
       label: visibleAddBook ? (
         <Link to="/addBook" onClick={() => setFilterClicked(false)}>
-        <button className="w-full add-books">Add book</button>
+        <button className="menu-choice w-full">Add book</button>
         </Link>
     ) : null},
+
     {
       key: "4",
+      label: visibleAddBook ? (
+        <Link to="/addAd" onClick={() => setFilterClicked(false)}>
+        <button className="menu-choice w-full">Add Ads</button>
+        </Link>
+    ) : null},
+    
+    {
+      key: "5",
       label: user && !visibleAddBook ? (
         <div onClick={ () => {
           navigate(`/RatedBooks`)}}><button className="w-full my-rated-books">My Rated Books</button></div>
@@ -177,7 +186,7 @@ const Header = () => {
               onClick={showFilter}
               className="header-button px-6 py-3 rounded-xl bg-hvit shadow-0 hover:shadow-lg h-12 leading-5"
             >
-              Show Filter
+              Browse Books
             </Link>
           ) : null}
         </button>

@@ -27,8 +27,9 @@ h1 {
 }
 
 .adCard {
-  width: 270px;
+  width: 250px;
   margin: 20px;
+  
 }
 
 .adImage:hover {
@@ -70,6 +71,6 @@ h1 {
 
 
 #hpContent {
-  padding-bottom: 500px;
+  padding-bottom: 270px;
 }
 

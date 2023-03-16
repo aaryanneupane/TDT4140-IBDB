@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import Card from "./Card";
 import { DocumentData } from "firebase/firestore";
-import AdCard from "./adCard";
+import AdCard from "./AdCard";
 
 const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
 

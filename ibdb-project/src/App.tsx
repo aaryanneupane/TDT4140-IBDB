@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useState } from 'react';
 
 import { Routes, Route } from "react-router-dom";
 import BookPage from './pages/BookPage';
+import AddAdPage from './pages/AddAdPage'
 import HomePage from './pages/HomePage';
 import MyBookLists from './pages/MyBookLists';
 import RatedBooks from './pages/RatedBooks';
@@ -71,7 +72,8 @@ function App() {
           <Route path="myBookLists" element={<MyBookLists />} />
           <Route path="filteredBooks" element={<Filter />} />
           <Route path="ratedBooks" element={<RatedBooks />} />
-            <Route path="addBook" element={<AddBookPage />} />
+          <Route path="addBook" element={<AddBookPage />} />
+          <Route path="addAd" element={<AddAdPage />} />
        
         </Routes>
       </div>
