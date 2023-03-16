@@ -84,6 +84,15 @@ const AddAdPage = () => {
 
             <div className="px-8 py-4 grid gap-6 md:grid-cols-2 w-2/3 items-start mt-8">
                 <div>
+                    {/* trinn for radvalg */}
+                    <label className="block mb-2 text-sm font-semibold">Row in homepage</label>
+                    <select id ='rows-select' name ='rows' value={row} onChange={handleRowChange} 
+                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0">
+                        {rows.map(el => <option key={el.id} value={el.rows} >{el.rows}</option>)} 
+                        <option value="" selected disabled hidden>Select row</option>
+                    </select>
+                </div>   
+                <div>
                     <label className="block mb-2 text-sm font-semibold">Name of advertiser</label>
                     <input type="text" 
                         className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
@@ -96,16 +105,7 @@ const AddAdPage = () => {
                         className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
                         placeholder="Website URL" 
                         value={WPURL} onChange={(event) => {setWPURL(event.target.value)}}/>
-                </div>                
-                <div>
-                    {/* trinn for radvalg */}
-                    <label className="block mb-2 text-sm font-semibold">Row in homepage</label>
-                    <select id ='rows-select' name ='rows' value={row} onChange={handleRowChange} 
-                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0">
-                        {rows.map(el => <option key={el.id} value={el.rows} >{el.rows}</option>)} 
-                        <option value="" selected disabled hidden>Select row</option>
-                    </select>
-                </div>       
+                </div>                    
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Image URL</label>
                     <input type="text" 

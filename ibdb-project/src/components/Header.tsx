@@ -140,7 +140,7 @@ const Header = () => {
       key: "3",
       label: visibleAddBook ? (
         <Link to="/addAd" onClick={() => setFilterClicked(false)}>
-        <button className="menu-choice w-full">Add Ads</button>
+        <button className="menu-choice w-full">Add ads</button>
         </Link>
     ) : null},
     
