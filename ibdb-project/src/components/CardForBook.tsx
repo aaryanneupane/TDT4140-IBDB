@@ -1,7 +1,6 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Card({
+function CardForBook({
   title,
   id,
   bookIMG,
@@ -21,4 +20,4 @@ function Card({
     </div>
   );
 }
-export default Card;
+export default CardForBook;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'firebase/firestore';
 import { Link } from 'react-router-dom';
 import { DocumentData } from 'firebase/firestore';
-import Card from './Card';
+import Card from './CardForBook';
 import '../styles/Filter.css';
 import { MenuProps } from 'antd';
 import DownDrop from './DownDrop';

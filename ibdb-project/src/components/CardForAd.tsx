@@ -1,9 +1,6 @@
-import React from "react";
-import { useState, useEffect } from 'react';
-import { DocumentData } from 'firebase/firestore';
 import '../styles/HomePage.css';
 
-function AdCard ({
+function CardForAd ({
   websiteURL,
   imgURL,
 } : {
@@ -27,4 +24,4 @@ function AdCard ({
   );
 };
 
-export default AdCard;
+export default CardForAd;
