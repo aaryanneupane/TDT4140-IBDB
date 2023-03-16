@@ -130,8 +130,7 @@ margin-bottom: 10px;
 }
 
 .rating {
-    margin-bottom: 0px;
-    margin-left: 10px;
+    margin: 0px 0px 4px 0px;
 }
 
 .rating section{
@@ -149,8 +148,7 @@ margin-bottom: 10px;
 
 .rating li {
     display: inline;
-    margin: 0px 0px;
-    color: rgb(70, 70, 70);
+    margin: 0px 8px 0px 0px;
     font-size: medium;
     font-weight: 600;
 }
