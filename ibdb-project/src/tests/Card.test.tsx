@@ -1,5 +1,5 @@
 import { act, fireEvent, render } from '@testing-library/react';
-import Card from '../components/Card';
+import Card from '../components/CardForBook';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 test('navigate to correct bookpage when clicked', () => {

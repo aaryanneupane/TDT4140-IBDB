@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DocumentData } from 'firebase/firestore';
-import Card from '../components/Card';
+import Card from '../components/CardForBook';
 import { StarRating } from "star-rating-react-ts";
 import { useNavigate } from "react-router-dom";
 import '../styles/RatedBooks.css';
