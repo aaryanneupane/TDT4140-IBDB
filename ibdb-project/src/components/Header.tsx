@@ -110,16 +110,6 @@ const Header = () => {
         </ScrollIntoView>
       ),
     },
-    {
-      key: "6",
-      label: (
-        <ScrollIntoView onClick={() => listView()} selector="">
-          <button className="menu-choice">
-            My Custom List 1
-          </button>
-        </ScrollIntoView>
-      ),
-    },
   ];
 
   const profile: MenuProps["items"] = [
