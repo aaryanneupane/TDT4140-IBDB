@@ -210,16 +210,7 @@ const AddBookPage = () => {
                         className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
                         placeholder="Website URL" 
                         value={WPURL} onChange={(event) => {setWPURL(event.target.value)}}/>
-                </div>
-                <div>
-                    <label className="block mb-2 text-sm font-semibold">Image URL</label>
-                    <input type="text" 
-                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
-                        placeholder="Image URL" 
-                        value={adimgURL} onChange={(event) => {setadImgURL(event.target.value)}}/>
-                </div> 
-
-
+                </div>                
                 <div>
                     {/* trinn for radvalg */}
                     <label className="block mb-2 text-sm font-semibold">Row in homepage</label>
@@ -229,7 +220,13 @@ const AddBookPage = () => {
                         <option value="" selected disabled hidden>Select row</option>
                     </select>
                 </div>       
-
+                <div>
+                    <label className="block mb-2 text-sm font-semibold">Image URL</label>
+                    <input type="text" 
+                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
+                        placeholder="Image URL" 
+                        value={adimgURL} onChange={(event) => {setadImgURL(event.target.value)}}/>
+                </div> 
 
                 <div>
                     {adButtonActive ? 
