@@ -62,7 +62,7 @@ const ScrollingMenu = ({filter, adID}: {filter: string, adID: number} ) => {
         <ScrollMenu>
           <div className="scrollingmenu">
             {cards.map((card) => 
-              card.advertiserName !== undefined ?
+              'websiteURL' in card ?
               <CardForAd 
                 websiteURL={card?.websiteURL}
                 imgURL={card?.imgURL}
