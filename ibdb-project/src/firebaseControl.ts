@@ -129,8 +129,6 @@ class firebaseControl {
       //Find the id, equal to the number of books
     const id : string = (await this.findLength()).toString();
       // Add a new document in collection "cities"
-    console.log(id)
- 
     await setDoc(doc(db, "books", id), {
       title: title, 
       author: author,
@@ -142,17 +140,75 @@ class firebaseControl {
       id: id,
     });
     }
+    
 
-    async addAd(advertiser : string, WPURL : string, adimgURL : string, adId : string) 
-      { 
-   
+    // async addToExistingList(name : string, bookID : string) {
+
+    //   const customListsCached = localStorage.getItem("customLists");
+    //   let allCustomLists: DocumentData[] = [];
+
+    //   if (customListsCached) {
+    //     allCustomLists = JSON.parse(customListsCached);
+    //   }
+    //   const userEmail = localStorage.getItem('user')?.replace(/"/g, '');
+    //   const thisUserLists = allCustomLists.find(
+    //     (list) => list.userID === userEmail
+    //   );
+      
+    //   for (const elem in thisUserLists) {
+    //     if (typeof thisUserLists[elem] !== "string") {
+    //       if(thisUserLists[elem][0] === name) {
+    //         thisUserLists[elem].push(bookID);
+    //       }
+    //     }
+    //   }
+
+    //   console.log(thisUserLists);
+
+    //   const docRef = doc(db, "customLists", userEmail);
+    //   await setDoc(docRef, thisUserLists);
+      
+
+    // }
+    async addToExistingList(name: string, bookID: string) {
+      const customListsCached = localStorage.getItem("customLists");
+      let allCustomLists: DocumentData[] = [];
+    
+      if (customListsCached) {
+        allCustomLists = JSON.parse(customListsCached);
+      }
+    
+      const userEmail = localStorage.getItem("user")?.replace(/"/g, "");
+      const thisUserLists = allCustomLists.find((list) => list.userID === userEmail);
+    
+      if (thisUserLists) {
+        for (const elem in thisUserLists) {
+          if (typeof thisUserLists[elem] !== "string") {
+            if (thisUserLists[elem][0] === name) {
+              thisUserLists[elem].push(bookID);
+            }
+          }
+        }
+    
+      console.log(thisUserLists);
+      if (userEmail){
+      const listRef = doc(db, "customLists", userEmail);
+      // await updateDoc(listRef, {
+        
+      // });
+    }
+      }
+    }
+
+
+    async addAd(advertiser : string, WPURL : string, adimgURL : string, adId : string) { 
       await updateDoc(doc(db, "ads" , adId), {
         advertiserName: advertiser, 
         websiteURL : WPURL,
         imgURL: adimgURL,
         id: adId,
       });
-      }
+    }
 
 };
 

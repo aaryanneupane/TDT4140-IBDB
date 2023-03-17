@@ -1,15 +1,9 @@
 import React from 'react'
 import ScrollingMenu from '../components/ScrollingMenu';
-import ScrollingMenyCustom from '../components/ScrollingMenuCustom';
 import '../styles/HomePage.css';
 import ScrollingMenuCustom from '../components/ScrollingMenuCustom';
 
 const HomePage = () => {
-
-    var userEmail = localStorage.getItem('user')?.replace(/"/g, '');
-    if (userEmail === undefined){
-        userEmail = "";
-    }
 
     return (
         <div id="hpContent">
@@ -41,11 +35,6 @@ const HomePage = () => {
                 </div>
                 <ScrollingMenu filter="added" adID={3}/>
             </div>
-            <ScrollingMenuCustom user={userEmail} list="list1"/>
-            <ScrollingMenuCustom user={userEmail} list="list2"/>
-            <ScrollingMenuCustom user={userEmail} list="list3"/>
-            <ScrollingMenuCustom user={userEmail} list="list4"/> 
-            <ScrollingMenuCustom user={userEmail} list="list5"/> 
         </div>
     )
 }

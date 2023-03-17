@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import Card from "./Card";
+import Card from "./CardForBook";
 import { DocumentData } from "firebase/firestore";
 
 const ScrollingMenu = ({ user, list }: { user: string, list: string }) => {
@@ -25,6 +25,7 @@ const ScrollingMenu = ({ user, list }: { user: string, list: string }) => {
     if (customListsCached) {
       allCustomLists = JSON.parse(customListsCached);
       setAllLists(allCustomLists);
+
     }
   }, []);
 
@@ -32,11 +33,6 @@ const ScrollingMenu = ({ user, list }: { user: string, list: string }) => {
   const userList = allLists.find((list) => list.userID.trim() === userEmail);
   let name: string = '';
   let mylist: DocumentData[] = [];
-
-  if(userList){
-    console.log('hei');
-    console.log(userList[0].id);
-  }
 
   if (userList) {
     mylist = userList[list];

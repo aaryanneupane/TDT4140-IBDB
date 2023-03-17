@@ -1,24 +1,26 @@
-import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import DownDrop from './DownDrop';
-import '../styles/Header.css';
-import SearchBar from './SearchBar';
-import LoginPopup from './LoginPopup';
-import { MenuProps } from 'antd';
-import ScrollIntoView from 'react-scroll-into-view';
-import { auth } from '../firebaseControl';
-import { User, onAuthStateChanged, signOut } from 'firebase/auth';
+import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import DownDrop from "./DownDrop";
+import "../styles/Header.css";
+import SearchBar from "./SearchBar";
+import LoginPopup from "./LoginPopup";
+import { MenuProps } from "antd";
+import ScrollIntoView from "react-scroll-into-view";
+import { auth } from "../firebaseControl";
+import { User, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { DarkModeContext } from './DarkModeHandler';
+import { DarkModeContext } from "./DarkModeHandler";
 
 const Header = () => {
   const [filterClicked, setFilterClicked] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const [visibleAddBook, setVisibleAddBook] = useState(false);
-  
+
   const [user, setUser] = useState<User | null>(null);
   const { darkMode, setDarkMode } = useContext(DarkModeContext);
-  const [divClass, setDivClass] = useState("sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy");
+  const [divClass, setDivClass] = useState(
+    "sticky top-0 z-30 navbar navbar-expand-lg shadow-md py-5 px-10 relative bg-bigBoy"
+  );
   const navigate = useNavigate();
 
   let admins: string[] = ["admin@gmail.com"];
@@ -28,12 +30,11 @@ const Header = () => {
       if (user && user.email) {
         localStorage.setItem("user", user.email);
         setUser(user);
-        if (user.email != null && admins.includes(user.email)){
+        if (user.email != null && admins.includes(user.email)) {
           setVisibleAddBook(true);
-          } else {
-            setVisibleAddBook(false);
-          }    
-       
+        } else {
+          setVisibleAddBook(false);
+        }
       } else {
         localStorage.setItem("user", "");
         setUser(null);
@@ -73,10 +74,12 @@ const Header = () => {
     {
       key: "1",
       label: (
-        <ScrollIntoView className="menu-choice" onClick={() => listView()} selector="#recentlyReleased">
-          <button>
-            Recently Released
-          </button>
+        <ScrollIntoView
+          className="menu-choice"
+          onClick={() => listView()}
+          selector="#recentlyReleased"
+        >
+          <button>Recently Released</button>
         </ScrollIntoView>
       ),
     },
@@ -84,9 +87,7 @@ const Header = () => {
       key: "2",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#comingSoon">
-          <button className="menu-choice">
-            Coming Soon
-          </button>
+          <button className="menu-choice">Coming Soon</button>
         </ScrollIntoView>
       ),
     },
@@ -94,9 +95,7 @@ const Header = () => {
       key: "3",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#topBooks">
-          <button className="menu-choice">
-            Top Books
-          </button>
+          <button className="menu-choice">Top Books</button>
         </ScrollIntoView>
       ),
     },
@@ -104,9 +103,7 @@ const Header = () => {
       key: "4",
       label: (
         <ScrollIntoView onClick={() => listView()} selector="#RATI">
-          <button className="menu-choice">
-            Recently added to IBDb
-          </button>
+          <button className="menu-choice">Recently added to IBDb</button>
         </ScrollIntoView>
       ),
     },
@@ -114,42 +111,70 @@ const Header = () => {
 
   const profile: MenuProps["items"] = [
     {
-      key: '1',
-      label: user ?
-      <div onClick={signOutUser}>
-        <button className="menu-choice w-full">
-          Sign Out
-        </button >
-        <p className='user-email'>
-          {user.email}
-        </p>
-      </div>
-        : <button className="menu-choice w-full" onClick= {() => {setPopupVisible(true)}}>
+      key: "1",
+      label: user ? (
+        <div onClick={signOutUser}>
+          <button className="menu-choice w-full">Sign Out</button>
+          <p className="user-email">{user.email}</p>
+        </div>
+      ) : (
+        <button
+          className="menu-choice w-full"
+          onClick={() => {
+            setPopupVisible(true);
+          }}
+        >
           Sign in
-        </button>  
+        </button>
+      ),
     },
-    visibleAddBook ? {
-      key: "2",
-      label: (
-        <Link to="/addBook" onClick={() => setFilterClicked(false)}>
-        <button className="menu-choice w-full add-books">Add book</button>
-        </Link>
-    ),}  : null,
+    visibleAddBook
+      ? {
+          key: "2",
+          label: (
+            <Link to="/addBook" onClick={() => setFilterClicked(false)}>
+              <button className="menu-choice w-full add-books">Add book</button>
+            </Link>
+          ),
+        }
+      : null,
 
-    visibleAddBook ? {
-      key: "3",
-      label:  (
-        <Link to="/addAd" onClick={() => setFilterClicked(false)}>
-        <button className="menu-choice w-full">Add ads</button>
-        </Link>
-    ),} : null,
-    
-    user && !visibleAddBook ? {
-      key: "4",
-      label:  (
-        <div onClick={ () => {
-          navigate(`/RatedBooks`)}}><button className="menu-choice w-full my-rated-books">My Rated Books</button></div>
-      ),} :null,
+    visibleAddBook
+      ? {
+          key: "3",
+          label: (
+            <Link to="/addAd" onClick={() => setFilterClicked(false)}>
+              <button className="menu-choice w-full">Add ads</button>
+            </Link>
+          ),
+        }
+      : null,
+
+    user && !visibleAddBook
+      ? {
+          key: "4",
+          label: (
+            <Link to="/ratedBooks">
+              <button className="menu-choice w-full">
+                My Rated Books
+              </button>
+            </Link>
+          ),
+        }
+      : null,
+
+    user && !visibleAddBook
+      ? {
+          key: "5",
+          label: (
+            <Link to="/myBookLists">
+              <button className="menu-choice w-full">
+                My Book Lists
+              </button>
+            </Link>
+          ),
+        }
+      : null,
   ];
 
   return (
@@ -157,7 +182,10 @@ const Header = () => {
       <div className="flex items-center w-full justify-between">
         <ScrollIntoView onClick={() => listView()} selector="#recentlyReleased">
           <button onClick={hideFilter}>
-            <Link to="/" className="ibdb-text px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg" >
+            <Link
+              to="/"
+              className="ibdb-text px-5 py-2 rounded-lg bg-kulTheme dark:hover:bg-teitThene font-serif text-4xl shadow-0 hover:shadow-lg"
+            >
               IBDb
             </Link>
           </button>
@@ -178,9 +206,19 @@ const Header = () => {
         <div>
           <DownDrop items={profile} text="Profile" />
         </div>
-        <div className="switch"><input className="toggle" type="checkbox" checked={darkMode} onClick={(e) => e.stopPropagation()} onChange={(e) => {setDarkMode(e.target.checked)}}/></div>
-        <LoginPopup visible={popupVisible} setVisible={setPopupVisible} />
+        <div className="switch">
+          <input
+            className="toggle"
+            type="checkbox"
+            checked={darkMode}
+            onClick={(e) => e.stopPropagation()}
+            onChange={(e) => {
+              setDarkMode(e.target.checked);
+            }}
+          />
         </div>
+        <LoginPopup visible={popupVisible} setVisible={setPopupVisible} />
+      </div>
     </div>
   );
 };

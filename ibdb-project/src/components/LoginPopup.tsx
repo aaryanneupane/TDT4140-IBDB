@@ -100,7 +100,6 @@ const LoginPopup = ({ visible, setVisible }: { visible: boolean; setVisible: Dis
                 <div className="popupBackground" onClick={closeOrOpen}>
                     <div className="login-inner" id="popup">
                         <div className="top">
-
                             <div className='logIn-signUp-flex'>
                                 <button className={logInOrSignup === 'logIn' ? 'normal' : 'grey-text'} onClick={() => setLogInOrSignup('logIn')}> Log in </button>
                                 <div className={logInOrSignup === 'logIn' ? 'logIn-underline' : ''}></div>
