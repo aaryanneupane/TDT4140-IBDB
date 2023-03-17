@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import Card from "./Card";
+import CardForBook from "./CardForBook";
 import { DocumentData } from "firebase/firestore";
-import AdCard from "./adCard";
+import CardForAd from "./CardForAd";
 
 const sortAndFilterBooks = (books: DocumentData[], filter: string) => {
 
@@ -62,18 +62,17 @@ const ScrollingMenu = ({filter, adID}: {filter: string, adID: number} ) => {
         <ScrollMenu>
           <div className="scrollingmenu">
             {cards.map((card) => 
-              card.advertiserName ?
-              <AdCard 
+              'websiteURL' in card ?
+              <CardForAd 
                 websiteURL={card?.websiteURL}
                 imgURL={card?.imgURL}
                 key={card?.id}
                 /> : 
-              <Card 
+              <CardForBook 
                 title={card.title}
                 bookIMG= {card.imgURL}
                 id= {card.id}
-                key={card.id}/>
-            )}
+                key={card.id}/>)}
           </div>
         </ScrollMenu>
       </div>

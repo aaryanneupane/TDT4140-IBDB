@@ -1,14 +1,21 @@
 
 
-.background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.dark .searchbar-text {
+    background-color: #181818;
 }
+
+.dark .search-result {
+    background-color: #292929;
+}
+
+.dark .search-result-text {
+    background-color: #292929;
+}
+
+.dark .search-result-text:hover {
+    background-color: #DD7973;
+}
+
+/* .dark .author {
+    background-color:;
+} */

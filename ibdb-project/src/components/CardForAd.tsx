@@ -1,9 +1,6 @@
-import React from "react";
-import { useState, useEffect } from 'react';
-import { DocumentData } from 'firebase/firestore';
 import '../styles/HomePage.css';
 
-function AdCard ({
+function CardForAd ({
   websiteURL,
   imgURL,
 } : {
@@ -17,9 +14,7 @@ function AdCard ({
 
   return (
     <div className = "adCard">
-      <div className="adText">
-        <p>Advertisement</p>
-      </div>
+      <p>Advertisement</p>
       <div className="adImage">
         <img src={imgURL} className='cursor-pointer' onClick={handleClick}/>
       </div>
@@ -27,4 +22,4 @@ function AdCard ({
   );
 };
 
-export default AdCard;
+export default CardForAd;

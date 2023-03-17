@@ -3,13 +3,14 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {},
     colors: {
       bigBoy: "#f6f9ff",
       teitThene: "#E1726B",
       kulTheme: "#DD7973",
-      kulText: "#4D4D4D",
+      kulText: "#343434",
       mindreKulText: "#282828",
       hvit: "#FFFFFF",
       graa: "#E5E7EB"

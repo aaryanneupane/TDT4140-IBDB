@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.dark h1 {
+  color: #dddddd;
+}
+
+.dark p {
+  color: #dddddd;
+}
 
 .App {
   text-align: center;

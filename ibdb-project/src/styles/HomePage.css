@@ -4,7 +4,6 @@ img {
 }
 
 h1 { 
-  color: #4D4D4D;
   font-family: "Maven Pro"; 
   font-size: 2rem;
   font-weight: 600;
@@ -16,20 +15,17 @@ h1 {
 }
 
 .card :hover {
-  transform: scale(1.1);
-}
-
-.adText {
-  text-align: left;
-  padding-left: 10px;
-  color: #4D4D4D;
-  font-family: "Maven Pro"; 
-  font-style: italic;
+  transform: scale(1.05);
 }
 
 .adCard {
-  width: 270px;
+  width: 250px;
   margin: 20px;
+
+}
+
+.adImage {
+  margin-top: 10px;
 }
 
 .adImage:hover {
@@ -59,7 +55,18 @@ h1 {
   align-items: center;
 }
 
+/* chrome and chromium based */
+.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.react-horizontal-scrolling-menu--scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+
 #hpContent {
-  padding-bottom: 500px;
+  padding-bottom: 270px;
 }
 
