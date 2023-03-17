@@ -14,9 +14,7 @@ function CardForAd ({
 
   return (
     <div className = "adCard">
-      <div className="adText">
-        <p>Advertisement</p>
-      </div>
+      <p>Advertisement</p>
       <div className="adImage">
         <img src={imgURL} className='cursor-pointer' onClick={handleClick}/>
       </div>
