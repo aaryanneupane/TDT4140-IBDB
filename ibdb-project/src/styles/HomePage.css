@@ -18,18 +18,14 @@ h1 {
   transform: scale(1.05);
 }
 
-.adText {
-  text-align: left;
-  padding-left: 10px;
-  color: #4D4D4D;
-  font-family: "Maven Pro"; 
-  font-style: italic;
-}
-
 .adCard {
   width: 250px;
   margin: 20px;
-  
+
+}
+
+.adImage {
+  margin-top: 10px;
 }
 
 .adImage:hover {
