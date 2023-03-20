@@ -18,7 +18,7 @@ const BookPage = () => {
     const [reviews, setReviews] = useState<DocumentData[]>([]);
     const [userReview, setUserReview] = useState<DocumentData>();
     const [reviewToDelete, setReviewToDelete] = useState<DocumentData>([]);
-    const [book, setBook] = useState<any>();
+    const [book, setBook] = useState<DocumentData>();
     const [rating, setRating] = useState<number>(0);
     const [averageRating, setAverageRating] = useState<number>(0);
     const [amountOfRatingsForBook, setAmountOfRatingsForBook] = useState<number>(0);
@@ -50,29 +50,23 @@ const BookPage = () => {
             thisBookReviews = allReviews.filter((review) => review.bookID === bookID);
         }
         setReviews(thisBookReviews);
-
-        var sum = 0;
         var counter = 0;
 
         thisBookReviews.forEach(review => {
-            sum += review.rating;
             counter++;
+
             if (review.userID === userEmail) {
                 setAlreadyReviewed(true);
                 setUserReview(review);
             }
         });
+        setAmountOfRatingsForBook(counter);
 
-        if (counter === 0){
-            setAverageRating(0);
-            setAmountOfRatingsForBook(counter);
-        } else {
-            setAverageRating(Number((sum / counter).toFixed(1)));
-            setAmountOfRatingsForBook(counter);
-        }
+
         if (userEmail === "admin@gmail.com"){
             setIsAdmin(true);
         }
+        console.log(book?.rating)
     },[bookID, userEmail]);
 
     const toggleShowFullText = () => {
@@ -112,6 +106,8 @@ const BookPage = () => {
     const handleRateBook = () => {
         if (!userEmail) {
             setErrorMessage("You need to be logged in to rate books");
+        } else if (book?.releaseYear > 2023) {
+            setErrorMessage("You can't rate a book before it is released")
         } else {
             setVisibleReviewPopup(true);
         }
@@ -201,11 +197,11 @@ const BookPage = () => {
                     <ul className="rating flex items-center">
                         <li className="rating">
                             {book && (
-                            <StarRating readOnly={true} initialRating={averageRating} />
+                            <StarRating readOnly={true} initialRating={book?.rating} />
                              )}
                         </li>
                         <li className="rating ml-5">
-                            {averageRating} / 5
+                            {book?.rating} / 5
                         </li>
                     </ul>
                     {amountOfRatingsForBook === 1 ?

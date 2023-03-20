@@ -1,4 +1,13 @@
 
+.logIn-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.signUp-buttons {
+    display: flex;
+    gap: 20px;
+}
 
 .popup-button {
     padding: 3px 6px 3px 6px;
@@ -17,22 +26,13 @@
     background-color: #343434;
 }
 
-.logIn-buttons {
-    display: flex;
-    gap: 20px;
-}
-
-.signUp-buttons {
-    display: flex;
-    gap: 20px;
-}
-
 .google-button {
     display: flex;
     padding: 9px 6px 3px 24px;
     margin-top: 8px;
     width: 250px;
     border-radius: 8px;
+    background-color: white;
     height: 48px;
 }
 
