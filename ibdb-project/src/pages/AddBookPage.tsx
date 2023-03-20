@@ -12,7 +12,6 @@ const AddBookPage = () => {
     const [releaseYear, setReleaseYear] = useState<number | undefined >();
     const [description, setDescription] = useState<string>('');
     const [imgURL, setImgURL] = useState<string>('');
-    const [rating, setRating] = useState<number>(0);    
     const [buttonActive, setButtonActive] = useState<boolean>(false);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
     
@@ -22,7 +21,7 @@ const AddBookPage = () => {
     
     async function addThisBook() {
         if (title.length > 0 && author.length > 0 && genre.length > 0 && description.length > 0 && imgURL.length > 0 && releaseYear !== undefined){
-            await firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, rating);
+            await firebaseController.addBook(title, author, genre, releaseYear, description, imgURL, 0);
             setTitle('');
             setAuthor('');
             setGenre('');

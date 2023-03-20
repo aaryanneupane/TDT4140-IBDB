@@ -18,6 +18,7 @@ function App() {
   const firebaseController = new firebaseControl();
 
   useEffect(() => {
+
     let allBooks: DocumentData[] = [];
     const booksCached = localStorage.getItem("books");
     if (!booksCached) {
@@ -40,6 +41,31 @@ function App() {
     }
     const unsubscribeReviews = firebaseController.listenForCollectionChanges('reviews', (updatedReviews: DocumentData[]) => {
       localStorage.setItem('reviews', JSON.stringify(updatedReviews));
+
+      let booksToChangeRating: DocumentData[] = [];
+      const booksCached = localStorage.getItem("books");
+      if (booksCached) {
+          booksToChangeRating = JSON.parse(booksCached);
+      }
+      booksToChangeRating.forEach(book => {
+        var sum = 0;
+        var counter = 0;
+
+        updatedReviews.forEach(review => {
+            if (book.id === review.bookID) {
+              sum += review.rating;
+              counter++;
+            }
+          });
+        if (counter === 0) {
+            book.rating = 0;
+        } else {
+            book.rating = Number((sum / counter).toFixed(1));
+        }
+        console.log(book.rating)
+      });
+      localStorage.setItem('books', JSON.stringify(booksToChangeRating))
+
     });
 
     let allAds: DocumentData[] = [];
