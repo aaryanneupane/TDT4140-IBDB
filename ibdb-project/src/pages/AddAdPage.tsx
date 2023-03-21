@@ -3,6 +3,7 @@ import { useState } from 'react';
 import firebaseControl from '../firebaseControl';
 import '../styles/HomePage.css';
 import { useNavigate } from 'react-router-dom';
+import '../styles/AddPage.css';
 
 const AddAdPage = () => {
 
@@ -86,7 +87,7 @@ const AddAdPage = () => {
                     {/* trinn for radvalg */}
                     <label className="block mb-2 text-sm font-semibold">Row in homepage</label>
                     <select id ='rows-select' name ='rows' value={row} onChange={handleRowChange} 
-                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0">
+                        className=" input-field block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0">
                         {rows.map(el => <option key={el.id} value={el.rows} >{el.rows}</option>)} 
                         <option value="" selected disabled hidden>Select row</option>
                     </select>
@@ -94,21 +95,21 @@ const AddAdPage = () => {
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Name of advertiser</label>
                     <input type="text" 
-                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
+                        className="input-field block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
                         placeholder="Name of advertiser" 
                         value={advertiser} onChange={(event) => {setAdvertiser(event.target.value)}}/>
                 </div>
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Website URL</label>
                     <input type="text" 
-                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
+                        className=" input-field block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
                         placeholder="Website URL" 
                         value={WPURL} onChange={(event) => {setWPURL(event.target.value)}}/>
                 </div>                    
                 <div>
                     <label className="block mb-2 text-sm font-semibold">Image URL</label>
                     <input type="text" 
-                        className="block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
+                        className=" input-field block w-full px-4 py-2 text-purple-700 bg-white rounded-full focus:border-teitTheme focus:ring-teitTheme focus:outline-none focus:ring focus:ring-opacity-40 shadow-0"
                         placeholder="Image URL" 
                         value={adimgURL} onChange={(event) => {setAdImgURL(event.target.value)}}/>
                 </div> 
@@ -116,15 +117,15 @@ const AddAdPage = () => {
                 <div>
                     {adButtonActive ? 
                         <div>
-                            <label className="block mb-2 text-sm font-semibold">Ready to add your ad!</label>
-                            <button onClick={addThisAd} className="px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
+                            <label className=" block mb-2 text-sm font-semibold">Ready to add your ad!</label>
+                            <button onClick={addThisAd} className="button-enable px-6 py-3 rounded-lg bg-hvit shadow-0 hover:shadow-lg">
                                 Add advertisement
                             </button>
                         </div>
                         : 
                         <div>
-                            <label className="block mb-2 text-sm font-semibold">Fill out all fields to add your advertisement</label>
-                            <button type="button" disabled className="px-6 py-3 rounded-lg shadow-0 bg-hvit">
+                            <label className=" block mb-2 text-sm font-semibold">Fill out all fields to add your advertisement</label>
+                            <button type="button" disabled className="input-field px-6 py-3 rounded-lg shadow-0 bg-hvit">
                             Add advertisement
                             </button>
                         </div>
