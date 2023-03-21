@@ -62,7 +62,6 @@ function App() {
         } else {
             book.rating = Number((sum / counter).toFixed(1));
         }
-        console.log(book.rating)
       });
       localStorage.setItem('books', JSON.stringify(booksToChangeRating))
 

@@ -66,7 +66,6 @@ const BookPage = () => {
         if (userEmail === "admin@gmail.com"){
             setIsAdmin(true);
         }
-        console.log(book?.rating)
     },[bookID, userEmail]);
 
     const toggleShowFullText = () => {

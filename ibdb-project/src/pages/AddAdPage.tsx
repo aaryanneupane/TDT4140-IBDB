@@ -64,7 +64,6 @@ const AddAdPage = () => {
         const selectedRow = event.target.value; 
         setRows(selectedRow);
         const selectedRowObject = rows.find(row => row.rows === selectedRow);
-        console.log(selectedRowObject?.id);
         if (selectedRowObject) {
             setadId(selectedRowObject.id);
             }
