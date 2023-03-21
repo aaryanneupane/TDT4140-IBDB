@@ -45,14 +45,12 @@ const ScrollingMenu = ({filter, adID}: {filter: string, adID: number} ) => {
   
     // create random index to insert advertisement card
     let cards: DocumentData[] = [];
-    let ad: DocumentData | undefined = undefined;
     
     if (allAds) {
       const adIndex : number = Math.floor(Math.random() * 9); 
       let ad = allAds[adID];
     // create array of cards with advertisement card at random index
       cards = [...books.slice(0, adIndex), ad , ...books.slice(adIndex)];
-      //console.log(cards);
     }
 
 
@@ -61,18 +59,18 @@ const ScrollingMenu = ({filter, adID}: {filter: string, adID: number} ) => {
         {/* create scrolling menu */}
         <ScrollMenu>
           <div className="scrollingmenu">
-            {cards.map((card) => 
-              'websiteURL' in card ?
+            {cards && cards.length > 0 && cards.map((card) => 
+              card && 'websiteURL' in card ?
               <CardForAd 
-                websiteURL={card?.websiteURL}
-                imgURL={card?.imgURL}
-                key={card?.id}
-                /> : 
+                websiteURL={card.websiteURL}
+                imgURL={card.imgURL}
+                key={card.id}
+                /> : card && 'title' in card ?
               <CardForBook 
                 title={card.title}
                 bookIMG= {card.imgURL}
                 id= {card.id}
-                key={card.id}/>)}
+                key={card.id}/> : null)}
           </div>
         </ScrollMenu>
       </div>

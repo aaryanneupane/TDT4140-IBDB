@@ -22,7 +22,7 @@ const AddAdPage = () => {
 
     async function addThisAd() {
         if (advertiser.length > 0 && adimgURL.length > 0 && WPURL.length > 0){
-            await firebaseController.addAd(advertiser, adimgURL, WPURL, adId);
+            await firebaseController.addAd(advertiser, WPURL, adimgURL, adId);
             setAdvertiser('');
             setWPURL('');
             setAdImgURL('');
@@ -64,7 +64,6 @@ const AddAdPage = () => {
         const selectedRow = event.target.value; 
         setRows(selectedRow);
         const selectedRowObject = rows.find(row => row.rows === selectedRow);
-        console.log(selectedRowObject?.id);
         if (selectedRowObject) {
             setadId(selectedRowObject.id);
             }
