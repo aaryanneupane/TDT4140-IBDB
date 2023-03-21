@@ -60,17 +60,17 @@ const ScrollingMenu = ({filter, adID}: {filter: string, adID: number} ) => {
         <ScrollMenu>
           <div className="scrollingmenu">
             {cards && cards.length > 0 && cards.map((card) => 
-              'websiteURL' in card ?
+              card && 'websiteURL' in card ?
               <CardForAd 
                 websiteURL={card.websiteURL}
                 imgURL={card.imgURL}
                 key={card.id}
-                /> : 
+                /> : card && 'title' in card ?
               <CardForBook 
                 title={card.title}
                 bookIMG= {card.imgURL}
                 id= {card.id}
-                key={card.id}/>)}
+                key={card.id}/> : null)}
           </div>
         </ScrollMenu>
       </div>
