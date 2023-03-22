@@ -1,6 +1,6 @@
 # IBDb - Internet Book Database
 
-IBDb er en nettside for bøker ... 
+IBDb er en nettside med bøker. På denne siden kan man søke på bøker, forfattere og lese om hver enkelt bok. Man kan opprette en bruker og gi bøker man har lest en vurdering, for å hjelpe andre med å bestemme seg for hvilken bok de ønsker å lese.
 
 ## Bygging og kjøring
 
@@ -25,12 +25,7 @@ Da vil nettsiden åpnes i en localhost i nettleseren din.
 
 ### Alternativ 2
 
-```
-sudo npm install -g firebase-tools
-firebase login
-npm run build
-```
+Åpne appen på https://ibdb-743f5.web.app/ .
 
-Da vil du få en egen link i terminalen som kan deles med andre.
 
 
