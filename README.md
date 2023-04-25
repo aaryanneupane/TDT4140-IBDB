@@ -25,7 +25,7 @@ Da vil nettsiden åpnes i en localhost i nettleseren din.
 
 ### Alternativ 2
 
-Åpne appen på https://ibdb-743f5.web.app/ .
+Åpne appen på https://ibdb-743f5.web.app/ og sjekk ut nettsiden! 
 
 
 
